@@ -1,9 +1,15 @@
 {
   "rewrites": [
-    { "source": "/styles/(.*)", "destination": "/src/styles/$1" },
-    { "source": "/scripts/(.*)", "destination": "/src/scripts/$1" },
-    { "source": "/assets/(.*)", "destination": "/src/assets/$1" },
-    { "source": "/images/(.*)", "destination": "/src/assets/images/$1" }
-  ],
-  "cleanUrls": true
+    { "source": "/styles/(.*)",       "destination": "/src/styles/$1" },
+    { "source": "/scripts/(.*)",      "destination": "/src/scripts/$1" },
+    { "source": "/assets/(.*)",       "destination": "/src/assets/$1" },
+    { "source": "/images/(.*)",       "destination": "/src/assets/images/$1" },
+    { "source": "/pais",              "destination": "/src/pages/pais.html" },
+    { "source": "/pais.html",         "destination": "/src/pages/pais.html" },
+    { "source": "/chefia",            "destination": "/src/pages/chefia.html" },
+    { "source": "/chefia.html",       "destination": "/src/pages/chefia.html" },
+    { "source": "/chefia-login",      "destination": "/src/pages/chefia-login.html" },
+    { "source": "/chefia-login.html", "destination": "/src/pages/chefia-login.html" },
+    { "source": "/",                  "destination": "/src/pages/index.html" }
+  ]
 }

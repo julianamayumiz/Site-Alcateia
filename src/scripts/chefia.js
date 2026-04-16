@@ -2860,7 +2860,7 @@ function toggleTheme() {
 // Verifica se o usuário está autenticado
 if (sessionStorage.getItem('chefiaAutenticada') !== 'true') {
   // Redireciona para a página de login se não estiver autenticado
-  window.location.href = 'chefia-login.html';
+  window.location.href = '/chefia-login.html';
 }
 
 // ===================== INIT =====================

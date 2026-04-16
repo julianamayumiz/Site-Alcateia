@@ -286,7 +286,7 @@
 
     // Verifica se já está autenticado
     if (sessionStorage.getItem('chefiaAutenticada') === 'true') {
-      window.location.href = 'chefia.html';
+      window.location.href = '/chefia.html';
     }
 
     loginForm.addEventListener('submit', function(e) {
@@ -299,7 +299,7 @@
         sessionStorage.setItem('chefiaAutenticada', 'true');
         
         // Redireciona para o portal da chefia
-        window.location.href = 'chefia.html';
+        window.location.href = '/chefia.html';
       } else {
         // Senha incorreta - mostra mensagem de erro
         errorMessage.classList.add('show');
