@@ -10,7 +10,8 @@
       "Bash(python skills/ui-ux-pro-max/scripts/search.py \"scout cubs group portal mobile web dashboard\" --design-system -p \"Alcateia Kotick\")",
       "Bash(python skills/ui-ux-pro-max/scripts/search.py \"scout cubs youth group portal mobile web dashboard\" --design-system -p \"Alcateia Kotick\")",
       "Bash(cmd /c \"cd /d \\\\\"C:\\\\Users\\\\julia\\\\.claude\\\\plugins\\\\cache\\\\ui-ux-pro-max-skill\\\\ui-ux-pro-max\\\\2.5.0\\\\\" && python skills/ui-ux-pro-max/scripts/search.py \\\\\"scout cubs youth group portal mobile web dashboard\\\\\" --design-system -p \\\\\"Alcateia Kotick\\\\\" 2>&1\")",
-      "Bash(python \"C:/Users/julia/.claude/plugins/cache/ui-ux-pro-max-skill/ui-ux-pro-max/2.5.0/skills/ui-ux-pro-max/scripts/search.py\" \"scout cubs youth group portal mobile web dashboard\" --design-system -p \"Alcateia Kotick\")"
+      "Bash(python \"C:/Users/julia/.claude/plugins/cache/ui-ux-pro-max-skill/ui-ux-pro-max/2.5.0/skills/ui-ux-pro-max/scripts/search.py\" \"scout cubs youth group portal mobile web dashboard\" --design-system -p \"Alcateia Kotick\")",
+      "Bash(python remove_inline_style.py)"
     ]
   }
 }

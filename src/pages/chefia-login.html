@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script>
     (function() {
-      var saved = localStorage.getItem('chefiaTheme');
+      var saved = localStorage.getItem('alcateiaTheme');
       var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark-init');
     })();
@@ -256,7 +256,7 @@
   <script>
     // Inicializa tema
     (function() {
-      var saved = localStorage.getItem('chefiaTheme');
+      var saved = localStorage.getItem('alcateiaTheme');
       var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       if (saved === 'dark' || (!saved && prefersDark)) {
         document.body.classList.add('dark');

@@ -2841,13 +2841,13 @@ function closeMaisMenu() {
 // ===================== TEMA =====================
 function toggleTheme() {
   var isDark = document.body.classList.toggle('dark');
-  localStorage.setItem('chefiaTheme', isDark ? 'dark' : 'light');
+  localStorage.setItem('alcateiaTheme', isDark ? 'dark' : 'light');
   document.getElementById('theme-icon-moon').style.display = isDark ? 'none'  : '';
   document.getElementById('theme-icon-sun').style.display  = isDark ? ''      : 'none';
 }
 
 (function initTheme() {
-  var saved = localStorage.getItem('chefiaTheme');
+  var saved = localStorage.getItem('alcateiaTheme');
   var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   if (saved === 'dark' || (!saved && prefersDark)) {
     document.body.classList.add('dark');

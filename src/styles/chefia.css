@@ -12,10 +12,32 @@
   --accent2-light: #fdf6dc;
   --red: #c0392b;
   --red-light: #fce8e6;
+  --green: #2e7d32;
+  --green-light: #e8f5e9;
   --blue: #1a4a7a;
   --blue-light: #e6eef8;
   --radius: 10px;
   --radius-sm: 6px;
+}
+
+body.dark {
+  --bg: #0f1117;
+  --surface: #181b2a;
+  --surface2: #1e2236;
+  --border: #2a304d;
+  --text: #e8ebf5;
+  --text2: #9ba6c8;
+  --text3: #7282ab;
+  --accent: #5472e4;
+  --accent-light: #1a2256;
+  --accent2: #e0b820;
+  --accent2-light: #27200a;
+  --red: #e05555;
+  --red-light: #2e1010;
+  --green: #5aad5e;
+  --green-light: #0e2110;
+  --blue: #3a7bd5;
+  --blue-light: #0d1e3a;
 }
 
 * {

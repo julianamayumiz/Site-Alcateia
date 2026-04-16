@@ -316,8 +316,9 @@ function renderCalendario() {
       return evDate >= today;
     }
     if (calPaisFilter === 'Local') return (ev.categoria || '').toLowerCase() === 'local';
-    if (calPaisFilter === 'Distrital') return (ev.categoria || '').toLowerCase() === 'distrital';
-    if (calPaisFilter === 'Regional') return (ev.categoria || '').toLowerCase() === 'regional';
+    if (calPaisFilter === 'Regional') return ['regional', 'distrital'].includes((ev.categoria || '').toLowerCase());
+    if (calPaisFilter === 'Normal') return getRowClass(ev) === 'row-normal';
+    if (calPaisFilter === 'Externa') return getRowClass(ev) === 'row-externa';
     return true; // todos
   });
 
@@ -557,13 +558,13 @@ function enviarConfirmacao() {
 // ===================== TEMA =====================
 function toggleTheme() {
   var isDark = document.body.classList.toggle('dark');
-  localStorage.setItem('paisTheme', isDark ? 'dark' : 'light');
+  localStorage.setItem('alcateiaTheme', isDark ? 'dark' : 'light');
   document.getElementById('theme-icon-moon').style.display = isDark ? 'none' : '';
   document.getElementById('theme-icon-sun').style.display  = isDark ? ''     : 'none';
 }
 
 (function initTheme() {
-  var saved = localStorage.getItem('paisTheme');
+  var saved = localStorage.getItem('alcateiaTheme');
   var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   var isDark = saved === 'dark' || (!saved && prefersDark);
   if (isDark) {

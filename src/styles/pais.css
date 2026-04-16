@@ -518,11 +518,28 @@ body.dark .row-regional { background: #16102a; }
   background: var(--surface2);
 }
 
+/* HEADER TOP ROW */
+.header-toprow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.btn-back {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: rgba(255, 255, 255, 0.82);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+.btn-back:hover { color: #fff; }
+
 /* THEME TOGGLE */
 .btn-theme {
-  position: absolute;
-  top: 16px;
-  right: 16px;
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: var(--radius-sm);
@@ -534,8 +551,6 @@ body.dark .row-regional { background: #16102a; }
   transition: background 0.2s;
 }
 .btn-theme:hover { background: rgba(255, 255, 255, 0.25); }
-
-.header { position: relative; }
 
 /* Focus rings for keyboard navigation */
 .nav-tab:focus-visible,
