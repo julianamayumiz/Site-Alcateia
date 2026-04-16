@@ -53,6 +53,12 @@ function goTo(page) {
   // Show/hide add button based on page
   const addBtn = document.getElementById('btn-add');
   addBtn.style.display = (page === 'presenca' || page === 'dashboard') ? 'none' : 'inline-flex';
+
+  // Importar/Exportar: ocultos no dashboard
+  const hideData = page === 'dashboard';
+  document.querySelectorAll('.btn-data').forEach(b => {
+    b.style.display = hideData ? 'none' : '';
+  });
   
   // Update bottom navigation (mobile)
   ['dashboard','calendario','presenca','especialidades','matilhas'].forEach(p => {

@@ -90,13 +90,13 @@
           <svg id="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
           <svg id="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
         </button>
-        <label for="file-import" class="btn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <label for="import-file" class="btn btn-data" id="btn-import">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           <span class="btn-label">Importar</span>
         </label>
         <input type="file" id="import-file" accept=".xlsx,.xls,.csv">
-        <button class="btn" onclick="exportarExcel()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <button class="btn btn-data" id="btn-export" onclick="exportarExcel()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span class="btn-label">Exportar</span>
         </button>
         <button class="btn btn-primary" id="btn-add">
@@ -118,32 +118,43 @@
       <!-- KPI row -->
       <div class="dash-kpi-row" id="dash-kpis"></div>
 
-      <!-- Main grid -->
-      <div class="dash-grid">
-
+      <!-- TO-DO + Avisos (linha destacada) -->
+      <div class="dash-highlight-row">
         <!-- TO-DO Chefia -->
-        <div class="card dash-card">
+        <div class="card dash-card dash-highlight">
           <div class="card-header">
-            <span class="card-title">✓ TO-DO Chefia</span>
+            <span class="card-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" aria-hidden="true" style="vertical-align:-3px;margin-right:4px"><polyline points="20 6 9 17 4 12"/></svg>
+              TO-DO Chefia
+            </span>
           </div>
-          <div style="display:flex;gap:6px;padding:0 16px 12px">
-            <input type="text" id="novo-todo-chefia" placeholder="Nova tarefa..." style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;background:var(--surface);color:var(--text)">
-            <button class="btn btn-sm" onclick="addTodoChefia()" style="font-size:11px">+</button>
+          <div class="dash-input-row">
+            <label for="novo-todo-chefia" class="sr-only">Nova tarefa</label>
+            <input type="text" id="novo-todo-chefia" placeholder="Nova tarefa..." onkeydown="if(event.key==='Enter'){event.preventDefault();addTodoChefia();}">
+            <button class="btn btn-primary btn-sm" onclick="addTodoChefia()" aria-label="Adicionar tarefa">+</button>
           </div>
           <div id="todos-chefia-list"></div>
         </div>
 
         <!-- Avisos Internos Importantes -->
-        <div class="card dash-card">
+        <div class="card dash-card dash-highlight">
           <div class="card-header">
-            <span class="card-title">📌 Avisos Internos</span>
+            <span class="card-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" aria-hidden="true" style="vertical-align:-3px;margin-right:4px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Avisos Internos Importantes
+            </span>
           </div>
-          <div style="display:flex;gap:6px;padding:0 16px 12px">
-            <input type="text" id="novo-aviso-interno" placeholder="Novo aviso..." style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;background:var(--surface);color:var(--text)">
-            <button class="btn btn-sm" onclick="addAvisoInterno()" style="font-size:11px">+</button>
+          <div class="dash-input-row">
+            <label for="novo-aviso-interno" class="sr-only">Novo aviso</label>
+            <input type="text" id="novo-aviso-interno" placeholder="Novo aviso..." onkeydown="if(event.key==='Enter'){event.preventDefault();addAvisoInterno();}">
+            <button class="btn btn-primary btn-sm" onclick="addAvisoInterno()" aria-label="Adicionar aviso">+</button>
           </div>
           <div id="avisos-internos-list"></div>
         </div>
+      </div>
+
+      <!-- Main grid -->
+      <div class="dash-grid">
 
         <!-- Próximas atividades -->
         <div class="card dash-card">
@@ -154,15 +165,7 @@
           <div id="proximas-atividades"></div>
         </div>
 
-        <!-- Resumo geral -->
-        <div class="card dash-card">
-          <div class="card-header">
-            <span class="card-title">Resumo geral</span>
-          </div>
-          <div id="resumo-geral" style="display:flex;flex-wrap:wrap;gap:12px;padding:16px"></div>
-        </div>
-
-        <!-- Presença geral -->
+        <!-- Presença geral (extremos) -->
         <div class="card dash-card">
           <div class="card-header">
             <span class="card-title">Presença geral</span>
@@ -178,15 +181,6 @@
             <button class="btn btn-sm" onclick="goTo('especialidades')" style="font-size:11px">Ver todas →</button>
           </div>
           <div id="dash-esp-pendentes"></div>
-        </div>
-
-        <!-- Matilhas e lideranças -->
-        <div class="card dash-card">
-          <div class="card-header">
-            <span class="card-title">Lideranças das matilhas</span>
-            <button class="btn btn-sm" onclick="goTo('matilhas')" style="font-size:11px">Ver matilhas →</button>
-          </div>
-          <div id="dash-matilhas"></div>
         </div>
 
       </div>

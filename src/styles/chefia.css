@@ -545,6 +545,85 @@ tr.row-regional:hover td { background: #e6d9ff; }
 .sort-header { user-select: none; }
 .sort-header:hover { color: var(--accent); }
 
+/* ===== Dashboard — linha destacada (TO-DO + Avisos) ===== */
+.dash-highlight-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.dash-highlight {
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+}
+.dash-highlight .card-header {
+  padding: 14px 18px 10px;
+}
+.dash-highlight .card-title {
+  font-size: 14.5px;
+  font-weight: 600;
+}
+.dash-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 0 18px 12px;
+}
+.dash-input-row input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+}
+.dash-input-row input:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(43,58,140,0.12);
+}
+.dash-input-row .btn-sm {
+  min-width: 36px;
+  padding: 6px 10px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* ===== Dashboard — extremos de presença ===== */
+.pres-extreme-label {
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.pres-extreme-divider {
+  border-top: 1px dashed var(--border);
+  margin: 10px 0;
+}
+
+/* ===== Screen reader only ===== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ===== Dashboard mobile: TO-DO/Avisos empilham ===== */
+@media (max-width: 768px) {
+  .dash-highlight-row { grid-template-columns: 1fr; gap: 12px; }
+}
+
 /* STATS ROW */
 .stat-row td {
   background: var(--surface2);
@@ -1637,6 +1716,8 @@ input[type="file"] { display: none; }
   transition: all 0.15s;
 }
 .todo-text.completed { text-decoration: line-through; color: var(--text3); }
+.todo-concluido .todo-text { text-decoration: line-through; color: var(--text3); }
+.aviso-data { color: var(--text3); font-size: 11.5px; }
 .todo-remove {
   background: none;
   border: none;
