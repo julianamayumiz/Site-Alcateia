@@ -217,7 +217,7 @@ function renderAll() {
   renderConfirmar();
 }
 
-// ===================== COMUNICADOS =====================
+// ===================== COMUNICADOS  =====================
 var CAT_LABELS = { aviso: 'Aviso', externa: 'Atividade Externa', reuniao: 'Reuniao', outros: 'Outros' };
 
 function renderComunicados() {
