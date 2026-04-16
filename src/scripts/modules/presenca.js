@@ -62,13 +62,17 @@ function renderPresenca() {
     visible = visible.filter(m => m.stats.percentage !== null && m.stats.percentage < 75);
   }
 
-  // Ordenação
+  // Ordenação: por % quando solicitado, senão alfabética (padrão)
   if(presencaSortDir) {
     visible = [...visible].sort((a, b) => {
       const pa = a.stats.percentage !== null ? a.stats.percentage : -1;
       const pb = b.stats.percentage !== null ? b.stats.percentage : -1;
       return presencaSortDir === 'desc' ? pb - pa : pa - pb;
     });
+  } else {
+    visible = [...visible].sort((a, b) =>
+      (a.nome || '').localeCompare(b.nome || '', 'pt-BR', { sensitivity: 'base' })
+    );
   }
 
   // Render linhas
@@ -310,10 +314,14 @@ function renderLobinhosList() {
     cont.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text3);font-size:13px">Nenhum lobinho cadastrado.</div>';
     return;
   }
-  cont.innerHTML = membros.map((m, i) => {
+  // Ordena alfabeticamente preservando o índice original (usado pelas ações)
+  const ordenado = membros
+    .map((m, i) => ({ m, i }))
+    .sort((a, b) => (a.m.nome || '').localeCompare(b.m.nome || '', 'pt-BR', { sensitivity: 'base' }));
+  cont.innerHTML = ordenado.map(({ m, i }, displayIdx) => {
     const nome = (m.nome || '').replace(/"/g, '&quot;');
     return `<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--border)">
-      <span style="font-size:11px;color:var(--text3);min-width:22px;font-family:'DM Mono',monospace">${i+1}</span>
+      <span style="font-size:11px;color:var(--text3);min-width:22px;font-family:'DM Mono',monospace">${displayIdx+1}</span>
       <input type="text" value="${nome}" data-idx="${i}" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;background:var(--surface);color:var(--text);font-family:inherit" onchange="renameLobinho(${i}, this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();}" aria-label="Editar nome do lobinho">
       <button class="btn" onclick="deleteLobinho(${i})" style="color:var(--red);border-color:var(--red-light);padding:4px 10px;font-size:14px;line-height:1" title="Remover lobinho" aria-label="Remover lobinho">✕</button>
     </div>`;
@@ -366,10 +374,15 @@ function deleteLobinho(idx) {
       novas[`${novoMi}-${riStr}`] = val;
     });
     state.justificativas = novas;
-    fbSet('justificativas', state.justificativas);
   }
 
-  fbSaveSection('presenca');
+  // Grava presença + justificativas atomicamente para evitar que o
+  // listener do Firebase sobrescreva uma parte enquanto a outra ainda não foi salva
+  fbUpdate({
+    presenca: state.presenca,
+    justificativas: state.justificativas || {}
+  });
+
   renderLobinhosList();
   renderPresenca();
   showToast('Lobinho removido');

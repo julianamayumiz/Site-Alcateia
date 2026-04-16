@@ -92,6 +92,15 @@ function fbSaveSection(section) {
     .catch(() => { showSyncStatus('erro'); });
 }
 
+// Atomic multi-path update — writes vários caminhos juntos para evitar
+// que o listener de value sobrescreva partes ainda não gravadas
+function fbUpdate(paths) {
+  if(!fbReady || !db) return Promise.resolve();
+  return db.ref('alcateia').update(paths)
+    .then(() => { showSyncStatus('salvo'); })
+    .catch(() => { showSyncStatus('erro'); });
+}
+
 // Sync indicator
 function showSyncStatus(status) {
   const el = document.getElementById('sync-status');
@@ -113,6 +122,7 @@ function showSyncStatus(status) {
 window.initFirebase = initFirebase;
 window.fbSet = fbSet;
 window.fbSaveSection = fbSaveSection;
+window.fbUpdate = fbUpdate;
 window.showSyncStatus = showSyncStatus;
 
 // Made with Bob
