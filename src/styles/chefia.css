@@ -1625,6 +1625,41 @@ input[type="file"] { display: none; }
   font-size: 12px;
 }
 
+/* ===== CAIXA — STATS GRID FIX ===== */
+/* caixa-stats usa stats-row (grid), o header-card deve ocupar linha inteira */
+#caixa-stats .caixa-header-card {
+  grid-column: 1 / -1;
+}
+
+/* ===== CAIXA — GRÁFICO WRAPPER ===== */
+.caixa-grafico-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.caixa-grafico-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--text2);
+}
+
+/* ===== CAIXA — SELECT DE FILTRO ===== */
+.caixa-filter-select {
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--text2);
+  font-size: 12.5px;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  outline: none;
+}
+.caixa-filter-select:focus { border-color: var(--accent); }
+
 /* ===== CAIXA — BARRAS ENTRADAS/SAÍDAS ===== */
 .caixa-barra-row {
   display: flex;
