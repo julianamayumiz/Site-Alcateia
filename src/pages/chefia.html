@@ -12,7 +12,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-  <script src="firebase-config.js"></script>
+  <script src="../scripts/firebase-config.js"></script>
   <style>
     :root {
       --bg: #f4f6fb;
@@ -1936,12 +1936,17 @@ input[type="file"] { display: none; }
       </div>
 
       <!-- RANKING VISUAL -->
-      <p class="section-label">🏆 Ranking geral</p>
+      <p class="section-label">🏆 Ranking — <span id="mat-semester-label"></span></p>
       <div id="ranking-visual" style="margin-bottom:24px"></div>
 
       <!-- PONTUAÇÃO por matilha -->
-      <p class="section-label">Pontuação por matilha</p>
-      <div class="pontuacao-grid" id="pontuacao-grid" style="margin-bottom:24px"></div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+        <p class="section-label" style="margin:0">Pontuação por sábado</p>
+        <div id="pont-date-controls" style="display:flex;align-items:center;gap:6px"></div>
+      </div>
+      <div class="pontuacao-grid" id="pontuacao-grid" style="margin-bottom:12px"></div>
+      <div id="pont-history-toggle" style="margin-bottom:24px"></div>
+      <div id="pont-history" style="margin-bottom:24px;display:none"></div>
 
       <!-- MATILHAS cards -->
       <p class="section-label">Composição e lideranças</p>
@@ -2358,12 +2363,7 @@ var state = {
   comunicados: [],
   confirmacoes: {},
   caixa: [],
-  pontuacao: {
-    Amarela: {jogos: 0, formacao: 0, comportamento: 0},
-    Branca:  {jogos: 0, formacao: 0, comportamento: 0},
-    Cinza:   {jogos: 0, formacao: 0, comportamento: 0},
-    Preta:   {jogos: 0, formacao: 0, comportamento: 0}
-  },
+  pontuacao: {},
   avisos_internos: [],
   todos_chefia: []
 };
@@ -2972,148 +2972,263 @@ function delEsp(i) {
 var MATILHA_COLORS = {Amarela:'amarela',Branca:'branca',Cinza:'cinza',Preta:'preta'};
 var MAT_DOT_COLORS = {Amarela:'#f5c200', Branca:'#bbb', Cinza:'#888', Preta:'#222'};
 
+var _pontDate = null;
+var _showPontHistory = false;
+
+function todayStr() {
+  var d = new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function getPontDate() {
+  if(!_pontDate) _pontDate = todayStr();
+  return _pontDate;
+}
+function setPontDate(d) {
+  _pontDate = d;
+  renderMatilhas();
+}
+function togglePontHistory() {
+  _showPontHistory = !_showPontHistory;
+  renderMatilhas();
+}
+function currentSemesterBounds() {
+  var now = new Date();
+  var year = now.getFullYear();
+  var m = now.getMonth(); // 0-11
+  if(m < 6) return { start: year+'-01-01', end: year+'-06-30', label: year+' · 1º semestre' };
+  return { start: year+'-07-01', end: year+'-12-31', label: year+' · 2º semestre' };
+}
+function isDateKey(k) {
+  return /^\d{4}-\d{2}-\d{2}$/.test(k);
+}
+function getPontuacaoDate(mat, date) {
+  if(!isDateKey(date)) return {jogos:0,formacao:0,comportamento:0,total:0};
+  var entry = ((state.pontuacao[date])||{})[mat]||{jogos:0,formacao:0,comportamento:0};
+  var j=entry.jogos||0, f=entry.formacao||0, c=entry.comportamento||0;
+  return {jogos:j, formacao:f, comportamento:c, total:j+f-c};
+}
+function getPontuacaoSemestre(mat) {
+  var b = currentSemesterBounds();
+  var j=0,f=0,c=0;
+  Object.entries(state.pontuacao).forEach(function(_ref) {
+    var date=_ref[0], dd=_ref[1];
+    if(!isDateKey(date)) return;
+    if(date < b.start || date > b.end) return;
+    var e = (dd[mat])||{};
+    j += e.jogos||0; f += e.formacao||0; c += e.comportamento||0;
+  });
+  return {jogos:j, formacao:f, comportamento:c, total:j+f-c};
+}
+function formatDateStrBR(dateStr) {
+  if(!dateStr) return '';
+  var parts = dateStr.split('-');
+  if(parts.length !== 3) return '';
+  var y=parts[0], m=parts[1], d=parts[2];
+  var days = ['dom','seg','ter','qua','qui','sex','sáb'];
+  var dt = new Date(+y, +m-1, +d);
+  return d+'/'+m+'/'+y+' ('+days[dt.getDay()]+')';
+}
+// Legacy compat — used nowhere else but keeping signature
 function getPontuacao(mat) {
-  var p = state.pontuacao[mat] || {jogos:0, formacao:0, comportamento:0};
-  var jogos       = p.jogos       || 0;
-  var formacao    = p.formacao    || 0;
-  var comportamento = p.comportamento || 0;
-  var total = jogos + formacao - comportamento;
-  return {jogos, formacao, comportamento, total};
+  return getPontuacaoSemestre(mat);
 }
 
 function renderMatilhas() {
-  var grid     = document.getElementById('matilhas-grid');
-  var stats    = document.getElementById('matilhas-stats');
-  var ranking  = document.getElementById('ranking-visual');
-  var pontGrid = document.getElementById('pontuacao-grid');
+  var grid        = document.getElementById('matilhas-grid');
+  var stats       = document.getElementById('matilhas-stats');
+  var ranking     = document.getElementById('ranking-visual');
+  var pontGrid    = document.getElementById('pontuacao-grid');
+  var dateCtrl    = document.getElementById('pont-date-controls');
+  var histToggle  = document.getElementById('pont-history-toggle');
+  var histDiv     = document.getElementById('pont-history');
+  var semLabel    = document.getElementById('mat-semester-label');
 
-  var totalMembros  = Object.values(state.matilhas).flat().length;
-  var nMatilhas     = Object.keys(state.matilhas).length;
-  var totalComCargo = Object.values(state.cargos).filter(c=>c.primo||c.segundo).length;
-  var allTotals = Object.keys(state.matilhas).map(m => getPontuacao(m).total);
-  var maxPts = Math.max(...allTotals, 1);
+  var semBounds = currentSemesterBounds();
+  if(semLabel) semLabel.textContent = semBounds.label;
 
+  // Update page subtitle dynamically
+  var pageSub = document.querySelector('#p-matilhas .page-header-left p');
+  if(pageSub) pageSub.textContent = semBounds.label+' — lideranças e pontuação';
+
+  var matKeys = Object.keys(state.matilhas);
   stats.innerHTML = '';
 
-  // ---- RANKING ----
-  var ranked = Object.keys(state.matilhas)
-    .map(mat => ({mat, ...getPontuacao(mat)}))
-    .sort((a,b) => b.total - a.total);
+  // ---- RANKING (semestre) ----
+  var allSemTotals = matKeys.map(m => getPontuacaoSemestre(m).total);
+  var maxPts = Math.max.apply(null, allSemTotals.concat([1]));
 
-  var medalColors = ['#f5c200','#aaa','#cd7f32'];
+  var ranked = matKeys
+    .map(function(mat){ return Object.assign({mat:mat}, getPontuacaoSemestre(mat)); })
+    .sort(function(a,b){ return b.total - a.total; });
+
   var medals = ['🥇','🥈','🥉'];
-
-  ranking.innerHTML = `<div class="card" style="padding:20px 22px">` +
-    ranked.map((r, i) => {
+  ranking.innerHTML = '<div class="card" style="padding:20px 22px">' +
+    ranked.map(function(r, i) {
       var barPct = maxPts > 0 ? Math.max(0, Math.round(r.total / maxPts * 100)) : 0;
       var dotColor = MAT_DOT_COLORS[r.mat] || '#999';
       var barColor = i===0 ? '#f5c200' : i===1 ? '#aaa' : i===2 ? '#cd7f32' : 'var(--accent)';
-      var posClass = i < 3 ? `pos-${i+1}` : '';
-      return `<div class="ranking-row">
-        <span class="rank-pos ${posClass}">${medals[i]||i+1}</span>
-        <span class="rank-dot" style="background:${dotColor}"></span>
-        <span class="rank-name">${r.mat}</span>
-        <div class="rank-bar-wrap">
-          <div class="rank-bar" style="width:${barPct}%;background:${barColor}"></div>
-        </div>
-        <span class="rank-pts">${r.total} pts
-          <span class="rank-breakdown">🎮${r.jogos} 📚${r.formacao} ⚠️-${r.comportamento}</span>
-        </span>
-      </div>`;
-    }).join('') + `</div>`;
+      var posClass = i < 3 ? 'pos-'+(i+1) : '';
+      return '<div class="ranking-row">'
+        +'<span class="rank-pos '+posClass+'">'+(medals[i]||i+1)+'</span>'
+        +'<span class="rank-dot" style="background:'+dotColor+'"></span>'
+        +'<span class="rank-name">'+r.mat+'</span>'
+        +'<div class="rank-bar-wrap"><div class="rank-bar" style="width:'+barPct+'%;background:'+barColor+'"></div></div>'
+        +'<span class="rank-pts">'+r.total+' pts'
+        +' <span class="rank-breakdown">🎮'+r.jogos+' 📚'+r.formacao+' ⚠️-'+r.comportamento+'</span></span>'
+        +'</div>';
+    }).join('') + '</div>';
 
-  // ---- PONTUAÇÃO CARDS ----
-  pontGrid.innerHTML = Object.keys(state.matilhas).map(mat => {
+  // ---- DATE SELECTOR ----
+  var selDate = getPontDate();
+  if(dateCtrl) {
+    dateCtrl.innerHTML = '<input type="date" value="'+selDate+'" '
+      +'style="padding:4px 8px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;background:var(--bg2);color:var(--text1)"'
+      +' onchange="setPontDate(this.value)">'
+      +'<button class="btn" onclick="confirmResetPontuacaoDate()" style="font-size:11px;color:var(--red);border-color:var(--red-light);padding:4px 10px">Limpar dia</button>';
+  }
+
+  // ---- PONTUAÇÃO CARDS (dia selecionado) ----
+  pontGrid.innerHTML = matKeys.map(function(mat) {
     var cls = MATILHA_COLORS[mat]||'';
-    var p = getPontuacao(mat);
+    var p = getPontuacaoDate(mat, selDate);
     var dotColor = MAT_DOT_COLORS[mat]||'#999';
-    return `<div class="pont-card ${cls}">
-      <div class="pont-header">
-        <div class="matilha-dot"></div>
-        <span style="font-weight:600;font-size:14px">${mat}</span>
-        <span class="pont-total" style="color:${p.total>=0?dotColor:'var(--red)'}">${p.total>=0?'+':''}${p.total}</span>
-      </div>
-      <div class="pont-cats">
-        <div class="pont-cat-row">
-          <span class="pont-cat-label">🎮 Jogos</span>
-          <div class="pont-btns">
-            <button class="pont-btn minus" onclick="addPont('${mat}','jogos',-1)">−</button>
-            <span class="pont-val" style="color:var(--accent)">${p.jogos}</span>
-            <button class="pont-btn plus"  onclick="addPont('${mat}','jogos',+1)">+</button>
-          </div>
-        </div>
-        <div class="pont-cat-row">
-          <span class="pont-cat-label">📚 Formação</span>
-          <div class="pont-btns">
-            <button class="pont-btn minus" onclick="addPont('${mat}','formacao',-1)">−</button>
-            <span class="pont-val" style="color:var(--accent)">${p.formacao}</span>
-            <button class="pont-btn plus"  onclick="addPont('${mat}','formacao',+1)">+</button>
-          </div>
-        </div>
-        <div class="pont-cat-row" style="border-top:1px dashed var(--border);padding-top:8px;margin-top:2px">
-          <span class="pont-cat-label">⚠️ Comportamento <span style="font-size:10px;color:var(--red)">(penalidade)</span></span>
-          <div class="pont-btns">
-            <button class="pont-btn minus" onclick="addPont('${mat}','comportamento',-1)" style="border-color:var(--accent);color:var(--accent)" title="Remover penalidade">−</button>
-            <span class="pont-val" style="color:var(--red)">-${p.comportamento}</span>
-            <button class="pont-btn plus" onclick="addPont('${mat}','comportamento',+1)" style="border-color:var(--red);color:var(--red)" title="Adicionar penalidade">+</button>
-          </div>
-        </div>
-      </div>
-    </div>`;
+    return '<div class="pont-card '+cls+'">'
+      +'<div class="pont-header">'
+      +'<div class="matilha-dot"></div>'
+      +'<span style="font-weight:600;font-size:14px">'+mat+'</span>'
+      +'<span class="pont-total" style="color:'+(p.total>=0?dotColor:'var(--red)')+'">'+( p.total>=0?'+':'')+p.total+'</span>'
+      +'</div>'
+      +'<div class="pont-cats">'
+      +'<div class="pont-cat-row">'
+      +'<span class="pont-cat-label">🎮 Jogos</span>'
+      +'<div class="pont-btns">'
+      +'<button class="pont-btn minus" onclick="addPont(\''+mat+'\',\'jogos\',-1)">−</button>'
+      +'<span class="pont-val" style="color:var(--accent)">'+p.jogos+'</span>'
+      +'<button class="pont-btn plus" onclick="addPont(\''+mat+'\',\'jogos\',+1)">+</button>'
+      +'</div></div>'
+      +'<div class="pont-cat-row">'
+      +'<span class="pont-cat-label">📚 Formação</span>'
+      +'<div class="pont-btns">'
+      +'<button class="pont-btn minus" onclick="addPont(\''+mat+'\',\'formacao\',-1)">−</button>'
+      +'<span class="pont-val" style="color:var(--accent)">'+p.formacao+'</span>'
+      +'<button class="pont-btn plus" onclick="addPont(\''+mat+'\',\'formacao\',+1)">+</button>'
+      +'</div></div>'
+      +'<div class="pont-cat-row" style="border-top:1px dashed var(--border);padding-top:8px;margin-top:2px">'
+      +'<span class="pont-cat-label">⚠️ Comportamento <span style="font-size:10px;color:var(--red)">(penalidade)</span></span>'
+      +'<div class="pont-btns">'
+      +'<button class="pont-btn minus" onclick="addPont(\''+mat+'\',\'comportamento\',-1)" style="border-color:var(--accent);color:var(--accent)" title="Remover penalidade">−</button>'
+      +'<span class="pont-val" style="color:var(--red)">-'+p.comportamento+'</span>'
+      +'<button class="pont-btn plus" onclick="addPont(\''+mat+'\',\'comportamento\',+1)" style="border-color:var(--red);color:var(--red)" title="Adicionar penalidade">+</button>'
+      +'</div></div>'
+      +'</div></div>';
   }).join('');
+
+  // ---- HISTORY TOGGLE ----
+  var histDates = Object.keys(state.pontuacao).filter(isDateKey).sort().reverse();
+  if(histToggle) {
+    histToggle.innerHTML = histDates.length === 0
+      ? '<span style="font-size:12px;color:var(--text3)">Nenhum registro ainda.</span>'
+      : '<button class="btn" onclick="togglePontHistory()" style="font-size:12px">'
+        +(_showPontHistory ? '▲ Ocultar histórico' : '▼ Ver histórico ('+histDates.length+' dias)')
+        +'</button>';
+  }
+
+  // ---- HISTORY ----
+  if(histDiv) {
+    histDiv.style.display = _showPontHistory && histDates.length > 0 ? '' : 'none';
+    if(_showPontHistory && histDates.length > 0) {
+      histDiv.innerHTML = '<div class="card" style="padding:0;overflow:hidden">'
+        + histDates.map(function(date) {
+            var rows = matKeys.map(function(mat) {
+              var e = ((state.pontuacao[date])||{})[mat]||{};
+              var j=e.jogos||0, f=e.formacao||0, c=e.comportamento||0;
+              var t = j+f-c;
+              var dotColor = MAT_DOT_COLORS[mat]||'#999';
+              if(j===0 && f===0 && c===0) return '';
+              return '<div style="display:flex;align-items:center;gap:8px;padding:6px 18px;border-top:1px solid var(--border)">'
+                +'<span class="rank-dot" style="background:'+dotColor+';width:8px;height:8px;border-radius:50%;flex-shrink:0"></span>'
+                +'<span style="font-size:13px;font-weight:600;min-width:60px">'+mat+'</span>'
+                +'<span style="font-size:12px;color:var(--text2)">🎮'+j+' 📚'+f+' ⚠️-'+c+'</span>'
+                +'<span style="font-size:13px;font-weight:700;margin-left:auto;color:'+(t>=0?'var(--accent)':'var(--red)')+'">'+( t>=0?'+':'')+t+'</span>'
+                +'</div>';
+            }).join('');
+            var hasData = rows.trim() !== '';
+            return '<div>'
+              +'<div style="display:flex;align-items:center;gap:10px;padding:10px 18px;background:var(--bg2);cursor:pointer" onclick="setPontDate(\''+date+'\')" title="Editar este dia">'
+              +'<span style="font-size:13px;font-weight:700">'+formatDateStrBR(date)+'</span>'
+              +(date===selDate ? '<span style="font-size:11px;background:var(--accent);color:#fff;padding:1px 7px;border-radius:20px">editando</span>' : '')
+              +'<span style="font-size:11px;color:var(--text3);margin-left:auto">clique para editar</span>'
+              +'</div>'
+              +(hasData ? rows : '<div style="padding:8px 18px;font-size:12px;color:var(--text3)">—</div>')
+              +'</div>';
+          }).join('')
+        + '</div>';
+    }
+  }
 
   // ---- MATILHA CARDS ----
   var gh = '';
-  Object.entries(state.matilhas).forEach(([mat, members]) => {
+  Object.entries(state.matilhas).forEach(function(entry) {
+    var mat = entry[0], members = entry[1];
     var cls = MATILHA_COLORS[mat]||'';
     var cargo = state.cargos[mat] || {primo:'',segundo:''};
 
-    var chips = members.map(m => {
+    var chips = members.map(function(m) {
       var isPrimo   = cargo.primo   === m;
       var isSegundo = cargo.segundo === m;
       var chipCls   = isPrimo ? 'cargo-primo' : isSegundo ? 'cargo-segundo' : '';
       var tag       = isPrimo
-        ? `<span class="cargo-tag primo">1º</span>`
+        ? '<span class="cargo-tag primo">1º</span>'
         : isSegundo
-        ? `<span class="cargo-tag segundo">2º</span>`
+        ? '<span class="cargo-tag segundo">2º</span>'
         : '';
-      return `<span class="member-chip ${chipCls}" onclick="toggleCargo('${mat}','${m}')" title="Clique para designar cargo">${tag}${m}</span>`;
+      return '<span class="member-chip '+chipCls+'" onclick="toggleCargo(\''+mat+'\',\''+m+'\')" title="Clique para designar cargo">'+tag+m+'</span>';
     }).join('');
 
-    var primoLabel   = cargo.primo   ? `<span style="font-size:12px;color:var(--text2)">1º <b>${cargo.primo}</b></span>`   : `<span style="font-size:12px;color:var(--text3)">1º —</span>`;
-    var segundoLabel = cargo.segundo ? `<span style="font-size:12px;color:var(--text2)">2º <b>${cargo.segundo}</b></span>` : `<span style="font-size:12px;color:var(--text3)">2º —</span>`;
+    var primoLabel   = cargo.primo   ? '<span style="font-size:12px;color:var(--text2)">1º <b>'+cargo.primo+'</b></span>'   : '<span style="font-size:12px;color:var(--text3)">1º —</span>';
+    var segundoLabel = cargo.segundo ? '<span style="font-size:12px;color:var(--text2)">2º <b>'+cargo.segundo+'</b></span>' : '<span style="font-size:12px;color:var(--text3)">2º —</span>';
 
-    gh += `<div class="matilha-card ${cls}">
-      <div class="matilha-header">
-        <div class="matilha-dot"></div>
-        <span class="matilha-name">${mat}</span>
-        <span class="matilha-count">${members.length}</span>
-      </div>
-      <div style="display:flex;gap:12px;padding:0 18px 10px;border-bottom:1px solid var(--border)">
-        ${primoLabel}
-        ${segundoLabel}
-      </div>
-      <div class="matilha-members" style="padding-top:10px">${chips}</div>
-    </div>`;
+    gh += '<div class="matilha-card '+cls+'">'
+      +'<div class="matilha-header">'
+      +'<div class="matilha-dot"></div>'
+      +'<span class="matilha-name">'+mat+'</span>'
+      +'<span class="matilha-count">'+members.length+'</span>'
+      +'</div>'
+      +'<div style="display:flex;gap:12px;padding:0 18px 10px;border-bottom:1px solid var(--border)">'+primoLabel+segundoLabel+'</div>'
+      +'<div class="matilha-members" style="padding-top:10px">'+chips+'</div>'
+      +'</div>';
   });
   grid.innerHTML = gh;
 }
 
 function addPont(mat, cat, delta) {
-  if(!state.pontuacao[mat]) state.pontuacao[mat] = {jogos:0, formacao:0, comportamento:0};
-  state.pontuacao[mat][cat] = Math.max(0, (state.pontuacao[mat][cat]||0) + delta);
+  var date = getPontDate();
+  if(!state.pontuacao[date]) state.pontuacao[date] = {};
+  if(!state.pontuacao[date][mat]) state.pontuacao[date][mat] = {jogos:0, formacao:0, comportamento:0};
+  state.pontuacao[date][mat][cat] = Math.max(0, (state.pontuacao[date][mat][cat]||0) + delta);
   fbSaveSection('pontuacao');
   renderMatilhas();
 }
 
+function confirmResetPontuacaoDate() {
+  var date = getPontDate();
+  if(confirm('⚠️ Limpar a pontuação de '+formatDateStrBR(date)+'?\n\nEssa ação não pode ser desfeita.')) {
+    delete state.pontuacao[date];
+    fbSaveSection('pontuacao');
+    renderMatilhas();
+    showToast('Pontuação do dia removida!');
+  }
+}
+
 function confirmResetPontuacao() {
-  if(confirm('⚠️ Tem certeza que quer resetar TODA a pontuação das matilhas?\n\nEssa ação não pode ser desfeita.')) {
-    Object.keys(state.pontuacao).forEach(mat => {
-      state.pontuacao[mat] = {jogos:0, formacao:0, comportamento:0};
+  var b = currentSemesterBounds();
+  if(confirm('⚠️ Resetar TODA a pontuação do semestre ('+b.label+')?\n\nEssa ação não pode ser desfeita.')) {
+    Object.keys(state.pontuacao).forEach(function(date) {
+      if(isDateKey(date) && date >= b.start && date <= b.end) delete state.pontuacao[date];
     });
     fbSaveSection('pontuacao');
     renderMatilhas();
-    showToast('Pontuação resetada!');
+    showToast('Pontuação do semestre resetada!');
   }
 }
 
