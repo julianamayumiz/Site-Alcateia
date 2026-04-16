@@ -243,7 +243,7 @@ function renderComunicados() {
       .replace(/</g, '<')
       .replace(/>/g, '>')
       .replace(/"/g, '"')
-      .replace(/'/g, ''');
+      .replace(/'/g, "&#x27;")
   }
 
   el.innerHTML = coms.map(c => {
