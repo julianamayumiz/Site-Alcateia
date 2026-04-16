@@ -89,7 +89,12 @@ var fbLoaded = false;
 // Single realtime listener — handles both initial load and updates
 db.ref('alcateia').on('value', snap => {
   var d = snap.val() || {};
-  // calendario comes from static data embedded in the file
+  // Sync calendario from Firebase if available, otherwise use static
+  if (d.calendario && Array.isArray(d.calendario) && d.calendario.length > 0) {
+    data.calendario = d.calendario;
+  } else {
+    data.calendario = CALENDARIO_ESTATICO;
+  }
   if (d.comunicados && Array.isArray(d.comunicados)) data.comunicados = d.comunicados;
   if (d.confirmacoes) data.confirmacoes = d.confirmacoes;
   fbLoaded = true;
