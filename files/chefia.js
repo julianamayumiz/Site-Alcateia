@@ -65,39 +65,42 @@ var state = {
     {mes:"novembro",data:"28/11",dia:"sáb.",atividade:"Normal Sede - Roca de Conselho",categoria:"",chefe:"Angelita e Jefferson",datas:"",obs:""},
     {mes:"dezembro",data:"06/12",dia:"dom.",atividade:"Bonenkai",categoria:"Local",chefe:"",datas:"",obs:""}
   ],
+  // SECURITY WARNING: This data contains personal information of minors (full names).
+  // Ensure Firebase Security Rules are properly configured to restrict access.
+  // Compliance with LGPD/GDPR required for handling children's personal data.
+  // Consider implementing data minimization and encryption for sensitive information.
   presenca: {
     datas: ["31/01","07/02","14/02","21/02","28/02","07/03","14/03","21/03","28/03","04/04","11/04","18/04","25/04","02/05","09/05","16/05","23/05","30/05","06/06","13/06","20/06","27/06","01/08","08/08","15/08","22/08","29/08","05/09","12/09","19/09","26/09","03/10","10/10","17/10","24/10","31/10","07/11","14/11","21/11","28/11"],
     membros: [
       {nome:"ALEX HWANG",reg:["P","A","P","P","P","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"ANA BEATRIZ MEGUMI HARASAKI",reg:["P","P","P","P","P","A","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"CAIO HIDEKI RODRIGUES UKON",reg:["P","P","A","A","P","A","P","A","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"CAIO KAZUKI ISHIY",reg:["","P","P","P","P","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"CAROLINA HARUMI HIRAOKA",reg:["","P","A","P","P","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"CAROLINA NAOMI ITIKAWA NAKAMURA",reg:["P","P","P","A","P","P","P","A","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"DANIEL MARIANO COUTINHO SOUSA",reg:["P","P","P","P","P","P","P","FJ","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"ANA BEATRIZ",reg:["P","P","P","P","P","A","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"CAIO UKON",reg:["P","P","A","A","P","A","P","A","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"CAIO ISHIY",reg:["","P","P","P","P","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"CAROLINA HARUMI",reg:["","P","A","P","P","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"CAROLINA NAOMI",reg:["P","P","P","A","P","P","P","A","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"DANIEL SOUSA",reg:["P","P","P","P","P","P","P","FJ","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
       {nome:"ENZO NAGADO",reg:["A","A","P","P","FJ","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"ERIC RYU SHINTANI KOJO",reg:["P","P","P","P","P","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"HENRY RYU TAKAHASHI KITAMURA",reg:["P","P","P","P","A","P","A","P","","","A","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"JULIA MIE TACHIBANA",reg:["","P","A","A","P","P","P","P","","","A","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"LETICIA LUMI TAKAHASHI KITAMURA",reg:["P","P","P","P","A","P","P","P","","","A","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"LIA SAORI TAGINI",reg:["P","P","P","P","P","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"LÍVIA YUI AKAMINE",reg:["P","P","A","A","P","P","P","A","","","A","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"LUCAS MARIANO COUTINHO SOUSA",reg:["P","P","P","P","P","P","P","A","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"LUCAS MASAKI ISHIY",reg:["P","P","P","P","P","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"LUCAS NORIO YAMADA KIMURA",reg:["P","P","P","P","P","P","P","P","","","A","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"LUCAS SUBARU OYAMA",reg:["P","P","P","P","P","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"LUCCA JUN MAIA YORINORI",reg:["A","P","P","P","P","FJ","P","A","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"LUIZA KIMI COSTIUC YAMACHIRA",reg:["P","P","P","P","P","P","P","P","","","A","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"LUIZA NAOMI FERNANDES FUJINO",reg:["P","FJ","A","A","P","A","P","FJ","","","A","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"MARIANA AYUMI HARASAKI",reg:["P","P","P","P","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"ERIC RYU",reg:["P","P","P","P","P","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"HENRY RYU",reg:["P","P","P","P","A","P","A","P","","","A","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"JULIA TACHIBANA",reg:["","P","A","A","P","P","P","P","","","A","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"LETICIA LUMI",reg:["P","P","P","P","A","P","P","P","","","A","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"LIA TAGINI",reg:["P","P","P","P","P","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"LÍVIA AKAMINE",reg:["P","P","A","A","P","P","P","A","","","A","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"LUCAS SOUSA",reg:["P","P","P","P","P","P","P","A","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"LUCAS MASAKI",reg:["P","P","P","P","P","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"LUCAS NORIO",reg:["P","P","P","P","P","P","P","P","","","A","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"LUCAS SUBARU",reg:["P","P","P","P","P","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"LUCCA JUN",reg:["A","P","P","P","P","FJ","P","A","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"LUIZA KIMI",reg:["P","P","P","P","P","P","P","P","","","A","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"LUIZA NAOMI",reg:["P","FJ","A","A","P","A","P","FJ","","","A","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
       {nome:"MIA TANIGUCHI",reg:["P","A","P","P","A","P","P","A","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"MIGUEL KNISS RODRIGUES",reg:["FJ","P","P","P","P","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"OLIVIA NAOMI WATANABE REZZANI",reg:["P","P","P","P","P","A","P","A","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"PEDRO SHUNJI RODRIGUES UKON",reg:["P","P","A","A","P","P","P","A","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"RAFAEL KENZO PENIN NISHIZAKI",reg:["","P","A","A","A","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"SABRINA SAYURI KOBAYASHI CAVALCANTE",reg:["","P","P","P","A","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"THOMAS AKIRA KANO MIYAGI",reg:["P","P","P","P","P","A","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
-      {nome:"TIAGO JUN NAKAMURA OKUMA",reg:["P","P","P","P","FJ","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]}
+      {nome:"MIGUEL KNISS",reg:["FJ","P","P","P","P","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"OLIVIA NAOMI",reg:["P","P","P","P","P","A","P","A","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"PEDRO UKON",reg:["P","P","A","A","P","P","P","A","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"RAFAEL KENZO",reg:["","P","A","A","A","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"SABRINA SAYURI",reg:["","P","P","P","A","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"THOMAS MIYAGI",reg:["P","P","P","P","P","A","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]},
+      {nome:"TIAGO JUN",reg:["P","P","P","P","FJ","P","P","P","","","P","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]}
     ]
   },
   especialidades: [
@@ -483,73 +486,244 @@ var presencaSortDir = null; // null = default, 'desc' = maior, 'asc' = menor
 
 if(!state.justificativas) state.justificativas = {};
 
+// Cache DOM elements for presence table to avoid repeated lookups
+let presenceDOMCache = null;
+
+/**
+ * Get cached DOM elements for presence table
+ * @returns {Object} Object containing head, body, and stats elements
+ */
+function getPresenceDOMElements() {
+  if (!presenceDOMCache) {
+    presenceDOMCache = {
+      head: document.getElementById('pres-head'),
+      body: document.getElementById('pres-body'),
+      stats: document.getElementById('presence-stats')
+    };
+  }
+  return presenceDOMCache;
+}
+
+/**
+ * Calculate attendance statistics for a member
+ * @param {Object} member - Member object with reg array
+ * @returns {Object} Statistics object with filled, present, and percentage
+ */
+function calculateMemberStats(member) {
+  const filled = member.reg.filter(r => r !== '').length;
+  const present = member.reg.filter(r => r === 'P').length;
+  const percentage = filled > 0 ? Math.round(present / filled * 100) : null;
+  return { filled, present, percentage };
+}
+
+/**
+ * Create a presence cell element with proper styling and data attributes
+ * @param {string} registro - Registration status (P, A, FJ, or empty)
+ * @param {number} memberIndex - Index of the member
+ * @param {number} regIndex - Index of the registration
+ * @param {string} justificativa - Justification text for FJ status
+ * @returns {HTMLElement} Table cell element
+ */
+function createPresenceCellElement(registro, memberIndex, regIndex, justificativa) {
+  const td = document.createElement('td');
+  td.className = 'date-col';
+  
+  const wrapper = document.createElement('div');
+  wrapper.style.position = 'relative';
+  wrapper.style.display = 'inline-block';
+  
+  let label, cellCls;
+  if (registro === 'FJ') {
+    label = justificativa ? '★' : 'FJ';
+    cellCls = 'cell-FJ';
+    wrapper.className = 'cell-FJ-wrap';
+    wrapper.tabIndex = 0;
+    
+    if (justificativa) {
+      const tooltip = document.createElement('div');
+      tooltip.className = 'fj-tooltip';
+      tooltip.textContent = justificativa;
+      wrapper.appendChild(tooltip);
+    }
+  } else {
+    label = registro || '·';
+    cellCls = registro ? 'cell-' + registro : 'cell-empty';
+  }
+  
+  const button = document.createElement('button');
+  button.className = 'presence-cell ' + cellCls;
+  button.textContent = label;
+  button.dataset.memberIndex = memberIndex;
+  button.dataset.regIndex = regIndex;
+  
+  wrapper.appendChild(button);
+  td.appendChild(wrapper);
+  
+  return td;
+}
+// ===================== PRESENCE RENDERING CONSTANTS =====================
+
+/**
+ * Thresholds for presence percentage color coding
+ */
+const PRESENCE_THRESHOLDS = {
+  EXCELLENT: 75,  // >= 75% shows accent color (green)
+  GOOD: 50        // >= 50% shows accent2 color (yellow), < 50% shows red
+};
+
+/**
+ * Determines the appropriate color for a presence percentage
+ * @param {number|null} percentage - Presence percentage (0-100) or null
+ * @returns {string} CSS color variable
+ */
+function getPresencePercentageColor(percentage) {
+  if (percentage === null) return 'var(--text3)';
+  if (percentage >= PRESENCE_THRESHOLDS.EXCELLENT) return 'var(--accent)';
+  if (percentage >= PRESENCE_THRESHOLDS.GOOD) return 'var(--accent2)';
+  return 'var(--red)';
+}
+
+/**
+ * Generates the HTML for the presence table header
+ * @param {Array<string>} dates - Array of date strings
+ * @param {string} sortDirection - Current sort direction (null, 'asc', or 'desc')
+ * @returns {string} HTML string for table header
+ */
+function buildPresenceTableHeader(dates, sortDirection) {
+  const sortArrow = sortDirection === 'desc' ? '↓' : sortDirection === 'asc' ? '↑' : '↕';
+  
+  const headerCells = [
+    '<th class="name-col">Nome</th>',
+    ...dates.map(dt => `<th class="date-col">${dt}</th>`),
+    `<th class="sort-header" style="min-width:60px;text-align:center;cursor:pointer;user-select:none" title="Ordenar por presença">% <span id="pres-sort-arrow">${sortArrow}</span></th>`
+  ];
+  
+  return headerCells.join('');
+}
+
+/**
+ * Creates a percentage cell element for the presence table
+ * @param {Object} stats - Member statistics object with percentage property
+ * @returns {HTMLElement} Table cell element
+ */
+function createPercentageCell(stats) {
+  const pct = stats.percentage;
+  const color = getPresencePercentageColor(pct);
+  
+  const pctCell = document.createElement('td');
+  pctCell.className = 'percentage-cell';
+  pctCell.style.color = color;
+  pctCell.textContent = pct !== null ? pct + '%' : '—';
+  
+  return pctCell;
+}
+
+/**
+ * Generates the HTML for overall presence statistics
+ * @param {Object} statsData - Object containing present, absent, justified counts
+ * @param {number} presencePercentage - Overall presence percentage
+ * @param {number} membersCount - Total number of members
+ * @param {number} datesCount - Total number of dates/meetings
+ * @returns {string} HTML string for statistics display
+ */
+function buildPresenceStatsHTML(statsData, presencePercentage, membersCount, datesCount) {
+  return `
+    <div class="stat-mini"><div class="val" style="color:var(--accent)">${presencePercentage}%</div><div class="lbl">Presença geral</div></div>
+    <div class="stat-mini"><div class="val">${membersCount}</div><div class="lbl">Membros</div></div>
+    <div class="stat-mini"><div class="val">${datesCount}</div><div class="lbl">Reuniões</div></div>
+    <div class="stat-mini"><div class="val" style="color:var(--red)">${statsData.absent}</div><div class="lbl">Faltas</div></div>
+    <div class="stat-mini"><div class="val" style="color:var(--accent2)">${statsData.justified}</div><div class="lbl">F. justificadas</div></div>
+  `;
+}
+
+/**
+ * Creates a table row for a member with attendance data
+ * @param {Object} member - Member object with stats and originalIndex
+ * @param {number} memberIndex - Index in original members array
+ * @returns {HTMLElement} Table row element
+ */
+function createMemberRow(member, memberIndex) {
+  const row = document.createElement('tr');
+  
+  // Name cell
+  const nameCell = document.createElement('td');
+  nameCell.className = 'name-col';
+  nameCell.textContent = member.nome;
+  row.appendChild(nameCell);
+  
+  // Registration cells
+  member.reg.forEach((r, regIndex) => {
+    const justificativa = state.justificativas[memberIndex]?.[regIndex] || '';
+    const cell = createPresenceCellElement(r, memberIndex, regIndex, justificativa);
+    row.appendChild(cell);
+  });
+  
+  // Percentage cell
+  const pctCell = createPercentageCell(member.stats);
+  row.appendChild(pctCell);
+  
+  return row;
+}
+
+/**
+ * Renders the presence table with member attendance data
+ * Includes sorting functionality and overall statistics
+ */
 function renderPresenca() {
-  var d = state.presenca;
-  var head = document.getElementById('pres-head');
-  var body = document.getElementById('pres-body');
-  var stats = document.getElementById('presence-stats');
+  const d = state.presenca;
+  const { head, body, stats } = getPresenceDOMElements();
 
-  var hh = '<th class="name-col">Nome</th>';
-  d.datas.forEach(dt => { hh += `<th class="date-col">${dt}</th>`; });
-  hh += `<th style="min-width:60px;text-align:center;cursor:pointer;user-select:none" onclick="togglePresencaSort()" title="Ordenar por presença">% <span id="pres-sort-arrow">${presencaSortDir==='desc'?'↓':presencaSortDir==='asc'?'↑':'↕'}</span></th>`;
-  head.innerHTML = hh;
+  // Render table header using helper function
+  head.innerHTML = buildPresenceTableHeader(d.datas, presencaSortDir);
 
-  var membrosRender = [...d.membros];
-  if(presencaSortDir) {
-    membrosRender.sort((a,b) => {
-      var filledA = a.reg.filter(r=>r!=='').length;
-      var presA = a.reg.filter(r=>r==='P').length;
-      var pctA = filledA > 0 ? Math.round(presA/filledA*100) : -1;
-      var filledB = b.reg.filter(r=>r!=='').length;
-      var presB = b.reg.filter(r=>r==='P').length;
-      var pctB = filledB > 0 ? Math.round(presB/filledB*100) : -1;
+  // Pre-compute stats and preserve original indices
+  const membersWithStats = d.membros.map((m, originalIndex) => ({
+    ...m,
+    stats: calculateMemberStats(m),
+    originalIndex
+  }));
+
+  // Sort members if needed (using pre-computed stats)
+  let membrosRender = [...membersWithStats];
+  if (presencaSortDir) {
+    membrosRender.sort((a, b) => {
+      const pctA = a.stats.percentage !== null ? a.stats.percentage : -1;
+      const pctB = b.stats.percentage !== null ? b.stats.percentage : -1;
       return presencaSortDir === 'desc' ? pctB - pctA : pctA - pctB;
     });
   }
 
-  var html = '';
-  membrosRender.forEach((m, mi) => {
-    html += `<tr><td class="name-col">${m.nome}</td>`;
-    m.reg.forEach((r, ri) => {
-      var label, cellCls, extra = '';
-      if(r === 'FJ') {
-        var just = (state.justificativas[mi] && state.justificativas[mi][ri]) || '';
-        label = just ? '★' : 'FJ';
-        cellCls = 'cell-FJ';
-        if(just) extra = `<div class="fj-tooltip">${just}</div>`;
-      } else {
-        label = r || '·';
-        cellCls = r ? 'cell-'+r : 'cell-empty';
-      }
-      var wrapCls = r === 'FJ' ? 'cell-FJ-wrap' : '';
-      var wrapTabIndex = r === 'FJ' ? 'tabindex="0"' : '';
-      html += `<td class="date-col">
-        <div class="${wrapCls}" style="position:relative;display:inline-block" ${wrapTabIndex}>
-          <button class="presence-cell ${cellCls}" onclick="openCellDropdown(event,${mi},${ri})">${label}</button>
-          ${extra}
-        </div>
-      </td>`;
-    });
-    var filled = m.reg.filter(r => r !== '').length;
-    var pres = m.reg.filter(r => r==='P').length;
-    var pct = filled > 0 ? Math.round(pres/filled*100) : null;
-    var color = pct===null?'var(--text3)':pct>=75?'var(--accent)':pct>=50?'var(--accent2)':'var(--red)';
-    html += `<td style="text-align:center;font-family:'DM Mono',monospace;font-size:12px;font-weight:600;color:${color}">${pct!==null?pct+'%':'—'}</td></tr>`;
+  // Build table body using DocumentFragment for better performance
+  const fragment = document.createDocumentFragment();
+  
+  membrosRender.forEach(m => {
+    const row = createMemberRow(m, m.originalIndex);
+    fragment.appendChild(row);
   });
-  body.innerHTML = html;
+  
+  // Single DOM update
+  body.innerHTML = '';
+  body.appendChild(fragment);
 
-  var allRegs = d.membros.flatMap(m=>m.reg).filter(r=>r!=='');
-  var total = allRegs.length || 1;
-  var totalP = allRegs.filter(r=>r==='P').length;
-  var totalA = allRegs.filter(r=>r==='A').length;
-  var totalFJ = allRegs.filter(r=>r==='FJ').length;
-  stats.innerHTML = `
-    <div class="stat-mini"><div class="val" style="color:var(--accent)">${Math.round(totalP/total*100)}%</div><div class="lbl">Presença geral</div></div>
-    <div class="stat-mini"><div class="val">${d.membros.length}</div><div class="lbl">Membros</div></div>
-    <div class="stat-mini"><div class="val">${d.datas.length}</div><div class="lbl">Reuniões</div></div>
-    <div class="stat-mini"><div class="val" style="color:var(--red)">${totalA}</div><div class="lbl">Faltas</div></div>
-    <div class="stat-mini"><div class="val" style="color:var(--accent2)">${totalFJ}</div><div class="lbl">F. justificadas</div></div>
-  `;
+  // Calculate overall statistics (optimized with single reduce)
+  const allRegs = d.membros.flatMap(m => m.reg).filter(r => r !== '');
+  const statsData = allRegs.reduce((acc, r) => {
+    if (r === 'P') acc.present++;
+    else if (r === 'A') acc.absent++;
+    else if (r === 'FJ') acc.justified++;
+    return acc;
+  }, { present: 0, absent: 0, justified: 0 });
+  
+  const total = allRegs.length || 1;
+  const presencePercentage = Math.round(statsData.present / total * 100);
+  
+  // Render statistics using helper function
+  stats.innerHTML = buildPresenceStatsHTML(
+    statsData,
+    presencePercentage,
+    d.membros.length,
+    d.datas.length
+  );
 }
 
 function togglePresencaSort() {
@@ -558,71 +732,193 @@ function togglePresencaSort() {
 }
 
 // ---- Dropdown ----
+// Configuration constants for dropdown positioning and sizing
+const DROPDOWN_CONFIG = {
+  OPTION_HEIGHT: 38,
+  HEADER_HEIGHT: 60,
+  MIN_WIDTH: 140,
+  MENU_PADDING: 4,
+  MENU_EDGE_OFFSET: 144
+};
+
+// Attendance options configuration
+const ATTENDANCE_OPTIONS = [
+  {val: 'P',  label: 'Presente',          color: 'var(--accent)',  bg: 'var(--accent-light)'},
+  {val: 'A',  label: 'Ausente',           color: 'var(--red)',     bg: 'var(--red-light)'},
+  {val: 'FJ', label: 'Falta Justificada', color: 'var(--accent2)', bg: 'var(--accent2-light)'},
+  {val: '',   label: 'Limpar',            color: 'var(--text3)',   bg: 'var(--surface2)'}
+];
+
+/**
+ * Creates the dropdown header element
+ * @param {string} memberName - First name of the member
+ * @param {string} date - Date string
+ * @returns {HTMLElement} Header element
+ */
+function createDropdownHeader(memberName, date) {
+  const header = document.createElement('div');
+  header.style.cssText = 'padding:8px 14px 6px;font-size:11px;color:var(--text3);border-bottom:1px solid var(--border);font-weight:600;letter-spacing:0.04em;text-transform:uppercase';
+  header.textContent = `${memberName} · ${date}`;
+  return header;
+}
+
+/**
+ * Creates an option button for the dropdown
+ * @param {Object} option - Option configuration object
+ * @param {boolean} isCurrentValue - Whether this option is currently selected
+ * @param {Function} onClick - Click handler function
+ * @returns {HTMLElement} Button element
+ */
+function createOptionButton(option, isCurrentValue, onClick) {
+  const btn = document.createElement('button');
+  btn.className = 'cell-dropdown-opt';
+  
+  const dot = document.createElement('span');
+  dot.className = 'opt-dot';
+  dot.style.background = option.color;
+  
+  const label = document.createTextNode(option.label);
+  
+  btn.appendChild(dot);
+  btn.appendChild(label);
+  
+  if (isCurrentValue) {
+    const checkmark = document.createElement('span');
+    checkmark.style.cssText = 'margin-left:auto;font-size:10px;opacity:0.6';
+    checkmark.textContent = '✓';
+    btn.appendChild(checkmark);
+  }
+  
+  btn.onclick = onClick;
+  return btn;
+}
+
+/**
+ * Creates the edit justification button
+ * @param {boolean} hasJustification - Whether a justification already exists
+ * @param {Function} onClick - Click handler function
+ * @returns {HTMLElement} Button element
+ */
+function createEditJustificationButton(hasJustification, onClick) {
+  const editBtn = document.createElement('button');
+  editBtn.className = 'cell-dropdown-opt';
+  editBtn.style.borderTop = '1px solid var(--border)';
+  editBtn.style.color = 'var(--accent)';
+  
+  const icon = document.createElement('span');
+  icon.style.fontSize = '13px';
+  icon.textContent = '✏️';
+  
+  const text = document.createTextNode(
+    hasJustification ? ' Editar justificativa' : ' Adicionar justificativa'
+  );
+  
+  editBtn.appendChild(icon);
+  editBtn.appendChild(text);
+  editBtn.onclick = onClick;
+  
+  return editBtn;
+}
+
+/**
+ * Calculates the optimal position for the dropdown menu
+ * @param {DOMRect} triggerRect - Bounding rectangle of the trigger element
+ * @param {number} menuHeight - Height of the menu
+ * @returns {Object} Position object with top and left properties
+ */
+function calculateDropdownPosition(triggerRect, menuHeight) {
+  let top = triggerRect.bottom + DROPDOWN_CONFIG.MENU_PADDING;
+  
+  // Flip above if would overflow bottom
+  if (top + menuHeight > window.innerHeight) {
+    top = triggerRect.top - menuHeight - DROPDOWN_CONFIG.MENU_PADDING;
+  }
+  
+  let left = triggerRect.left;
+  
+  // Adjust if would overflow right edge
+  if (left + DROPDOWN_CONFIG.MIN_WIDTH > window.innerWidth) {
+    left = window.innerWidth - DROPDOWN_CONFIG.MENU_EDGE_OFFSET;
+  }
+  
+  return { top, left };
+}
+
+/**
+ * Builds the dropdown menu DOM structure
+ * @param {string} memberFirstName - Member's first name
+ * @param {string} date - Date string
+ * @param {string} currentValue - Current attendance value
+ * @param {string} justification - Justification text if exists
+ * @param {number} mi - Member index
+ * @param {number} ri - Registration/date index
+ * @returns {HTMLElement} Menu element
+ */
+function buildDropdownMenu(memberFirstName, date, currentValue, justification, mi, ri) {
+  const menu = document.createElement('div');
+  menu.className = 'cell-dropdown-menu open';
+  menu.id = 'cell-dd-menu';
+  
+  menu.appendChild(createDropdownHeader(memberFirstName, date));
+  
+  ATTENDANCE_OPTIONS.forEach(opt => {
+    const isCurrentValue = currentValue === opt.val;
+    const button = createOptionButton(opt, isCurrentValue, (ev) => {
+      ev.stopPropagation();
+      closeDropdown();
+      setCell(mi, ri, opt.val);
+    });
+    menu.appendChild(button);
+  });
+  
+  if (currentValue === 'FJ') {
+    const editButton = createEditJustificationButton(!!justification, (ev) => {
+      ev.stopPropagation();
+      closeDropdown();
+      openFJModal(mi, ri);
+    });
+    menu.appendChild(editButton);
+  }
+  
+  return menu;
+}
+
+/**
+ * Calculates the total height of the dropdown menu
+ * @returns {number} Menu height in pixels
+ */
+function calculateMenuHeight() {
+  return ATTENDANCE_OPTIONS.length * DROPDOWN_CONFIG.OPTION_HEIGHT +
+         DROPDOWN_CONFIG.HEADER_HEIGHT;
+}
+
+/**
+ * Opens a dropdown menu for cell attendance selection
+ * @param {Event} e - Click event
+ * @param {number} mi - Member index
+ * @param {number} ri - Registration/date index
+ */
 function openCellDropdown(e, mi, ri) {
   e.stopPropagation();
   closeDropdown();
 
-  var cur = state.presenca.membros[mi].reg[ri];
-  var nome = state.presenca.membros[mi].nome.split(' ')[0];
-  var data = state.presenca.datas[ri];
-  var just = (state.justificativas[mi] && state.justificativas[mi][ri]) || '';
+  const member = state.presenca.membros[mi];
+  const currentValue = member.reg[ri];
+  const memberFirstName = member.nome.split(' ')[0];
+  const date = state.presenca.datas[ri];
+  const justification = state.justificativas?.[mi]?.[ri] || '';
 
-  var menu = document.createElement('div');
-  menu.className = 'cell-dropdown-menu open';
-  menu.id = 'cell-dd-menu';
-
-  var opts = [
-    {val:'P',  label:'Presente',          color:'var(--accent)',  bg:'var(--accent-light)'},
-    {val:'A',  label:'Ausente',            color:'var(--red)',     bg:'var(--red-light)'},
-    {val:'FJ', label:'Falta Justificada',  color:'var(--accent2)', bg:'var(--accent2-light)'},
-    {val:'',   label:'Limpar',             color:'var(--text3)',   bg:'var(--surface2)'}
-  ];
-
-  var header = document.createElement('div');
-  header.style.cssText = 'padding:8px 14px 6px;font-size:11px;color:var(--text3);border-bottom:1px solid var(--border);font-weight:600;letter-spacing:0.04em;text-transform:uppercase';
-  header.textContent = nome + ' · ' + data;
-  menu.appendChild(header);
-
-  opts.forEach(opt => {
-    var btn = document.createElement('button');
-    btn.className = 'cell-dropdown-opt';
-    var isCur = cur === opt.val;
-    btn.innerHTML = `<span class="opt-dot" style="background:${opt.color}"></span>${opt.label}${isCur?' <span style="margin-left:auto;font-size:10px;opacity:0.6">✓</span>':''}`;
-    btn.onclick = function(ev) {
-      ev.stopPropagation();
-      closeDropdown();
-      setCell(mi, ri, opt.val);
-    };
-    menu.appendChild(btn);
-  });
-
-  // If FJ and has justificativa, add edit option
-  if(cur === 'FJ') {
-    var editBtn = document.createElement('button');
-    editBtn.className = 'cell-dropdown-opt';
-    editBtn.style.borderTop = '1px solid var(--border)';
-    editBtn.style.color = 'var(--accent)';
-    editBtn.innerHTML = `<span style="font-size:13px">✏️</span> ${just ? 'Editar justificativa' : 'Adicionar justificativa'}`;
-    editBtn.onclick = function(ev) {
-      ev.stopPropagation();
-      closeDropdown();
-      openFJModal(mi, ri);
-    };
-    menu.appendChild(editBtn);
-  }
-
+  const menu = buildDropdownMenu(memberFirstName, date, currentValue, justification, mi, ri);
+  
   document.body.appendChild(menu);
   activeDropdown = menu;
 
-  // Position the menu near the button
-  var rect = e.currentTarget.getBoundingClientRect();
-  var menuH = opts.length * 38 + 60;
-  var top = rect.bottom + 4;
-  if(top + menuH > window.innerHeight) top = rect.top - menuH - 4;
-  var left = rect.left;
-  if(left + 140 > window.innerWidth) left = window.innerWidth - 144;
-  menu.style.top = top + 'px';
-  menu.style.left = left + 'px';
+  const triggerRect = e.currentTarget.getBoundingClientRect();
+  const menuHeight = calculateMenuHeight();
+  const position = calculateDropdownPosition(triggerRect, menuHeight);
+  
+  menu.style.top = `${position.top}px`;
+  menu.style.left = `${position.left}px`;
 }
 
 function closeDropdown() {
@@ -631,6 +927,44 @@ function closeDropdown() {
 
 document.addEventListener('click', closeDropdown);
 document.addEventListener('scroll', closeDropdown, true);
+// ===================== PRESENCE EVENT DELEGATION =====================
+/**
+ * Event delegation for presence table cell clicks
+ * Handles clicks on presence cell buttons to open dropdown
+ */
+document.addEventListener('DOMContentLoaded', () => {
+  const presBody = document.getElementById('pres-body');
+  if (presBody) {
+    presBody.addEventListener('click', (e) => {
+      const button = e.target.closest('.presence-cell');
+      if (!button) return;
+      
+      const memberIndex = parseInt(button.dataset.memberIndex);
+      const regIndex = parseInt(button.dataset.regIndex);
+      
+      if (!isNaN(memberIndex) && !isNaN(regIndex)) {
+        openCellDropdown(e, memberIndex, regIndex);
+      }
+    });
+  }
+});
+/**
+ * Event delegation for presence table sort header
+ * Handles clicks on the percentage column header to toggle sort order
+ */
+document.addEventListener('DOMContentLoaded', () => {
+  const presHead = document.getElementById('pres-head');
+  if (presHead) {
+    presHead.addEventListener('click', (e) => {
+      const sortHeader = e.target.closest('.sort-header');
+      if (sortHeader) {
+        togglePresencaSort();
+      }
+    });
+  }
+});
+
+
 
 // ===================== CALENDAR EVENT DELEGATION =====================
 /**
@@ -720,6 +1054,119 @@ function cancelFJ() {
 // ===================== ESPECIALIDADES =====================
 var espFilter = {};
 
+// Constants for especialidades
+const DELIVERY_STATUS_VALUES = new Set(['OK', 'Ok', 'ok', 'Sim']);
+
+/**
+ * Check if an especialidade has been delivered
+ * @param {string} entregue - Delivery status value
+ * @returns {boolean} True if delivered
+ */
+function isDelivered(entregue) {
+  return DELIVERY_STATUS_VALUES.has(entregue);
+}
+
+/**
+ * Check if an especialidade matches all active filters
+ * @param {Object} especialidade - The especialidade object to check
+ * @param {Object} filters - Filter criteria object
+ * @returns {boolean} True if matches all filters
+ */
+function matchesEspFilters(especialidade, filters) {
+  const { txt, lobinho, nivel, comprado, entregue } = filters;
+  
+  if (txt && !especialidade.nome.toLowerCase().includes(txt) &&
+      !especialidade.esp.toLowerCase().includes(txt)) {
+    return false;
+  }
+  
+  if (lobinho && especialidade.nome !== lobinho) return false;
+  if (nivel !== '' && String(especialidade.nivel) !== nivel) return false;
+  if (comprado === 'ok' && especialidade.comprado !== 'OK') return false;
+  if (comprado === 'nao' && especialidade.comprado === 'OK') return false;
+  
+  const delivered = isDelivered(especialidade.entregue);
+  if (entregue === 'sim' && !delivered) return false;
+  if (entregue === 'nao' && delivered) return false;
+  
+  return true;
+}
+
+/**
+ * Calculate statistics for especialidades in a single pass
+ * @param {Array} especialidades - Array of especialidade objects
+ * @returns {Object} Statistics object with total, entregues, and nivel0 counts
+ */
+function calculateEspStatistics(especialidades) {
+  return especialidades.reduce((stats, esp) => {
+    stats.total++;
+    if (isDelivered(esp.entregue)) stats.entregues++;
+    if (esp.nivel === 0) stats.nivel0++;
+    return stats;
+  }, { total: 0, entregues: 0, nivel0: 0 });
+}
+
+/**
+ * Create HTML for a single especialidade table row
+ * @param {Object} especialidade - The especialidade object
+ * @param {number} index - Index in the state.especialidades array
+ * @returns {string} HTML string for the table row
+ */
+function createEspRow(especialidade, index) {
+  const compOK = especialidade.comprado === 'OK';
+  const entOK = isDelivered(especialidade.entregue);
+  
+  return `<tr data-esp-index="${index}">
+    <td><b>${especialidade.nome}</b></td>
+    <td>${especialidade.esp}</td>
+    <td><span class="nivel-badge nivel-${especialidade.nivel}">${especialidade.nivel}</span></td>
+    <td style="font-family:'DM Mono',monospace;font-size:12px">${especialidade.data || '—'}</td>
+    <td><span class="badge ${compOK ? 'badge-green' : 'badge-red'}">${especialidade.comprado}</span></td>
+    <td><span class="badge ${entOK ? 'badge-green' : 'badge-red'}">${especialidade.entregue || '—'}</span></td>
+    <td style="color:var(--text2);font-size:12px">${especialidade.avaliador || '—'}</td>
+    <td style="white-space:nowrap">
+      <button class="btn btn-sm btn-edit" data-action="edit" style="padding:3px 8px;font-size:11px;margin-right:4px" title="Editar">✏️</button>
+      <button class="btn btn-sm btn-delete" data-action="delete" style="color:var(--red);border-color:var(--red-light);padding:3px 8px;font-size:11px" title="Excluir">✕</button>
+    </td>
+  </tr>`;
+}
+
+/**
+ * Create HTML for statistics display
+ * @param {Object} stats - Statistics object with total, entregues, nivel0
+ * @returns {string} HTML string for statistics
+ */
+function renderEspStatsHTML(stats) {
+  const pendentes = stats.total - stats.entregues;
+  return `
+    <div class="stat-mini"><div class="val">${stats.total}</div><div class="lbl">Total</div></div>
+    <div class="stat-mini"><div class="val" style="color:var(--accent)">${stats.entregues}</div><div class="lbl">Entregues</div></div>
+    <div class="stat-mini"><div class="val" style="color:var(--red)">${pendentes}</div><div class="lbl">Pendentes</div></div>
+    <div class="stat-mini"><div class="val" style="color:#7c3aed">${stats.nivel0}</div><div class="lbl">Insígnias</div></div>
+  `;
+}
+
+/**
+ * Setup event delegation for especialidades table buttons
+ * @param {HTMLElement} bodyElement - The table body element
+ */
+function setupEspEventListeners(bodyElement) {
+  bodyElement.addEventListener('click', (e) => {
+    const button = e.target.closest('button[data-action]');
+    if (!button) return;
+    
+    const row = button.closest('tr');
+    const index = parseInt(row.dataset.espIndex, 10);
+    const action = button.dataset.action;
+    
+    if (action === 'edit') {
+      editEsp(index);
+    } else if (action === 'delete') {
+      delEsp(index);
+    }
+  });
+}
+
 function populateEspLobinhos() {
   var sel = document.getElementById('esp-filter-lobinho');
   if(!sel) return;
@@ -744,59 +1191,42 @@ function limparFiltrosEsp() {
 
 function renderEsp() {
   populateEspLobinhos();
-  var body = document.getElementById('esp-body');
-  var stats = document.getElementById('esp-stats');
-
-  var txt      = ((document.getElementById('esp-search')||{}).value||'').toLowerCase();
-  var lobinho  = ((document.getElementById('esp-filter-lobinho')||{}).value||'');
-  var nivel    = ((document.getElementById('esp-filter-nivel')||{}).value||'');
-  var comprado = ((document.getElementById('esp-filter-comprado')||{}).value||'');
-  var entregue = ((document.getElementById('esp-filter-entregue')||{}).value||'');
-
-  var data = state.especialidades.filter(e => {
-    if(txt && !e.nome.toLowerCase().includes(txt) && !e.esp.toLowerCase().includes(txt)) return false;
-    if(lobinho && e.nome !== lobinho) return false;
-    if(nivel !== '' && String(e.nivel) !== nivel) return false;
-    if(comprado === 'ok'  && e.comprado !== 'OK') return false;
-    if(comprado === 'nao' && e.comprado === 'OK') return false;
-    var entOK = ['OK','Ok','ok','Sim'].includes(e.entregue);
-    if(entregue === 'sim' && !entOK) return false;
-    if(entregue === 'nao' && entOK)  return false;
-    return true;
-  });
-
-  var html = '';
-  data.forEach((e, i) => {
-    var compOK = e.comprado==='OK';
-    var entOK = ['OK','Ok','ok','Sim'].includes(e.entregue);
-    var idx = state.especialidades.indexOf(e);
-    html += `<tr>
-      <td><b>${e.nome}</b></td>
-      <td>${e.esp}</td>
-      <td><span class="nivel-badge nivel-${e.nivel}">${e.nivel}</span></td>
-      <td style="font-family:'DM Mono',monospace;font-size:12px">${e.data||'—'}</td>
-      <td><span class="badge ${compOK?'badge-green':'badge-red'}">${e.comprado}</span></td>
-      <td><span class="badge ${entOK?'badge-green':'badge-red'}">${e.entregue||'—'}</span></td>
-      <td style="color:var(--text2);font-size:12px">${e.avaliador||'—'}</td>
-      <td style="white-space:nowrap">
-        <button class="btn btn-sm" onclick="editEsp(${idx})" style="padding:3px 8px;font-size:11px;margin-right:4px" title="Editar">✏️</button>
-        <button class="btn btn-sm" onclick="delEsp(${idx})" style="color:var(--red);border-color:var(--red-light);padding:3px 8px;font-size:11px" title="Excluir">✕</button>
-      </td>
-    </tr>`;
-  });
-
-  body.innerHTML = html || '<tr><td colspan="8" style="text-align:center;padding:32px;color:var(--text3)">Nenhum resultado.</td></tr>';
-
-  var total = state.especialidades.length;
-  var entregues = state.especialidades.filter(e=>['OK','Ok','ok','Sim'].includes(e.entregue)).length;
-  var pendentes = total-entregues;
-  var nivel0 = state.especialidades.filter(e=>e.nivel==0).length;
-  stats.innerHTML = `
-    <div class="stat-mini"><div class="val">${total}</div><div class="lbl">Total</div></div>
-    <div class="stat-mini"><div class="val" style="color:var(--accent)">${entregues}</div><div class="lbl">Entregues</div></div>
-    <div class="stat-mini"><div class="val" style="color:var(--red)">${pendentes}</div><div class="lbl">Pendentes</div></div>
-    <div class="stat-mini"><div class="val" style="color:#7c3aed">${nivel0}</div><div class="lbl">Insígnias</div></div>
-  `;
+  
+  // Cache DOM elements
+  const body = document.getElementById('esp-body');
+  const stats = document.getElementById('esp-stats');
+  
+  // Extract filter values once
+  const filters = {
+    txt: (document.getElementById('esp-search')?.value || '').toLowerCase(),
+    lobinho: document.getElementById('esp-filter-lobinho')?.value || '',
+    nivel: document.getElementById('esp-filter-nivel')?.value || '',
+    comprado: document.getElementById('esp-filter-comprado')?.value || '',
+    entregue: document.getElementById('esp-filter-entregue')?.value || ''
+  };
+  
+  // Filter data using extracted helper function
+  const filteredData = state.especialidades.filter(esp => matchesEspFilters(esp, filters));
+  
+  // Render rows with original indices preserved
+  const html = filteredData.length > 0
+    ? filteredData.map(esp => {
+        const originalIndex = state.especialidades.indexOf(esp);
+        return createEspRow(esp, originalIndex);
+      }).join('')
+    : '<tr><td colspan="8" style="text-align:center;padding:32px;color:var(--text3)">Nenhum resultado.</td></tr>';
+  
+  body.innerHTML = html;
+  
+  // Setup event delegation (only once)
+  if (!body.dataset.listenersAttached) {
+    setupEspEventListeners(body);
+    body.dataset.listenersAttached = 'true';
+  }
+  
+  // Calculate and render statistics in a single pass
+  const statistics = calculateEspStatistics(state.especialidades);
+  stats.innerHTML = renderEspStatsHTML(statistics);
 }
 
 var editingEspIdx = -1;
@@ -858,6 +1288,45 @@ function getPontuacao(mat) {
   return {jogos, formacao, comportamento, total};
 }
 
+/**
+ * Helper function to create a pontuacao button row
+ * @param {string} label - Category label
+ * @param {string} emoji - Category emoji
+ * @param {number} value - Current value
+ * @param {string} mat - Matilha name
+ * @param {string} category - Category key (jogos, formacao, comportamento)
+ * @param {Object} options - Optional styling and behavior options
+ * @returns {string} HTML string for the button row
+ */
+function createPontButtonRow(label, emoji, value, mat, category, options = {}) {
+  const {
+    valueColor = 'var(--accent)',
+    minusStyle = '',
+    plusStyle = '',
+    minusTitle = '',
+    plusTitle = '',
+    showNegative = false,
+    rowStyle = '',
+    subtitle = ''
+  } = options;
+
+  const displayValue = showNegative ? `-${value}` : value;
+  const rowStyleAttr = rowStyle ? ` style="${rowStyle}"` : '';
+  const minusStyleAttr = minusStyle ? ` style="${minusStyle}"` : '';
+  const plusStyleAttr = plusStyle ? ` style="${plusStyle}"` : '';
+  const minusTitleAttr = minusTitle ? ` title="${minusTitle}"` : '';
+  const plusTitleAttr = plusTitle ? ` title="${plusTitle}"` : '';
+
+  return `<div class="pont-cat-row"${rowStyleAttr}>
+    <span class="pont-cat-label">${emoji} ${label}${subtitle}</span>
+    <div class="pont-btns">
+      <button class="pont-btn minus" data-action="pont" data-mat="${mat}" data-cat="${category}" data-delta="-1"${minusStyleAttr}${minusTitleAttr}>−</button>
+      <span class="pont-val" style="color:${valueColor}">${displayValue}</span>
+      <button class="pont-btn plus" data-action="pont" data-mat="${mat}" data-cat="${category}" data-delta="1"${plusStyleAttr}${plusTitleAttr}>+</button>
+    </div>
+  </div>`;
+}
+
 function renderMatilhas() {
   var grid     = document.getElementById('matilhas-grid');
   var stats    = document.getElementById('matilhas-stats');
@@ -901,43 +1370,46 @@ function renderMatilhas() {
 
   // ---- PONTUAÇÃO CARDS ----
   pontGrid.innerHTML = Object.keys(state.matilhas).map(mat => {
-    var cls = MATILHA_COLORS[mat]||'';
-    var p = getPontuacao(mat);
-    var dotColor = MAT_DOT_COLORS[mat]||'#999';
+    const cls = MATILHA_COLORS[mat] || '';
+    const { total, jogos, formacao, comportamento } = getPontuacao(mat);
+    const dotColor = MAT_DOT_COLORS[mat] || '#999';
+    const totalColor = total >= 0 ? dotColor : 'var(--red)';
+    const totalSign = total >= 0 ? '+' : '';
+
     return `<div class="pont-card ${cls}">
       <div class="pont-header">
         <div class="matilha-dot"></div>
         <span style="font-weight:600;font-size:14px">${mat}</span>
-        <span class="pont-total" style="color:${p.total>=0?dotColor:'var(--red)'}">${p.total>=0?'+':''}${p.total}</span>
+        <span class="pont-total" style="color:${totalColor}">${totalSign}${total}</span>
       </div>
       <div class="pont-cats">
-        <div class="pont-cat-row">
-          <span class="pont-cat-label">🎮 Jogos</span>
-          <div class="pont-btns">
-            <button class="pont-btn minus" onclick="addPont('${mat}','jogos',-1)">−</button>
-            <span class="pont-val" style="color:var(--accent)">${p.jogos}</span>
-            <button class="pont-btn plus"  onclick="addPont('${mat}','jogos',+1)">+</button>
-          </div>
-        </div>
-        <div class="pont-cat-row">
-          <span class="pont-cat-label">📚 Formação</span>
-          <div class="pont-btns">
-            <button class="pont-btn minus" onclick="addPont('${mat}','formacao',-1)">−</button>
-            <span class="pont-val" style="color:var(--accent)">${p.formacao}</span>
-            <button class="pont-btn plus"  onclick="addPont('${mat}','formacao',+1)">+</button>
-          </div>
-        </div>
-        <div class="pont-cat-row" style="border-top:1px dashed var(--border);padding-top:8px;margin-top:2px">
-          <span class="pont-cat-label">⚠️ Comportamento <span style="font-size:10px;color:var(--red)">(penalidade)</span></span>
-          <div class="pont-btns">
-            <button class="pont-btn minus" onclick="addPont('${mat}','comportamento',-1)" style="border-color:var(--accent);color:var(--accent)" title="Remover penalidade">−</button>
-            <span class="pont-val" style="color:var(--red)">-${p.comportamento}</span>
-            <button class="pont-btn plus" onclick="addPont('${mat}','comportamento',+1)" style="border-color:var(--red);color:var(--red)" title="Adicionar penalidade">+</button>
-          </div>
-        </div>
+        ${createPontButtonRow('Jogos', '🎮', jogos, mat, 'jogos')}
+        ${createPontButtonRow('Formação', '📚', formacao, mat, 'formacao')}
+        ${createPontButtonRow('Comportamento', '⚠️', comportamento, mat, 'comportamento', {
+          rowStyle: 'border-top:1px dashed var(--border);padding-top:8px;margin-top:2px',
+          subtitle: ' <span style="font-size:10px;color:var(--red)">(penalidade)</span>',
+          valueColor: 'var(--red)',
+          minusStyle: 'border-color:var(--accent);color:var(--accent)',
+          plusStyle: 'border-color:var(--red);color:var(--red)',
+          minusTitle: 'Remover penalidade',
+          plusTitle: 'Adicionar penalidade',
+          showNegative: true
+        })}
       </div>
     </div>`;
   }).join('');
+
+  // Setup event delegation for pontuacao buttons (only once)
+  if (!pontGrid.dataset.delegationSetup) {
+    pontGrid.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-action="pont"]');
+      if (!btn) return;
+
+      const { mat, cat, delta } = btn.dataset;
+      addPont(mat, cat, parseInt(delta, 10));
+    });
+    pontGrid.dataset.delegationSetup = 'true';
+  }
 
   // ---- MATILHA CARDS ----
   var gh = '';
@@ -1028,7 +1500,7 @@ var fbReady = false;
 
 function initFirebase() {
   var config = {
-    apiKey: "AIzaSyBqn10ZjuimbifYx_3813caY-s9boS7FKM",
+    apiKey: window.FIREBASE_API_KEY || "",
     authDomain: "alcateiakotick-db12b.firebaseapp.com",
     databaseURL: "https://alcateiakotick-db12b-default-rtdb.firebaseio.com",
     projectId: "alcateiakotick-db12b",
@@ -1046,6 +1518,7 @@ function initFirebase() {
   } catch(e) {
     console.warn('Firebase init failed:', e);
     showSyncStatus('offline');
+    alert('⚠️ Falha ao conectar com o servidor.\n\nO aplicativo está em modo offline. Suas alterações NÃO serão salvas automaticamente.\n\nPor favor, verifique sua conexão com a internet e recarregue a página.');
   }
 }
 
@@ -1053,57 +1526,147 @@ function fbSet(path, data) {
   if(!fbReady || !db) return;
   db.ref('alcateia/' + path).set(data)
     .then(() => showSyncStatus('salvo'))
-    .catch(e => { console.warn('fbSet error', e); showSyncStatus('erro'); });
+    .catch(e => {
+      console.warn('fbSet error', e);
+      showSyncStatus('erro');
+      showToast('Erro ao salvar dados. Verifique sua conexão e tente novamente.');
+    });
 }
 
-function listenAll() {
-  if(!db) return;
-  var ref = db.ref('alcateia');
+// Configuration for Firebase state synchronization
+const STATE_CONFIG = [
+  { key: 'calendario', validate: (v) => Array.isArray(v) },
+  { key: 'presenca', validate: (v) => v && v.datas },
+  { key: 'especialidades', validate: (v) => Array.isArray(v) },
+  { key: 'matilhas' },
+  { key: 'cargos' },
+  { key: 'justificativas' },
+  { key: 'comunicados', validate: (v) => Array.isArray(v) },
+  { key: 'confirmacoes' },
+  { key: 'caixa', validate: (v) => Array.isArray(v) },
+  { key: 'pontuacao' },
+  { key: 'avisos_internos', validate: (v) => Array.isArray(v) },
+  { key: 'todos_chefia', validate: (v) => Array.isArray(v) }
+];
 
+function listenAll() {
+  if (!db) return;
+  
+  const ref = db.ref('alcateia');
+  let activePageId = null;
+  
+  // Cleanup previous listener if exists to prevent memory leaks
+  if (window.firebaseListener) {
+    ref.off('value', window.firebaseListener);
+    window.firebaseListener = null;
+  }
+
+  // Helper to get current active page ID (cached for performance)
+  const getActivePageId = () => {
+    const current = document.querySelector('.page.active');
+    const currentId = current ? current.id.replace('p-', '') : null;
+    if (currentId !== activePageId) {
+      activePageId = currentId;
+    }
+    return activePageId;
+  };
+
+  // Optimized hash function with early exit for null/undefined
+  function computeHash(obj) {
+    if (!obj) return 0;
+    
+    // For arrays, use length as quick check before full hash
+    if (Array.isArray(obj) && obj.length === 0) return 1;
+    
+    const str = JSON.stringify(obj);
+    let hash = 0;
+    const len = str.length;
+    
+    // Optimized loop with bitwise operations
+    for (let i = 0; i < len; i++) {
+      const char = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash; // Convert to 32-bit integer
+    }
+    return hash;
+  }
+
+  // Initial data load
   ref.once('value').then(snap => {
-    var d = snap.val();
-    if(d) {
-      if(d.calendario  && Array.isArray(d.calendario))  state.calendario  = d.calendario;
-      if(d.presenca    && d.presenca.datas)              state.presenca    = d.presenca;
-      if(d.especialidades && Array.isArray(d.especialidades)) state.especialidades = d.especialidades;
-      if(d.matilhas)   state.matilhas  = d.matilhas;
-      if(d.cargos)     state.cargos    = d.cargos;
-      if(d.justificativas) state.justificativas = d.justificativas;
-      if(d.comunicados && Array.isArray(d.comunicados)) state.comunicados = d.comunicados;
-      if(d.confirmacoes) state.confirmacoes = d.confirmacoes;
-      if(d.caixa && Array.isArray(d.caixa)) state.caixa = d.caixa;
-      if(d.pontuacao) state.pontuacao = d.pontuacao;
-      if(d.avisos_internos && Array.isArray(d.avisos_internos)) state.avisos_internos = d.avisos_internos;
-      if(d.todos_chefia && Array.isArray(d.todos_chefia)) state.todos_chefia = d.todos_chefia;
+    const d = snap.val();
+    if (d) {
+      // Consolidated state assignment using configuration
+      STATE_CONFIG.forEach(({ key, validate }) => {
+        if (d[key] && (!validate || validate(d[key]))) {
+          state[key] = d[key];
+        }
+      });
     }
     showSyncStatus('ok');
+    
     // Re-render active page with fresh data
-    var activePage = document.querySelector('.page.active');
-    if(activePage) render(activePage.id.replace('p-',''));
-  }).catch(e => { console.warn('Firebase read error:', e); showSyncStatus('offline'); });
-
-  // Listen for real-time changes from other devices
-  ref.on('value', snap => {
-    var d = snap.val();
-    if(!d) return;
-    var changed = false;
-    if(d.calendario  && JSON.stringify(d.calendario)  !== JSON.stringify(state.calendario))  { state.calendario  = d.calendario;  changed=true; }
-    if(d.presenca    && JSON.stringify(d.presenca)    !== JSON.stringify(state.presenca))    { state.presenca    = d.presenca;    changed=true; }
-    if(d.especialidades && JSON.stringify(d.especialidades) !== JSON.stringify(state.especialidades)) { state.especialidades = d.especialidades; changed=true; }
-    if(d.matilhas    && JSON.stringify(d.matilhas)    !== JSON.stringify(state.matilhas))    { state.matilhas    = d.matilhas;    changed=true; }
-    if(d.cargos      && JSON.stringify(d.cargos)      !== JSON.stringify(state.cargos))      { state.cargos      = d.cargos;      changed=true; }
-    if(d.justificativas && JSON.stringify(d.justificativas) !== JSON.stringify(state.justificativas)) { state.justificativas = d.justificativas; changed=true; }
-    if(d.comunicados && JSON.stringify(d.comunicados) !== JSON.stringify(state.comunicados)) { state.comunicados = d.comunicados; changed=true; }
-    if(d.confirmacoes && JSON.stringify(d.confirmacoes) !== JSON.stringify(state.confirmacoes)) { state.confirmacoes = d.confirmacoes; changed=true; }
-    if(d.caixa && JSON.stringify(d.caixa) !== JSON.stringify(state.caixa)) { state.caixa = d.caixa; changed=true; }
-    if(d.pontuacao   && JSON.stringify(d.pontuacao)   !== JSON.stringify(state.pontuacao))   { state.pontuacao   = d.pontuacao;   changed=true; }
-    if(d.avisos_internos && JSON.stringify(d.avisos_internos) !== JSON.stringify(state.avisos_internos)) { state.avisos_internos = d.avisos_internos; changed=true; }
-    if(d.todos_chefia && JSON.stringify(d.todos_chefia) !== JSON.stringify(state.todos_chefia)) { state.todos_chefia = d.todos_chefia; changed=true; }
-    if(changed) {
-      var activePage = document.querySelector('.page.active');
-      if(activePage) render(activePage.id.replace('p-',''));
-    }
+    const currentPageId = getActivePageId();
+    if (currentPageId) render(currentPageId);
+  }).catch(e => {
+    console.warn('Firebase read error:', e);
+    showSyncStatus('offline');
   });
+
+  // Real-time change detection using hash comparison
+  const stateHashes = {};
+  
+  // Value listener with error handling
+  const valueListener = (snap) => {
+    const d = snap.val();
+    if (!d) return;
+    
+    let hasChanges = false;
+    
+    // Check for changes using configuration with early exit optimization
+    for (const { key } of STATE_CONFIG) {
+      if (d[key]) {
+        const newHash = computeHash(d[key]);
+        const oldHash = stateHashes[key];
+        
+        // Initialize hash on first run or detect change
+        if (oldHash === undefined) {
+          stateHashes[key] = newHash;
+        } else if (newHash !== oldHash) {
+          state[key] = d[key];
+          stateHashes[key] = newHash;
+          hasChanges = true;
+          // Early exit: since we re-render entire page, no need to check other keys
+          break;
+        }
+      }
+    }
+    
+    if (hasChanges) {
+      const currentPageId = getActivePageId();
+      if (currentPageId) render(currentPageId);
+    }
+  };
+  
+  // Error handler for Firebase listener
+  const errorHandler = (error) => {
+    console.error('Firebase listener error:', error);
+    showSyncStatus('erro');
+    showToast('Erro na sincronização. Reconectando...');
+  };
+  
+  // Store listener reference globally for cleanup
+  window.firebaseListener = valueListener;
+  
+  // Listen for real-time changes with error handling
+  ref.on('value', valueListener, errorHandler);
+  
+  // Return cleanup function for proper resource management
+  return () => {
+    if (window.firebaseListener) {
+      ref.off('value', window.firebaseListener);
+      window.firebaseListener = null;
+    }
+  };
 }
 
 // Save entire state section to Firebase
@@ -1111,7 +1674,11 @@ function fbSaveSection(section) {
   if(!fbReady || !db) return;
   db.ref('alcateia/' + section).set(state[section])
     .then(() => showSyncStatus('salvo'))
-    .catch(() => showSyncStatus('erro'));
+    .catch(e => {
+      console.warn('fbSaveSection error', e);
+      showSyncStatus('erro');
+      showToast('Erro ao salvar dados. Verifique sua conexão e tente novamente.');
+    });
 }
 
 // Sync indicator
@@ -1658,111 +2225,248 @@ function filterConfs(status, btn) {
   renderConfirmacoes();
 }
 
+// Helper: Update badge count
+function updateBadge(elementId, count) {
+  const badge = document.getElementById(elementId);
+  if (badge) badge.textContent = count;
+}
+
+// Helper: Render empty state for comunicados
+function renderEmptyStateComunicados(container) {
+  container.innerHTML = `<div class="empty-state" style="text-align:center;padding:60px 20px;color:var(--text3)">
+    <div style="font-size:36px;margin-bottom:12px">📢</div>
+    <p>Nenhum comunicado publicado ainda.<br>Clique em <b>Novo</b> para criar o primeiro.</p>
+  </div>`;
+}
+
+// Helper: Create a single comunicado card element
+function createComunicadoCard(comunicado, index) {
+  const card = document.createElement('div');
+  card.className = `com-card${comunicado.fixado ? ' fixado' : ''}`;
+  
+  const catCls = 'com-cat-' + (comunicado.categoria || 'aviso');
+  const catLabel = CAT_LABELS[comunicado.categoria] || '📋 Aviso';
+  const dataStr = comunicado.dataEvento ? ` · 📅 ${comunicado.dataEvento}` : '';
+  const pubDate = comunicado.ts
+    ? new Date(comunicado.ts).toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      })
+    : '';
+  
+  // Header
+  const header = document.createElement('div');
+  header.className = 'com-header';
+  header.innerHTML = `
+    <span class="com-cat-badge ${catCls}">${catLabel}</span>
+    <span class="com-titulo">${comunicado.fixado ? '📌 ' : ''}${comunicado.titulo}</span>
+  `;
+  
+  // Meta
+  const meta = document.createElement('div');
+  meta.className = 'com-meta';
+  meta.textContent = `Publicado em ${pubDate}${dataStr}`;
+  
+  // Text
+  const texto = document.createElement('div');
+  texto.className = 'com-texto';
+  texto.textContent = comunicado.texto;
+  
+  // Actions
+  const actions = document.createElement('div');
+  actions.className = 'com-actions';
+  
+  const editBtn = document.createElement('button');
+  editBtn.className = 'btn btn-sm';
+  editBtn.dataset.action = 'edit';
+  editBtn.dataset.idx = index;
+  editBtn.textContent = '✏️ Editar';
+  
+  const pinBtn = document.createElement('button');
+  pinBtn.className = 'btn btn-sm';
+  pinBtn.dataset.action = 'toggle-pin';
+  pinBtn.dataset.idx = index;
+  pinBtn.style.color = 'var(--accent2)';
+  pinBtn.textContent = comunicado.fixado ? '📌 Desafixar' : '📌 Fixar';
+  
+  const delBtn = document.createElement('button');
+  delBtn.className = 'btn btn-sm';
+  delBtn.dataset.action = 'delete';
+  delBtn.dataset.idx = index;
+  delBtn.style.color = 'var(--red)';
+  delBtn.style.borderColor = 'var(--red-light)';
+  delBtn.textContent = '✕ Excluir';
+  
+  actions.appendChild(editBtn);
+  actions.appendChild(pinBtn);
+  actions.appendChild(delBtn);
+  
+  card.appendChild(header);
+  card.appendChild(meta);
+  card.appendChild(texto);
+  card.appendChild(actions);
+  
+  return card;
+}
+
+// Event delegation handler for comunicado actions
+function setupComunicadoEventDelegation() {
+  const lista = document.getElementById('com-lista');
+  if (!lista || lista.dataset.delegationSetup) return;
+  
+  lista.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-action]');
+    if (!btn) return;
+    
+    const action = btn.dataset.action;
+    const idx = parseInt(btn.dataset.idx, 10);
+    
+    if (isNaN(idx)) return;
+    
+    switch(action) {
+      case 'edit':
+        editCom(idx);
+        break;
+      case 'toggle-pin':
+        toggleFixarCom(idx);
+        break;
+      case 'delete':
+        delCom(idx);
+        break;
+    }
+  });
+  
+  lista.dataset.delegationSetup = 'true';
+}
+
 function renderComunicados() {
-  var lista  = document.getElementById('com-lista');
-  var stats  = document.getElementById('com-stats');
+  const listaElement = document.getElementById('com-lista');
+  const statsElement = document.getElementById('com-stats');
 
-  var confs    = state.confirmacoes ? Object.values(state.confirmacoes) : [];
-  var confSim  = confs.filter(c=>c.status==='sim').length;
-  var confNao  = confs.filter(c=>c.status==='nao').length;
-  var confTalvez = confs.filter(c=>c.status==='talvez').length;
+  // Single-pass confirmation counting for better performance
+  const confirmacoes = state.confirmacoes ? Object.values(state.confirmacoes) : [];
+  const confirmationCounts = confirmacoes.reduce((acc, c) => {
+    if (c.status === 'sim') acc.sim++;
+    else if (c.status === 'nao') acc.nao++;
+    else if (c.status === 'talvez') acc.talvez++;
+    return acc;
+  }, { sim: 0, nao: 0, talvez: 0 });
 
-  var coms    = [...state.comunicados].sort((a,b) => {
-    if(a.fixado && !b.fixado) return -1;
-    if(!a.fixado && b.fixado) return 1;
-    return (b.ts||0) - (a.ts||0);
+  // Sort comunicados: pinned first, then by timestamp
+  const sortedComunicados = [...state.comunicados].sort((a, b) => {
+    if (a.fixado && !b.fixado) return -1;
+    if (!a.fixado && b.fixado) return 1;
+    return (b.ts || 0) - (a.ts || 0);
   });
 
   // Update badges
-  var badgeComs  = document.getElementById('badge-coms');
-  var badgeConfs = document.getElementById('badge-confs');
-  if(badgeComs)  badgeComs.textContent  = coms.length;
-  if(badgeConfs) badgeConfs.textContent = confs.length;
+  updateBadge('badge-coms', sortedComunicados.length);
+  updateBadge('badge-confs', confirmacoes.length);
 
-  stats.innerHTML = '';
+  statsElement.innerHTML = '';
 
-  if(!coms.length) {
-    lista.innerHTML = `<div style="text-align:center;padding:60px 20px;color:var(--text3)">
-      <div style="font-size:36px;margin-bottom:12px">📢</div>
-      <p>Nenhum comunicado publicado ainda.<br>Clique em <b>Novo</b> para criar o primeiro.</p>
-    </div>`;
+  // Handle empty state
+  if (!sortedComunicados.length) {
+    renderEmptyStateComunicados(listaElement);
     return;
   }
 
-  lista.innerHTML = coms.map(c => {
-    var realIdx = state.comunicados.indexOf(c);
-    var catCls  = 'com-cat-' + (c.categoria||'aviso');
-    var catLabel = CAT_LABELS[c.categoria] || '📋 Aviso';
-    var dataStr  = c.dataEvento ? ` · 📅 ${c.dataEvento}` : '';
-    var pubDate  = c.ts ? new Date(c.ts).toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit',year:'numeric'}) : '';
-    return `<div class="com-card${c.fixado?' fixado':''}">
-      <div class="com-header">
-        <span class="com-cat-badge ${catCls}">${catLabel}</span>
-        <span class="com-titulo">${c.fixado?'📌 ':''}${c.titulo}</span>
-      </div>
-      <div class="com-meta">Publicado em ${pubDate}${dataStr}</div>
-      <div class="com-texto">${c.texto}</div>
-      <div class="com-actions">
-        <button class="btn btn-sm" onclick="editCom(${realIdx})">✏️ Editar</button>
-        <button class="btn btn-sm" onclick="toggleFixarCom(${realIdx})" style="color:var(--accent2)">${c.fixado?'📌 Desafixar':'📌 Fixar'}</button>
-        <button class="btn btn-sm" onclick="delCom(${realIdx})" style="color:var(--red);border-color:var(--red-light)">✕ Excluir</button>
-      </div>
-    </div>`;
-  }).join('');
+  // Setup event delegation once
+  setupComunicadoEventDelegation();
 
-  if(comSubtab === 'confs') renderConfirmacoes();
+  // Build comunicado cards using DocumentFragment for better performance
+  const fragment = document.createDocumentFragment();
+  sortedComunicados.forEach(comunicado => {
+    const realIdx = state.comunicados.indexOf(comunicado);
+    const card = createComunicadoCard(comunicado, realIdx);
+    fragment.appendChild(card);
+  });
+
+  listaElement.innerHTML = '';
+  listaElement.appendChild(fragment);
+
+  if (comSubtab === 'confs') renderConfirmacoes();
+}
+
+// Helper: Create status badge for confirmacao
+function createConfirmacaoStatusBadge(status) {
+  const badges = {
+    sim: '<span class="badge badge-green">✅ Vai</span>',
+    nao: '<span class="badge badge-red">❌ Não vai</span>',
+    talvez: '<span style="background:var(--accent2-light);color:var(--accent2);padding:2px 8px;border-radius:20px;font-size:11.5px;font-weight:500">⚠️ Talvez</span>'
+  };
+  return badges[status] || badges.talvez;
+}
+
+// Helper: Create a single confirmacao card
+function createConfirmacaoCard(key, confirmacao) {
+  const { nomeLobinho, atividade, dataAtiv, obs, status, ts } = confirmacao;
+  const statusBadge = createConfirmacaoStatusBadge(status);
+  const date = ts ? new Date(ts).toLocaleDateString('pt-BR') : '';
+  const obsHtml = obs
+    ? `<div style="font-size:12px;color:var(--text2);margin-top:3px;font-style:italic">"${obs}"</div>`
+    : '';
+  
+  return `<div style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border)">
+    <div style="flex:1;min-width:0">
+      <div style="font-weight:500;font-size:13px">${nomeLobinho}</div>
+      <div style="font-size:12px;color:var(--text3);margin-top:2px">${atividade || ''} · ${dataAtiv || ''}</div>
+      ${obsHtml}
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">
+      ${statusBadge}
+      <span style="font-size:11px;color:var(--text3)">${date}</span>
+      <div style="display:flex;gap:4px">
+        <button class="btn btn-sm" onclick="editConf('${key}')" style="padding:3px 8px;font-size:11px">✏️</button>
+        <button class="btn btn-sm" onclick="delConf('${key}')" style="color:var(--red);border-color:var(--red-light);padding:3px 8px;font-size:11px">✕</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// Helper: Populate atividade filter dropdown
+function populateAtividadeFilter(allConfs) {
+  const sel = document.getElementById('conf-f-ativ');
+  if (!sel) return;
+  
+  const atividades = [...new Set(allConfs.map(([k, c]) => c.atividade).filter(Boolean))].sort();
+  const currentValue = sel.value;
+  
+  sel.innerHTML = '<option value="">Todas as atividades</option>' +
+    atividades.map(a => `<option value="${a}"${a === currentValue ? ' selected' : ''}>${a}</option>`).join('');
 }
 
 function renderConfirmacoes() {
-  var el = document.getElementById('confs-lista');
-  if(!el) return;
+  const el = document.getElementById('confs-lista');
+  if (!el) return;
 
-  var allConfs = state.confirmacoes ? Object.entries(state.confirmacoes) : [];
+  const allConfs = state.confirmacoes ? Object.entries(state.confirmacoes) : [];
 
   // Populate atividade filter
-  var sel = document.getElementById('conf-f-ativ');
-  if(sel) {
-    var ativs = [...new Set(allConfs.map(([k,c])=>c.atividade).filter(Boolean))].sort();
-    var curAtiv = sel.value;
-    sel.innerHTML = '<option value="">Todas as atividades</option>' +
-      ativs.map(a=>`<option value="${a}"${a===curAtiv?' selected':''}>${a}</option>`).join('');
-  }
+  populateAtividadeFilter(allConfs);
 
-  // Filter
-  var filtered = allConfs.filter(([k,c]) => {
-    if(confFilter.status !== 'todos' && c.status !== confFilter.status) return false;
-    if(confFilter.atividade && c.atividade !== confFilter.atividade) return false;
-    return true;
-  }).sort((a,b) => (b[1].ts||0) - (a[1].ts||0));
+  // Filter and sort
+  const filtered = allConfs
+    .filter(([k, c]) => {
+      if (confFilter.status !== 'todos' && c.status !== confFilter.status) return false;
+      if (confFilter.atividade && c.atividade !== confFilter.atividade) return false;
+      return true;
+    })
+    .sort((a, b) => (b[1].ts || 0) - (a[1].ts || 0));
 
-  if(!filtered.length) {
+  // Render empty state
+  if (!filtered.length) {
     el.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text3);font-size:13px">Nenhuma confirmação encontrada.</div>';
     return;
   }
 
-  el.innerHTML = `<div class="card">` + filtered.map(([key, c]) => {
-    var statusBadge = c.status==='sim'
-      ? '<span class="badge badge-green">✅ Vai</span>'
-      : c.status==='nao'
-      ? '<span class="badge badge-red">❌ Não vai</span>'
-      : '<span style="background:var(--accent2-light);color:var(--accent2);padding:2px 8px;border-radius:20px;font-size:11.5px;font-weight:500">⚠️ Talvez</span>';
-    var date = c.ts ? new Date(c.ts).toLocaleDateString('pt-BR') : '';
-    return `<div style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border)">
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:500;font-size:13px">${c.nomeLobinho}</div>
-        <div style="font-size:12px;color:var(--text3);margin-top:2px">${c.atividade||''} · ${c.dataAtiv||''}</div>
-        ${c.obs ? `<div style="font-size:12px;color:var(--text2);margin-top:3px;font-style:italic">"${c.obs}"</div>` : ''}
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">
-        ${statusBadge}
-        <span style="font-size:11px;color:var(--text3)">${date}</span>
-        <div style="display:flex;gap:4px">
-          <button class="btn btn-sm" onclick="editConf('${key}')" style="padding:3px 8px;font-size:11px">✏️</button>
-          <button class="btn btn-sm" onclick="delConf('${key}')" style="color:var(--red);border-color:var(--red-light);padding:3px 8px;font-size:11px">✕</button>
-        </div>
-      </div>
-    </div>`;
-  }).join('') + `</div>`;
+  // Render cards
+  const cardsHtml = filtered
+    .map(([key, c]) => createConfirmacaoCard(key, c))
+    .join('');
+  
+  el.innerHTML = `<div class="card">${cardsHtml}</div>`;
 }
 
 function editConf(key) {

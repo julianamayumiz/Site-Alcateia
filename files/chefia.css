@@ -384,6 +384,14 @@ tr.row-regional:hover td { background: #e6d9ff; }
 .cell-A { background: var(--red-light); color: var(--red); }
 .cell-FJ { background: var(--accent2-light); color: var(--accent2); }
 .cell-empty { background: var(--surface2); color: var(--text3); border: 1px dashed var(--border); }
+/* Percentage cell styling */
+.percentage-cell {
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+}
+
 
 /* FJ tooltip */
 .cell-FJ-wrap { position: relative; display: inline-block; }

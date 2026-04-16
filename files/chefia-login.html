@@ -278,6 +278,7 @@
 
     // Configuração da senha (ALTERE AQUI A SENHA)
     const SENHA_CHEFIA = 'kotick'; // Altere esta senha conforme necessário
+    const ERROR_MESSAGE_DURATION_MS = 3000; // 3 seconds
 
     const loginForm = document.getElementById('loginForm');
     const passwordInput = document.getElementById('password');
@@ -308,7 +309,7 @@
         // Remove a mensagem de erro após 3 segundos
         setTimeout(() => {
           errorMessage.classList.remove('show');
-        }, 3000);
+        }, ERROR_MESSAGE_DURATION_MS);
       }
     });
 

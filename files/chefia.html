@@ -12,6 +12,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="firebase-config.js"></script>
   <style>
     :root {
       --bg: #f4f6fb;
@@ -3150,7 +3151,7 @@ var fbReady = false;
 
 function initFirebase() {
   var config = {
-    apiKey: "AIzaSyBqn10ZjuimbifYx_3813caY-s9boS7FKM",
+    apiKey: window.FIREBASE_API_KEY || "",
     authDomain: "alcateiakotick-db12b.firebaseapp.com",
     databaseURL: "https://alcateiakotick-db12b-default-rtdb.firebaseio.com",
     projectId: "alcateiakotick-db12b",
