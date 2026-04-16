@@ -1534,3 +1534,162 @@ input[type="file"] { display: none; }
   .topbar { padding: 0 10px; }
   .stats-row { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ===== AVISOS INTERNOS ===== */
+.aviso-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.aviso-item:last-child { border-bottom: none; }
+.aviso-bullet {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+.aviso-text {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+.aviso-remove {
+  background: none;
+  border: none;
+  color: var(--text3);
+  cursor: pointer;
+  padding: 2px 6px;
+  font-size: 14px;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+.aviso-remove:hover { color: var(--red); }
+
+/* ===== TO-DO CHEFIA ===== */
+.todo-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.todo-item:last-child { border-bottom: none; }
+.todo-checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  background: var(--surface);
+}
+.todo-checkbox:hover { border-color: var(--accent); }
+.todo-checkbox.checked { background: var(--accent); border-color: var(--accent); }
+.todo-checkbox.checked::after { content: '✓'; color: white; font-size: 12px; font-weight: 600; }
+.todo-text {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+  word-wrap: break-word;
+  transition: all 0.15s;
+}
+.todo-text.completed { text-decoration: line-through; color: var(--text3); }
+.todo-remove {
+  background: none;
+  border: none;
+  color: var(--text3);
+  cursor: pointer;
+  padding: 2px 6px;
+  font-size: 14px;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+.todo-remove:hover { color: var(--red); }
+
+.empty-state-small {
+  padding: 20px;
+  text-align: center;
+  color: var(--text3);
+  font-size: 12px;
+}
+
+/* ===== CAIXA — BARRAS ENTRADAS/SAÍDAS ===== */
+.caixa-barra-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.caixa-barra-label {
+  font-size: 12px;
+  color: var(--text2);
+  min-width: 55px;
+}
+.caixa-barra-track {
+  flex: 1;
+  background: var(--surface2);
+  border-radius: 20px;
+  height: 10px;
+  overflow: hidden;
+}
+.caixa-barra-fill {
+  height: 100%;
+  border-radius: 20px;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.caixa-barra-entrada { background: var(--accent); }
+.caixa-barra-saida { background: var(--red); }
+.caixa-barra-valor {
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'DM Mono', monospace;
+  min-width: 80px;
+  text-align: right;
+}
+
+/* ===== CAIXA — BOTÕES DE LANÇAMENTO ===== */
+.lanc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.lanc-btn:hover { background: var(--surface2); color: var(--text); }
+.lanc-btn-del:hover { background: var(--red-light); color: var(--red); border-color: var(--red); }
+
+/* ===== CAIXA — CABEÇALHO DE MÊS ===== */
+.lanc-mes-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: var(--surface2);
+  font-size: 12px;
+  font-weight: 600;
+}
+.lanc-mes-titulo {
+  flex: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+}
+.lanc-mes-entrada { color: var(--accent); font-family: 'DM Mono', monospace; }
+.lanc-mes-saida { color: var(--red); font-family: 'DM Mono', monospace; }
