@@ -1076,6 +1076,9 @@ input[type="file"] { display: none; }
 @media (max-width: 768px) {
   .pontuacao-grid { grid-template-columns: 1fr 1fr; }
 }
+@media (max-width: 600px) {
+  .pontuacao-grid { grid-template-columns: 1fr; }
+}
 /* ===== FLUXO DE CAIXA ===== */
 .lanc-row {
   display: flex;
