@@ -1317,6 +1317,7 @@ input[type="file"] { display: none; }
 .com-cat-externa    { background: var(--accent2-light); color: var(--accent2); }
 .com-cat-reuniao    { background: #e8f5e9; color: #2e7d32; }
 .com-cat-outros     { background: var(--accent-light); color: var(--accent); }
+.com-cat-evento     { background: var(--green-light); color: var(--green); }
 .com-titulo { font-size: 15px; font-weight: 600; flex: 1; }
 .com-meta { font-size: 12px; color: var(--text3); margin-bottom: 8px; padding: 0 18px; }
 .com-texto { font-size: 13.5px; color: var(--text2); padding: 0 18px 16px; line-height: 1.7; white-space: pre-wrap; }

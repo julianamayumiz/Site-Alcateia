@@ -1,71 +1,104 @@
 // ===================== CALENDARIO MODULE =====================
-// Gerencia o calendário de atividades
+// Renderiza calendário agrupado por mês, com row-colors por categoria
 
 let currentCalFilter = 'todos';
+const FERIADO_WORDS = ['feriado', 'emenda'];
+const EXTERNA_WORDS = ['externa', 'caçada', 'rally', 'cinema'];
 
-// ===================== RENDER CALENDARIO =====================
+// ===================== HELPERS =====================
+function isFeriado(ev) {
+  const a = (ev.atividade || '').toLowerCase();
+  const c = (ev.categoria || '').toLowerCase();
+  return FERIADO_WORDS.some(w => a.includes(w) || c.includes(w));
+}
+
+function getRowClass(ev) {
+  const a = (ev.atividade || '').toLowerCase();
+  const c = (ev.categoria || '').toLowerCase();
+  if(FERIADO_WORDS.some(w => a.includes(w) || c.includes(w))) return 'row-feriado';
+  if(c === 'regional' || c === 'distrital') return 'row-regional';
+  if(c === 'local') return 'row-local';
+  if(EXTERNA_WORDS.some(w => a.includes(w))) return 'row-externa';
+  if(a.includes('normal sede')) return 'row-normal';
+  return '';
+}
+
+function matchFilter(ev, filter) {
+  if(filter === 'todos') return true;
+  if(filter === 'feriados') return isFeriado(ev);
+  if(filter === 'externos') {
+    const a = (ev.atividade || '').toLowerCase();
+    const c = (ev.categoria || '').toLowerCase();
+    return EXTERNA_WORDS.some(w => a.includes(w)) || c.includes('extern') || c === 'regional' || c === 'distrital';
+  }
+  if(filter === 'sede') {
+    return (ev.atividade || '').toLowerCase().includes('normal sede') ||
+      (!isFeriado(ev) && !(ev.categoria || '').toLowerCase().match(/extern|regional|distrital/));
+  }
+  return true;
+}
+
+// ===================== RENDER =====================
 function renderCal() {
   const tbody = document.getElementById('cal-tbody');
   if(!tbody) return;
-  
-  let filtered = state.calendario;
-  if(currentCalFilter !== 'todos') {
-    filtered = state.calendario.filter(ev => {
-      if(currentCalFilter === 'feriados') return isFeriado(ev);
-      if(currentCalFilter === 'externos') return ev.categoria && ev.categoria.toLowerCase().includes('extern');
-      if(currentCalFilter === 'sede') return !ev.categoria || ev.categoria.toLowerCase().includes('sede') || ev.categoria === '';
-      return true;
-    });
+
+  // Filtra + preserva índice original
+  const filtered = state.calendario
+    .map((ev, originalIdx) => ({ ...ev, _idx: originalIdx }))
+    .filter(ev => matchFilter(ev, currentCalFilter));
+
+  if(filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text3)">Nenhuma atividade encontrada.</td></tr>';
+    return;
   }
-  
-  tbody.innerHTML = filtered.map((ev, idx) => {
-    const rowClass = getRowClass(ev);
-    return `
-      <tr class="${rowClass}">
-        <td>${ev.mes}</td>
-        <td>${ev.data}</td>
-        <td>${ev.dia}</td>
-        <td>${ev.atividade}</td>
-        <td>${ev.categoria || '-'}</td>
-        <td>${ev.chefe || '-'}</td>
-        <td>${ev.datas || '-'}</td>
-        <td>${ev.obs || '-'}</td>
-        <td>
-          <button class="btn-icon" onclick="editCal(${state.calendario.indexOf(ev)})" title="Editar">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-            </svg>
+
+  // Agrupa por mês (preserva ordem do array, que já vem sorted)
+  const byMonth = {};
+  filtered.forEach(ev => {
+    const mes = ev.mes || 'Sem mês';
+    (byMonth[mes] = byMonth[mes] || []).push(ev);
+  });
+
+  tbody.innerHTML = Object.entries(byMonth).map(([mes, evs]) => {
+    const header = `<tr class="month-header"><td colspan="7">${mes.toUpperCase()}</td></tr>`;
+    const rows = evs.map(ev => {
+      const rowCls = getRowClass(ev);
+      const chefeBadge = ev.chefe ? `<span class="badge badge-gray">${ev.chefe}</span>` : '';
+      return `<tr class="event-row ${rowCls}">
+        <td><b>${ev.data || ''}</b></td>
+        <td style="color:var(--text2)">${ev.dia || ''}</td>
+        <td>${ev.atividade || ''}</td>
+        <td>${chefeBadge}</td>
+        <td style="font-size:12px;color:var(--text2)">${ev.datas || ''}</td>
+        <td style="font-size:12px;color:var(--text2)">${ev.obs || ''}</td>
+        <td style="white-space:nowrap">
+          <button class="lanc-btn" onclick="editCal(${ev._idx})" aria-label="Editar atividade" title="Editar">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
           </button>
-          <button class="btn-icon" onclick="delCal(${state.calendario.indexOf(ev)})" title="Excluir">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="3 6 5 6 21 6"></polyline>
-              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-            </svg>
+          <button class="lanc-btn lanc-btn-del" onclick="delCal(${ev._idx})" aria-label="Excluir atividade" title="Excluir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
           </button>
         </td>
-      </tr>
-    `;
+      </tr>`;
+    }).join('');
+    return header + rows;
   }).join('');
 }
 
-// ===================== FILTER CALENDARIO =====================
+// ===================== FILTER =====================
 function filterCal(filter) {
   currentCalFilter = filter;
-  
-  // Update filter buttons
-  document.querySelectorAll('.filter-btn').forEach(btn => {
+  document.querySelectorAll('#cal-filters .filter-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.filter === filter);
   });
-  
   renderCal();
 }
 
-// ===================== EDIT CALENDARIO =====================
+// ===================== EDIT =====================
 function editCal(idx) {
   window.editingCalIdx = idx;
   const ev = state.calendario[idx];
-  
   document.getElementById('modal-cal-title').textContent = 'Editar atividade';
   document.getElementById('add-mes').value = ev.mes || '';
   document.getElementById('add-data').value = ev.data || '';
@@ -75,11 +108,10 @@ function editCal(idx) {
   document.getElementById('add-chefe').value = ev.chefe || '';
   document.getElementById('add-datas').value = ev.datas || '';
   document.getElementById('add-obs').value = ev.obs || '';
-  
   openModal('modal-cal');
 }
 
-// ===================== SAVE CALENDARIO =====================
+// ===================== SAVE =====================
 function saveCalEvent() {
   const mes = document.getElementById('add-mes').value.trim();
   const data = document.getElementById('add-data').value.trim();
@@ -89,14 +121,14 @@ function saveCalEvent() {
   const chefe = document.getElementById('add-chefe').value.trim();
   const datas = document.getElementById('add-datas').value.trim();
   const obs = document.getElementById('add-obs').value.trim();
-  
+
   if(!mes || !data || !atividade) {
     showToast('Preencha mês, data e atividade');
     return;
   }
-  
-  const ev = {mes, data, dia, atividade, categoria, chefe, datas, obs};
-  
+
+  const ev = { mes, data, dia, atividade, categoria, chefe, datas, obs };
+
   if(window.editingCalIdx >= 0) {
     state.calendario[window.editingCalIdx] = ev;
     showToast('Atividade atualizada');
@@ -104,46 +136,30 @@ function saveCalEvent() {
     state.calendario.push(ev);
     showToast('Atividade adicionada');
   }
-  
-  // Sort by month order
-  state.calendario.sort((a,b) => {
+
+  // Sort by month order, then by day-of-month
+  state.calendario.sort((a, b) => {
     const ma = MES_NUM[a.mes] || 99;
     const mb = MES_NUM[b.mes] || 99;
     if(ma !== mb) return ma - mb;
-    // Parse dates for same month
-    const [da1, ma1] = (a.data || '01/01').split('/').map(Number);
-    const [db1, mb1] = (b.data || '01/01').split('/').map(Number);
-    return da1 - db1;
+    const [da] = (a.data || '01/01').split('/').map(Number);
+    const [db] = (b.data || '01/01').split('/').map(Number);
+    return da - db;
   });
-  
+
   withModalSaveLoading(fbSaveSection('calendario')).then(() => {
     closeModals();
     renderCal();
   });
 }
 
-// ===================== DELETE CALENDARIO =====================
+// ===================== DELETE =====================
 function delCal(idx) {
   if(!confirm('Excluir esta atividade?')) return;
   state.calendario.splice(idx, 1);
   fbSaveSection('calendario');
   showToast('Atividade excluída');
   renderCal();
-}
-
-// ===================== HELPERS =====================
-function getRowClass(ev) {
-  if(isFeriado(ev)) return 'row-feriado';
-  if(ev.categoria && ev.categoria.toLowerCase().includes('extern')) return 'row-externa';
-  if(ev.categoria && (ev.categoria.toLowerCase().includes('local') || ev.categoria.toLowerCase().includes('distrital') || ev.categoria.toLowerCase().includes('regional'))) return 'row-evento';
-  return '';
-}
-
-function isFeriado(ev) {
-  const feriadoWords = ['feriado', 'emenda'];
-  const ativ = (ev.atividade || '').toLowerCase();
-  const cat = (ev.categoria || '').toLowerCase();
-  return feriadoWords.some(w => ativ.includes(w) || cat.includes(w));
 }
 
 // Exporta funções para uso global
@@ -154,5 +170,3 @@ window.saveCalEvent = saveCalEvent;
 window.delCal = delCal;
 window.getRowClass = getRowClass;
 window.isFeriado = isFeriado;
-
-// Made with Bob
