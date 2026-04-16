@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "Bash(where python:*)",
+      "Bash(where python3:*)",
+      "Bash(where node:*)",
+      "Bash(python -c ':*)",
+      "Read(//c/Users/julia/.claude/plugins/cache/ui-ux-pro-max-skill/ui-ux-pro-max/2.5.0/**)",
+      "Bash(python skills/ui-ux-pro-max/scripts/search.py \"scout cubs group portal mobile web dashboard\" --design-system -p \"Alcateia Kotick\")",
+      "Bash(python skills/ui-ux-pro-max/scripts/search.py \"scout cubs youth group portal mobile web dashboard\" --design-system -p \"Alcateia Kotick\")",
+      "Bash(cmd /c \"cd /d \\\\\"C:\\\\Users\\\\julia\\\\.claude\\\\plugins\\\\cache\\\\ui-ux-pro-max-skill\\\\ui-ux-pro-max\\\\2.5.0\\\\\" && python skills/ui-ux-pro-max/scripts/search.py \\\\\"scout cubs youth group portal mobile web dashboard\\\\\" --design-system -p \\\\\"Alcateia Kotick\\\\\" 2>&1\")",
+      "Bash(python \"C:/Users/julia/.claude/plugins/cache/ui-ux-pro-max-skill/ui-ux-pro-max/2.5.0/skills/ui-ux-pro-max/scripts/search.py\" \"scout cubs youth group portal mobile web dashboard\" --design-system -p \"Alcateia Kotick\")"
+    ]
+  }
+}

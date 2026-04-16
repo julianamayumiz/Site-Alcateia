@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Login - Portal da Chefia - Alcateia Kotick">
+  <title>Alcateia Kotick · Login Chefia</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script>
+    (function() {
+      var saved = localStorage.getItem('chefiaTheme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark-init');
+    })();
+  </script>
+  <style>.dark-init { background: #0f1117; }</style>
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --surface: #ffffff;
+      --border: #d6dcea;
+      --text: #12183a;
+      --text2: #5a6480;
+      --accent: #2b3a8c;
+      --accent-hover: #1f2b6b;
+      --red: #c0392b;
+      --red-light: #fce8e6;
+      --surface2: #edf0f8;
+      --text3: #677090;
+      --radius-sm: 6px;
+      --radius: 10px;
+    }
+
+    body.dark {
+      --bg: #0f1117;
+      --surface: #181b2a;
+      --surface2: #1e2236;
+      --border: #2a304d;
+      --text: #e8ebf5;
+      --text2: #9ba6c8;
+      --text3: #7282ab;
+      --accent: #5472e4;
+      --accent-hover: #4060d4;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-container {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      padding: 40px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--text2);
+      margin-bottom: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    input[type="password"]:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(43, 58, 140, 0.1);
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 12px 24px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-login:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(43, 58, 140, 0.2);
+    }
+
+    .btn-login:active {
+      transform: translateY(0);
+    }
+
+    .error-message {
+      background: var(--red-light);
+      color: var(--red);
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+      animation: shake 0.4s;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+
+    .back-link {
+      margin-top: 24px;
+      font-size: 13px;
+    }
+
+    .back-link a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+
+    .pw-wrapper {
+      position: relative;
+    }
+    .pw-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text3);
+      padding: 4px;
+      display: flex;
+      align-items: center;
+    }
+    .pw-toggle:hover { color: var(--text); }
+
+    .info-text {
+      font-size: 12px;
+      color: var(--text2);
+      margin-top: 16px;
+      padding: 12px;
+      background: var(--surface2);
+      border-radius: var(--radius-sm);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-container">
+    <div class="logo">
+      <svg width="48" height="48" viewBox="0 0 52 52" fill="none" aria-hidden="true">
+        <path d="M26 4L6 12v16c0 11 9.5 18 20 20 10.5-2 20-9 20-20V12L26 4z" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+        <polygon points="26,16 28.4,22.8 35.5,22.9 29.8,27.2 31.9,34.1 26,30 20.1,34.1 22.2,27.2 16.5,22.9 23.6,22.8" fill="white"/>
+      </svg>
+    </div>
+    <h1>Portal da Chefia</h1>
+    <div class="subtitle">Acesso Restrito</div>
+
+    <div class="error-message" id="errorMessage">
+      Senha incorreta. Tente novamente.
+    </div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="password">Senha de Acesso</label>
+        <div class="pw-wrapper">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Digite a senha da chefia"
+            required
+            autocomplete="off"
+          >
+          <button type="button" class="pw-toggle" onclick="togglePw()" aria-label="Mostrar/ocultar senha">
+            <svg id="pw-eye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg id="pw-eye-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-login">Acessar Portal</button>
+    </form>
+
+    <div class="info-text">
+      Esta área é exclusiva para membros da chefia da Alcateia Kotick
+    </div>
+
+    <div class="back-link">
+      <a href="index.html">← Voltar para página inicial</a>
+    </div>
+  </div>
+
+  <script>
+    // Inicializa tema
+    (function() {
+      var saved = localStorage.getItem('chefiaTheme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.body.classList.add('dark');
+        document.documentElement.classList.remove('dark-init');
+      } else {
+        document.documentElement.classList.remove('dark-init');
+      }
+    })();
+
+    function togglePw() {
+      var inp = document.getElementById('password');
+      var eye = document.getElementById('pw-eye');
+      var eyeOff = document.getElementById('pw-eye-off');
+      var isHidden = inp.type === 'password';
+      inp.type = isHidden ? 'text' : 'password';
+      eye.style.display = isHidden ? 'none' : '';
+      eyeOff.style.display = isHidden ? '' : 'none';
+    }
+
+    // Configuração da senha (ALTERE AQUI A SENHA)
+    const SENHA_CHEFIA = 'kotick'; // Altere esta senha conforme necessário
+
+    const loginForm = document.getElementById('loginForm');
+    const passwordInput = document.getElementById('password');
+    const errorMessage = document.getElementById('errorMessage');
+
+    // Verifica se já está autenticado
+    if (sessionStorage.getItem('chefiaAutenticada') === 'true') {
+      window.location.href = 'chefia.html';
+    }
+
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const senhaDigitada = passwordInput.value;
+
+      if (senhaDigitada === SENHA_CHEFIA) {
+        // Senha correta - salva autenticação na sessão
+        sessionStorage.setItem('chefiaAutenticada', 'true');
+        
+        // Redireciona para o portal da chefia
+        window.location.href = 'chefia.html';
+      } else {
+        // Senha incorreta - mostra mensagem de erro
+        errorMessage.classList.add('show');
+        passwordInput.value = '';
+        passwordInput.focus();
+
+        // Remove a mensagem de erro após 3 segundos
+        setTimeout(() => {
+          errorMessage.classList.remove('show');
+        }, 3000);
+      }
+    });
+
+    // Remove mensagem de erro quando o usuário começa a digitar
+    passwordInput.addEventListener('input', function() {
+      errorMessage.classList.remove('show');
+    });
+  </script>
+</body>
+
+</html>
