@@ -2386,7 +2386,7 @@ function closeSidebar() {
 var pageNames = {dashboard:'Dashboard',calendario:'Calendário',presenca:'Presença',especialidades:'Especialidades',matilhas:'Matilhas',comunicados:'Comunicados',caixa:'Fluxo de Caixa'};
 var pageList = ['dashboard','calendario','presenca','especialidades','matilhas','comunicados','caixa'];
 
-function goTo(page) {
+function goTo(page, updateHash = true) {
   if(!pageList.includes(page)) page = 'dashboard';
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => {
@@ -2402,7 +2402,12 @@ function goTo(page) {
   addBtn.style.display = (page === 'presenca' || page === 'dashboard' || page === 'caixa') ? 'none' : 'inline-flex';
   closeMaisMenu();
   // Update URL hash without reloading
-  history.replaceState(null, '', page === 'dashboard' ? '#' : '#' + page);
+  if (updateHash) {
+    var newHash = page === 'dashboard' ? '' : '#' + page;
+    if (window.location.hash !== newHash) {
+      window.location.hash = newHash;
+    }
+  }
   closeSidebar();
   render(page);
 }
@@ -2410,7 +2415,7 @@ function goTo(page) {
 // Handle browser back/forward and direct hash links
 window.addEventListener('hashchange', function() {
   var hash = window.location.hash.replace('#','') || 'dashboard';
-  goTo(hash);
+  goTo(hash, false);
 });
 
 // ===================== MODALS =====================
