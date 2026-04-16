@@ -1,5 +1,6 @@
 trim_file.py
 files/FIREBASE-SETUP.md
+backup/
 
 # Firebase configuration files with API keys
 firebase-key.js
