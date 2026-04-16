@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Como instalar o app da Alcateia no celular">
+  <title>Alcateia Kotick · Como instalar o app</title>
+
+  <link rel="icon" type="image/jpeg" href="../images/logo_jpeg.jpeg">
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --surface: #ffffff;
+      --border: #d6dcea;
+      --text: #12183a;
+      --text2: #5a6480;
+      --text3: #677090;
+      --accent: #2b3a8c;
+      --accent-hover: #1f2b6b;
+      --green: #27ae60;
+      --green-light: #e8f5ee;
+      --apple: #007aff;
+      --android: #3ddc84;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 20px 16px 60px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    header.page-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 30px 20px;
+      background: var(--surface);
+      border-radius: 14px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    header.page-header img {
+      width: 70px;
+      height: 70px;
+      border-radius: 14px;
+      margin-bottom: 12px;
+    }
+
+    header.page-header h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    header.page-header p {
+      color: var(--text2);
+      font-size: 15px;
+    }
+
+    .platform-section {
+      background: var(--surface);
+      border-radius: 14px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      padding: 28px 20px;
+      margin-bottom: 30px;
+    }
+
+    .platform-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .platform-title .badge {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      color: white;
+      font-weight: 600;
+    }
+
+    .platform-title .badge.android {
+      background: var(--android);
+      color: #0a2a17;
+    }
+
+    .platform-title .badge.ios {
+      background: var(--apple);
+    }
+
+    .platform-subtitle {
+      color: var(--text2);
+      font-size: 14px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .steps {
+      display: grid;
+      gap: 32px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      align-items: center;
+    }
+
+    @media (min-width: 640px) {
+      .step {
+        grid-template-columns: 260px 1fr;
+        gap: 28px;
+      }
+    }
+
+    .step-visual {
+      display: flex;
+      justify-content: center;
+    }
+
+    .step-text {
+      order: 2;
+    }
+
+    @media (min-width: 640px) {
+      .step:nth-child(even) .step-visual {
+        order: 2;
+      }
+
+      .step:nth-child(even) .step-text {
+        order: 1;
+      }
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+
+    .step-text h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .step-text p {
+      color: var(--text2);
+      font-size: 14.5px;
+      margin-bottom: 8px;
+    }
+
+    .step-text .hint {
+      font-size: 13px;
+      color: var(--text3);
+      font-style: italic;
+      padding: 8px 12px;
+      background: var(--bg);
+      border-left: 3px solid var(--accent);
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+
+    /* Phone mockup */
+    .phone {
+      width: 220px;
+      height: 440px;
+      background: #1a1a1a;
+      border-radius: 32px;
+      padding: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Android notch */
+    .phone.android::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #333;
+      z-index: 10;
+    }
+
+    /* iOS notch */
+    .phone.ios::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 22px;
+      border-radius: 0 0 16px 16px;
+      background: #1a1a1a;
+      z-index: 10;
+    }
+
+    .status-bar {
+      height: 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 18px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #000;
+      flex-shrink: 0;
+    }
+
+    .phone.ios .status-bar {
+      padding: 4px 18px 0;
+    }
+
+    /* Browser chrome */
+    .browser-bar {
+      background: #f1f3f4;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      color: #555;
+      border-bottom: 1px solid #e0e0e0;
+      flex-shrink: 0;
+    }
+
+    .browser-bar .url {
+      flex: 1;
+      background: white;
+      border-radius: 12px;
+      padding: 4px 8px;
+      font-size: 9px;
+      color: #333;
+      border: 1px solid #e0e0e0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .browser-bar .menu-dots {
+      font-size: 14px;
+      padding: 0 2px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    /* Safari bottom bar */
+    .safari-bottom {
+      height: 42px;
+      background: #f7f7f7;
+      border-top: 1px solid #d0d0d0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-shrink: 0;
+      padding: 0 8px;
+    }
+
+    .safari-btn {
+      font-size: 16px;
+      color: var(--apple);
+      font-weight: 300;
+    }
+
+    .safari-btn.share {
+      color: var(--apple);
+      position: relative;
+    }
+
+    /* Page content mockup */
+    .page-content {
+      flex: 1;
+      background: linear-gradient(180deg, var(--accent) 0%, var(--accent) 80px, #f4f6fb 80px);
+      padding: 14px 12px 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .mock-logo {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 8px;
+      margin: 0 auto 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .mock-title {
+      text-align: center;
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .mock-card {
+      background: white;
+      border-radius: 8px;
+      padding: 10px;
+      margin-top: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .mock-line {
+      height: 6px;
+      background: #e0e4ef;
+      border-radius: 3px;
+      margin-bottom: 6px;
+    }
+
+    .mock-line.short {
+      width: 60%;
+    }
+
+    .mock-btn {
+      background: var(--accent);
+      color: white;
+      font-size: 9px;
+      padding: 6px;
+      border-radius: 5px;
+      text-align: center;
+      margin-top: 8px;
+      font-weight: 600;
+    }
+
+    /* Install banner (Android) */
+    .install-banner {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+      background: white;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid var(--android);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.02);
+      }
+    }
+
+    .install-banner .icon {
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      border-radius: 6px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .install-banner .text {
+      flex: 1;
+      font-size: 9px;
+      color: #333;
+    }
+
+    .install-banner .text strong {
+      display: block;
+      color: #000;
+      font-size: 10px;
+    }
+
+    .install-banner .btn {
+      background: var(--android);
+      color: #0a2a17;
+      font-size: 9px;
+      padding: 5px 10px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    /* Chrome menu */
+    .chrome-menu {
+      position: absolute;
+      top: 36px;
+      right: 6px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+      padding: 6px 0;
+      width: 140px;
+      z-index: 20;
+    }
+
+    .menu-item {
+      padding: 6px 10px;
+      font-size: 9px;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .menu-item.highlight {
+      background: #fff7d6;
+      color: #000;
+      font-weight: 600;
+      border-left: 3px solid var(--android);
+    }
+
+    /* iOS share sheet */
+    .share-sheet {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #f2f2f7;
+      border-radius: 14px 14px 0 0;
+      padding: 10px 8px;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+      z-index: 20;
+    }
+
+    .share-title {
+      font-size: 10px;
+      font-weight: 600;
+      color: #000;
+      padding: 4px 6px 8px;
+      border-bottom: 1px solid #d0d0d0;
+      margin-bottom: 6px;
+    }
+
+    .share-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 6px;
+      font-size: 10px;
+      color: #000;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .share-option.highlight {
+      background: #fff7d6;
+      border-radius: 6px;
+      font-weight: 600;
+      border-left: 3px solid var(--apple);
+    }
+
+    .share-option .ico {
+      width: 22px;
+      height: 22px;
+      border-radius: 5px;
+      background: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    /* Home screen */
+    .home-screen {
+      flex: 1;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 16px 12px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      align-content: start;
+    }
+
+    .app-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .app-icon .icon-img {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .app-icon .name {
+      color: white;
+      font-size: 7px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .app-icon.alcateia .icon-img {
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+      animation: highlight 2s infinite;
+    }
+
+    @keyframes highlight {
+
+      0%,
+      100% {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 0 0 rgba(255, 255, 255, 0.7);
+      }
+
+      50% {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 0 6px rgba(255, 255, 255, 0);
+      }
+    }
+
+    /* Confirm dialog */
+    .confirm-dialog {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border-radius: 12px;
+      padding: 14px;
+      width: 85%;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+      z-index: 20;
+      text-align: center;
+    }
+
+    .confirm-dialog .title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #000;
+      margin-bottom: 6px;
+    }
+
+    .confirm-dialog .desc {
+      font-size: 9px;
+      color: #555;
+      margin-bottom: 12px;
+    }
+
+    .confirm-dialog .actions {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .confirm-dialog button {
+      font-size: 10px;
+      padding: 5px 14px;
+      border-radius: 6px;
+      border: none;
+      font-weight: 600;
+    }
+
+    .confirm-dialog .cancel {
+      background: #e0e0e0;
+      color: #333;
+    }
+
+    .confirm-dialog .install {
+      background: var(--accent);
+      color: white;
+    }
+
+    .confirm-dialog.ios .install {
+      background: var(--apple);
+    }
+
+    /* iOS add to home screen sheet */
+    .ios-add-sheet {
+      position: absolute;
+      inset: 0;
+      background: #f2f2f7;
+      z-index: 25;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ios-add-sheet .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      gap: 4px;
+    }
+
+    .ios-add-sheet .cancel {
+      font-size: 9px;
+      color: var(--apple);
+      flex-shrink: 0;
+    }
+
+    .ios-add-sheet .title {
+      font-size: 9px;
+      font-weight: 600;
+      color: #000;
+      text-align: center;
+      flex: 1;
+    }
+
+    .ios-add-sheet .add-btn {
+      font-size: 9px;
+      color: var(--apple);
+      font-weight: 700;
+      background: #fff7d6;
+      padding: 3px 6px;
+      border-radius: 4px;
+      border: 2px solid var(--apple);
+      flex-shrink: 0;
+    }
+
+    .ios-add-sheet .preview {
+      background: white;
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ios-add-sheet .preview .icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .ios-add-sheet .preview .info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .ios-add-sheet .preview .name {
+      font-size: 11px;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .ios-add-sheet .preview .url {
+      font-size: 8px;
+      color: #777;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Final tips */
+    .tips-section {
+      background: var(--green-light);
+      border-left: 4px solid var(--green);
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .tips-section h3 {
+      color: var(--green);
+      font-size: 17px;
+      margin-bottom: 10px;
+    }
+
+    .tips-section ul {
+      padding-left: 20px;
+      color: var(--text2);
+      font-size: 14.5px;
+    }
+
+    .tips-section li {
+      margin-bottom: 6px;
+    }
+
+    .warning-box {
+      background: #fff4e0;
+      border-left: 4px solid #e67e22;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: #7d4e17;
+    }
+
+    .warning-box strong {
+      color: #c0660f;
+    }
+
+    footer.page-footer {
+      text-align: center;
+      color: var(--text3);
+      font-size: 13px;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <header class="page-header">
+      <img src="../images/logo_jpeg.jpeg" alt="Alcateia Kotick">
+      <h1>Como instalar o app no celular</h1>
+      <p>Guia passo a passo pra chefia · Android e iPhone</p>
+    </header>
+
+    <!-- ================= ANDROID ================= -->
+    <section class="platform-section">
+      <div class="platform-title">
+        <span class="badge android">ANDROID</span>
+        Instalar pelo Chrome
+      </div>
+      <p class="platform-subtitle">Funciona com qualquer celular Android — use o navegador <strong>Chrome</strong>.</p>
+
+      <div class="steps">
+
+        <!-- Passo 1 -->
+        <div class="step">
+          <div class="step-visual">
+            <div class="phone android">
+              <div class="phone-screen">
+                <div class="status-bar">
+                  <span>09:41</span>
+                  <span>📶 📊 🔋</span>
+                </div>
+                <div class="browser-bar">
+                  <span>←</span>
+                  <div class="url">alcateiakotick.com.br</div>
+                  <span class="menu-dots">⋮</span>
+                </div>
+                <div class="page-content">
+                  <div class="mock-logo">🐺</div>
+                  <div class="mock-title">Portal da Chefia</div>
+                  <div class="mock-card">
+                    <div class="mock-line"></div>
+                    <div class="mock-line short"></div>
+                    <div class="mock-btn">Entrar</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="step-text">
+            <span class="step-number">1</span>
+            <h3>Abra o site no Chrome</h3>
+            <p>No celular, abra o <strong>Chrome</strong> e acesse o endereço do Portal da Chefia. Faça login normalmente.</p>
+            <div class="hint">💡 Precisa ser o Chrome pra funcionar direitinho.</div>
+          </div>
+        </div>
+
+        <!-- Passo 2 -->
+        <div class="step">
+          <div class="step-visual">
+            <div class="phone android">
+              <div class="phone-screen">
+                <div class="status-bar">
+                  <span>09:41</span>
+                  <span>📶 📊 🔋</span>
+                </div>
+                <div class="browser-bar">
+                  <span>←</span>
+                  <div class="url">alcateiakotick.com.br</div>
+                  <span class="menu-dots">⋮</span>
+                </div>
+                <div class="page-content">
+                  <div class="mock-logo">🐺</div>
+                  <div class="mock-title">Portal da Chefia</div>
+                  <div class="mock-card">
+                    <div class="mock-line"></div>
+                    <div class="mock-line short"></div>
+                  </div>
+                  <div class="install-banner">
+                    <div class="icon">🐺</div>
+                    <div class="text">
+                      <strong>Alcateia Kotick</strong>
+                      Adicionar à tela inicial
+                    </div>
+                    <div class="btn">Instalar</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="step-text">
+            <span class="step-number">2</span>
+            <h3>Toque em "Instalar"</h3>
+            <p>Depois de alguns segundos, aparece um <strong>banner embaixo da tela</strong> com o botão "Instalar". É só tocar.</p>
+            <div class="hint">💡 Se o banner não aparecer, vá pro passo 3.</div>
+          </div>
+        </div>
+
+        <!-- Passo 3 -->
+        <div class="step">
+          <div class="step-visual">
+            <div class="phone android">
+              <div class="phone-screen">
+                <div class="status-bar">
+                  <span>09:41</span>
+                  <span>📶 📊 🔋</span>
+                </div>
+                <div class="browser-bar">
+                  <span>←</span>
+                  <div class="url">alcateiakotick.com.br</div>
+                  <span class="menu-dots">⋮</span>
+                </div>
+                <div class="page-content">
+                  <div class="mock-logo">🐺</div>
+                  <div class="mock-title">Portal da Chefia</div>
+                  <div class="mock-card">
+                    <div class="mock-line"></div>
+                    <div class="mock-line short"></div>
+                  </div>
+                </div>
+                <div class="chrome-menu">
+                  <div class="menu-item">🔄 Nova aba</div>
+                  <div class="menu-item">⭐ Favoritos</div>
+                  <div class="menu-item">⬇️ Downloads</div>
+                  <div class="menu-item highlight">📲 Instalar app</div>
+                  <div class="menu-item">⚙️ Configurações</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="step-text">
+            <span class="step-number">3</span>
+            <h3>Alternativa: menu ⋮</h3>
+            <p>Se o banner não apareceu: toque nos <strong>três pontinhos (⋮)</strong> no canto superior direito do Chrome.</p>
+            <p>No menu que abrir, escolha <strong>"Instalar app"</strong> ou <strong>"Adicionar à tela inicial"</strong>.</p>
+          </div>
+        </div>
+
+        <!-- Passo 4 -->
+        <div class="step">
+          <div class="step-visual">
+            <div class="phone android">
+              <div class="phone-screen">
+                <div class="status-bar">
+                  <span>09:41</span>
+                  <span>📶 📊 🔋</span>
+                </div>
+                <div class="browser-bar">
+                  <span>←</span>
+                  <div class="url">alcateiakotick.com.br</div>
+                  <span class="menu-dots">⋮</span>
+                </div>
+                <div class="page-content" style="filter: brightness(0.5);">
+                  <div class="mock-logo">🐺</div>
+                  <div class="mock-title">Portal da Chefia</div>
+                </div>
+                <div class="confirm-dialog">
+                  <div class="title">Instalar app?</div>
+                  <div class="desc">Alcateia Kotick será adicionado à sua tela inicial</div>
+                  <div class="actions">
+                    <button class="cancel">Cancelar</button>
+                    <button class="install">Instalar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="step-text">
+            <span class="step-number">4</span>
+            <h3>Confirme a instalação</h3>
+            <p>Uma janelinha vai aparecer pedindo confirmação. Toque em <strong>"Instalar"</strong>.</p>
+          </div>
+        </div>
+
+        <!-- Passo 5 -->
+        <div class="step">
+          <div class="step-visual">
+            <div class="phone android">
+              <div class="phone-screen">
+                <div class="status-bar" style="color: white;">
+                  <span>09:41</span>
+                  <span>📶 📊 🔋</span>
+                </div>
+                <div class="home-screen">
+                  <div class="app-icon">
+                    <div class="icon-img">📷</div>
+                    <div class="name">Câmera</div>
+                  </div>
+                  <div class="app-icon">
+                    <div class="icon-img">💬</div>
+                    <div class="name">WhatsApp</div>
+                  </div>
+                  <div class="app-icon">
+                    <div class="icon-img">🌐</div>
+                    <div class="name">Chrome</div>
+                  </div>
+                  <div class="app-icon alcateia">
+                    <div class="icon-img">🐺</div>
+                    <div class="name">Alcateia</div>
+                  </div>
+                  <div class="app-icon">
+                    <div class="icon-img">📧</div>
+                    <div class="name">Gmail</div>
+                  </div>
+                  <div class="app-icon">
+                    <div class="icon-img">🗺️</div>
+                    <div class="name">Maps</div>
+                  </div>
+                  <div class="app-icon">
+                    <div class="icon-img">📱</div>
+                    <div class="name">Telefone</div>
+                  </div>
+                  <div class="app-icon">
+                    <div class="icon-img">⚙️</div>
+                    <div class="name">Ajustes</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="step-text">
+            <span class="step-number">5</span>
+            <h3>Pronto! 🎉</h3>
+            <p>O ícone da <strong>Alcateia</strong> aparece na sua tela inicial, igualzinho a qualquer outro app.</p>
+            <p>Agora é só tocar no ícone pra abrir — sem precisar do navegador.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= iOS ================= -->
+    <section class="platform-section">
+      <div class="platform-title">
+        <span class="badge ios">IPHONE</span>
+        Instalar pelo Safari
+      </div>
+      <p class="platform-subtitle">No iPhone, a instalação funciona pelo <strong>Safari</strong>.</p>
+
+      <div class="warning-box">
+        ⚠️ <strong>Atenção:</strong> no iPhone <strong>precisa ser o Safari</strong>. Se você usa o Chrome ou outro navegador no iPhone, feche e abra pelo Safari.
+      </div>
+
+      <div class="steps">
+
+        <!-- Passo 1 iOS -->
+        <div class="step">
+          <div class="step-visual">
+            <div class="phone ios">
+              <div class="phone-screen">
+                <div class="status-bar">
+                  <span>09:41</span>
+                  <span>📶 📊 🔋</span>
+                </div>
+                <div class="page-content" style="flex: 1;">
+                  <div class="mock-logo">🐺</div>
+                  <div class="mock-title">Portal da Chefia</div>
+                  <div class="mock-card">
+                    <div class="mock-line"></div>
+                    <div class="mock-line short"></div>
+                    <div class="mock-btn">Entrar</div>
+                  </div>
+                </div>
+                <div class="safari-bottom">
+                  <span class="safari-btn">←</span>
+                  <span class="safari-btn">→</span>
+                  <span class="safari-btn share" style="background: #fff7d6; border: 2px solid var(--apple); border-radius: 4px; padding: 2px 6px;">⬆️</span>
+                  <span class="safari-btn">📖</span>
+                  <span class="safari-btn">⎘</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="step-text">
+            <span class="step-number">1</span>
+            <h3>Abra o site no Safari</h3>
+            <p>Acesse o Portal da Chefia no <strong>Safari</strong> e faça login.</p>
+            <p>Depois toque no <strong>botão de Compartilhar</strong> — é o quadradinho com seta pra cima (⬆️) na <strong>barra de baixo</strong>.</p>
+          </div>
+        </div>
+
+        <!-- Passo 2 iOS -->
+        <div class="step">
+          <div class="step-visual">
+            <div class="phone ios">
+              <div class="phone-screen">
+                <div class="status-bar">
+                  <span>09:41</span>
+                  <span>📶 📊 🔋</span>
+                </div>
+                <div class="page-content" style="flex: 1; filter: brightness(0.7);"></div>
+                <div class="share-sheet">
+                  <div class="share-title">Alcateia Kotick</div>
+                  <div class="share-option">
+                    <div class="ico">💬</div>
+                    Mensagem
+                  </div>
+                  <div class="share-option">
+                    <div class="ico">📧</div>
+                    Mail
+                  </div>
+                  <div class="share-option">
+                    <div class="ico">⭐</div>
+                    Favoritos
+                  </div>
+                  <div class="share-option highlight">
+                    <div class="ico">➕</div>
+                    Adicionar à Tela de Início
+                  </div>
+                  <div class="share-option">
+                    <div class="ico">📋</div>
+                    Copiar
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="step-text">
+            <span class="step-number">2</span>
+            <h3>Role e toque em "Adicionar à Tela de Início"</h3>
+            <p>Vai abrir um painel de opções. <strong>Role pra baixo</strong> na lista até achar <strong>"Adicionar à Tela de Início"</strong> (com o ícone ➕).</p>
+            <div class="hint">💡 Se não achar de primeira, arrasta o painel pra cima — tem mais opções escondidas.</div>
+          </div>
+        </div>
+
+        <!-- Passo 3 iOS -->
+        <div class="step">
+          <div class="step-visual">
+            <div class="phone ios">
+              <div class="phone-screen">
+                <div class="status-bar">
+                  <span>09:41</span>
+                  <span>📶 📊 🔋</span>
+                </div>
+                <div class="ios-add-sheet">
+                  <div class="top-bar">
+                    <span class="cancel">Cancelar</span>
+                    <span class="title">Adicionar à Tela</span>
+                    <span class="add-btn">Adicionar</span>
+                  </div>
+                  <div class="preview">
+                    <div class="icon">🐺</div>
+                    <div class="info">
+                      <div class="name">Alcateia Kotick</div>
+                      <div class="url">alcateiakotick.com.br</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="step-text">
+            <span class="step-number">3</span>
+            <h3>Confirme em "Adicionar"</h3>
+            <p>Aparece uma prévia do ícone e do nome do app. No canto <strong>superior direito</strong>, toque em <strong>"Adicionar"</strong>.</p>
+          </div>
+        </div>
+
+        <!-- Passo 4 iOS -->
+        <div class="step">
+          <div class="step-visual">
+            <div class="phone ios">
+              <div class="phone-screen">
+                <div class="status-bar" style="color: white;">
+                  <span>09:41</span>
+                  <span>📶 📊 🔋</span>
+                </div>
+                <div class="home-screen">
+                  <div class="app-icon">
+                    <div class="icon-img">📷</div>
+                    <div class="name">Câmera</div>
+                  </div>
+                  <div class="app-icon">
+                    <div class="icon-img">💬</div>
+                    <div class="name">Mensagens</div>
+                  </div>
+                  <div class="app-icon">
+                    <div class="icon-img">🧭</div>
+                    <div class="name">Safari</div>
+                  </div>
+                  <div class="app-icon alcateia">
+                    <div class="icon-img">🐺</div>
+                    <div class="name">Alcateia</div>
+                  </div>
+                  <div class="app-icon">
+                    <div class="icon-img">📧</div>
+                    <div class="name">Mail</div>
+                  </div>
+                  <div class="app-icon">
+                    <div class="icon-img">🗺️</div>
+                    <div class="name">Mapas</div>
+                  </div>
+                  <div class="app-icon">
+                    <div class="icon-img">📱</div>
+                    <div class="name">Telefone</div>
+                  </div>
+                  <div class="app-icon">
+                    <div class="icon-img">⚙️</div>
+                    <div class="name">Ajustes</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="step-text">
+            <span class="step-number">4</span>
+            <h3>Pronto! 🎉</h3>
+            <p>O ícone da <strong>Alcateia</strong> aparece na tela inicial do iPhone.</p>
+            <p>Agora é só tocar nele pra abrir o app em tela cheia, sem barra de navegador.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Dicas finais -->
+    <div class="tips-section">
+      <h3>✅ Depois de instalado</h3>
+      <ul>
+        <li><strong>Abre em tela cheia</strong>, sem a barra do navegador — igual um app de verdade.</li>
+        <li><strong>Funciona offline</strong> — se perder sinal no acampamento, ainda dá pra ver o que já foi carregado.</li>
+        <li><strong>Atualiza sozinho</strong> quando você estiver conectada — não precisa reinstalar.</li>
+        <li>Pra <strong>remover</strong>, é só segurar no ícone e escolher "Desinstalar" (Android) ou "Remover App" (iPhone).</li>
+      </ul>
+    </div>
+
+    <footer class="page-footer">
+      🐺 Alcateia Kotick · Portal da Chefia
+    </footer>
+
+  </div>
+</body>
+
+</html>
