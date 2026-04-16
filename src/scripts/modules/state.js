@@ -142,12 +142,7 @@ const state = {
   comunicados: [],
   confirmacoes: {},
   caixa: [],
-  pontuacao: {
-    Amarela: {jogos: 0, formacao: 0, comportamento: 0},
-    Branca:  {jogos: 0, formacao: 0, comportamento: 0},
-    Cinza:   {jogos: 0, formacao: 0, comportamento: 0},
-    Preta:   {jogos: 0, formacao: 0, comportamento: 0}
-  },
+  pontuacao: {},
   avisos_internos: [],
   todos_chefia: []
 };
