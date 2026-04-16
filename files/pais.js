@@ -1,15 +1,6 @@
-// ===================== FIREBASE =====================
-var firebaseConfig = {
-  apiKey: "AIzaSyBqn10ZjuimbifYx_3813caY-s9boS7FKM",
-  authDomain: "alcateiakotick-db12b.firebaseapp.com",
-  databaseURL: "https://alcateiakotick-db12b-default-rtdb.firebaseio.com",
-  projectId: "alcateiakotick-db12b",
-  storageBucket: "alcateiakotick-db12b.firebasestorage.app",
-  messagingSenderId: "1038585867031",
-  appId: "1:1038585867031:web:7ca99aa4523c4beda36552"
-};
-
-firebase.initializeApp(firebaseConfig);
+﻿// ===================== FIREBASE =====================
+// Use centralized Firebase configuration from firebase-config.js
+firebase.initializeApp(window.firebaseConfig);
 var db = firebase.database();
 
 var CALENDARIO_ESTATICO = [
@@ -85,9 +76,75 @@ var SVG_COM = '<svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-
 var SVG_CAL = '<svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true"><circle cx="36" cy="36" r="32" fill="var(--accent-light)"/><rect x="17" y="24" width="38" height="30" rx="5" stroke="var(--accent)" stroke-width="2.5" fill="none"/><line x1="17" y1="34" x2="55" y2="34" stroke="var(--accent)" stroke-width="2"/><line x1="28" y1="19" x2="28" y2="29" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/><line x1="44" y1="19" x2="44" y2="29" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/><circle cx="36" cy="46" r="5" fill="var(--accent)" opacity="0.3"/><line x1="34" y1="46" x2="36" y2="44" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/><line x1="36" y1="44" x2="39" y2="49" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/></svg>';
 var SVG_OK  = '<svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true"><circle cx="36" cy="36" r="32" fill="var(--accent-light)"/><circle cx="36" cy="36" r="15" stroke="var(--accent)" stroke-width="2.5" fill="none"/><polyline points="28,36 33,41 44,30" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 var fbLoaded = false;
+var offlineMode = false;
+var retryAttempts = 0;
+var maxRetries = 3;
+var retryDelay = 3000; // 3 seconds
 
-// Single realtime listener — handles both initial load and updates
-db.ref('alcateia').on('value', snap => {
+// Display user-friendly error notification
+function showErrorNotification(message, isRetrying) {
+  var existingNotif = document.getElementById('firebase-error-notification');
+  if (existingNotif) existingNotif.remove();
+  
+  var notif = document.createElement('div');
+  notif.id = 'firebase-error-notification';
+  notif.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#ff4444;color:white;padding:16px 24px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.3);z-index:10000;max-width:90%;text-align:center;font-family:DM Sans,sans-serif;';
+  notif.innerHTML = '<strong>⚠️ ' + message + '</strong>' + (isRetrying ? '<br><small>Tentando reconectar...</small>' : '');
+  document.body.appendChild(notif);
+  
+  if (!isRetrying) {
+    setTimeout(function() { notif.remove(); }, 8000);
+  }
+}
+
+// Display offline mode indicator
+function showOfflineIndicator() {
+  var existingIndicator = document.getElementById('offline-indicator');
+  if (existingIndicator) return;
+  
+  var indicator = document.createElement('div');
+  indicator.id = 'offline-indicator';
+  indicator.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#ff9800;color:white;padding:12px 20px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.2);z-index:9999;font-family:DM Sans,sans-serif;font-size:14px;';
+  indicator.innerHTML = '📡 Modo Offline';
+  document.body.appendChild(indicator);
+}
+
+// Remove offline indicator
+function hideOfflineIndicator() {
+  var indicator = document.getElementById('offline-indicator');
+  if (indicator) indicator.remove();
+  var notif = document.getElementById('firebase-error-notification');
+  if (notif) notif.remove();
+}
+
+// Retry connection with exponential backoff
+function retryConnection() {
+  if (retryAttempts >= maxRetries) {
+    offlineMode = true;
+    showOfflineIndicator();
+    showErrorNotification('Não foi possível conectar ao servidor. Usando dados locais.', false);
+    return;
+  }
+  
+  retryAttempts++;
+  var delay = retryDelay * Math.pow(2, retryAttempts - 1);
+  showErrorNotification('Erro de conexão com o servidor', true);
+  
+  setTimeout(function() {
+    db.ref('alcateia').once('value').then(function(snap) {
+      retryAttempts = 0;
+      offlineMode = false;
+      hideOfflineIndicator();
+      processFirebaseData(snap);
+    }).catch(function(error) {
+      console.error('Retry failed:', error);
+      retryConnection();
+    });
+  }, delay);
+}
+
+// Process Firebase data
+function processFirebaseData(snap) {
   var d = snap.val() || {};
   // Sync calendario from Firebase if available, otherwise use static
   if (d.calendario && Array.isArray(d.calendario) && d.calendario.length > 0) {
@@ -100,11 +157,34 @@ db.ref('alcateia').on('value', snap => {
   fbLoaded = true;
   document.getElementById('com-lista-pais').removeAttribute('aria-busy');
   renderAll();
+}
+
+// Single realtime listener — handles both initial load and updates
+db.ref('alcateia').on('value', function(snap) {
+  retryAttempts = 0;
+  offlineMode = false;
+  hideOfflineIndicator();
+  processFirebaseData(snap);
 }, function (error) {
-  console.warn('Firebase error:', error);
+  console.error('Firebase error:', error);
+  
+  // Log to monitoring service (placeholder for future implementation)
+  if (typeof window.errorMonitoring !== 'undefined') {
+    window.errorMonitoring.logError('Firebase Connection Error', {
+      error: error.message,
+      code: error.code,
+      timestamp: new Date().toISOString()
+    });
+  }
+  
+  // Use static data as fallback
+  data.calendario = CALENDARIO_ESTATICO;
   fbLoaded = true;
   document.getElementById('com-lista-pais').removeAttribute('aria-busy');
   renderAll();
+  
+  // Attempt to retry connection
+  retryConnection();
 });
 
 // ===================== NAVIGATION =====================
@@ -157,18 +237,29 @@ function renderComunicados() {
     return;
   }
 
+  function escapeHtml(value) {
+    return String(value ?? '')
+      .replace(/&/g, '&')
+      .replace(/</g, '<')
+      .replace(/>/g, '>')
+      .replace(/"/g, '"')
+      .replace(/'/g, ''');
+  }
+
   el.innerHTML = coms.map(c => {
     var catCls = 'com-cat-' + (c.categoria || 'aviso');
     var catLabel = CAT_LABELS[c.categoria] || 'Aviso';
-    var dataStr = c.dataEvento ? ` · 📅 ${c.dataEvento}` : '';
+    var dataStr = c.dataEvento ? ` · 📅 ${escapeHtml(c.dataEvento)}` : '';
     var pubDate = c.ts ? new Date(c.ts).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '';
+    var titulo = escapeHtml(c.titulo);
+    var texto = escapeHtml(c.texto);
     return `<div class="com-card${c.fixado ? ' fixado' : ''}">
       <div class="com-header-row">
         <span class="com-cat-badge ${catCls}">${catLabel}</span>
-        <span class="com-titulo">${c.fixado ? '📌 ' : ''}${c.titulo}</span>
+        <span class="com-titulo">${c.fixado ? '📌 ' : ''}${titulo}</span>
       </div>
       <div class="com-meta">Publicado em ${pubDate}${dataStr}</div>
-      <div class="com-texto">${c.texto}</div>
+      <div class="com-texto">${texto}</div>
     </div>`;
   }).join('');
 }
@@ -377,13 +468,42 @@ function enviarConfirmacao() {
   var status = document.getElementById('conf-status').value;
   var obs = document.getElementById('conf-obs').value.trim();
 
+  // Comprehensive name validation
+  var errEl = document.getElementById('conf-nome-error');
+  
   if (!nome) {
-    var errEl = document.getElementById('conf-nome-error');
     if (errEl) { errEl.textContent = 'Por favor, informe o nome do lobinho.'; errEl.style.display = 'block'; }
     document.getElementById('conf-nome').focus();
     return;
   }
-  var errEl = document.getElementById('conf-nome-error');
+  
+  if (nome.length < 2) {
+    if (errEl) { errEl.textContent = 'O nome deve ter pelo menos 2 caracteres.'; errEl.style.display = 'block'; }
+    document.getElementById('conf-nome').focus();
+    return;
+  }
+  
+  if (nome.length > 100) {
+    if (errEl) { errEl.textContent = 'O nome deve ter no máximo 100 caracteres.'; errEl.style.display = 'block'; }
+    document.getElementById('conf-nome').focus();
+    return;
+  }
+  
+  // Validate character set: letters (including accented), spaces, hyphens, and apostrophes
+  var validNamePattern = /^[a-zA-ZÀ-ÿ\s'-]+$/;
+  if (!validNamePattern.test(nome)) {
+    if (errEl) { errEl.textContent = 'O nome deve conter apenas letras, espaços, hífens e apóstrofos.'; errEl.style.display = 'block'; }
+    document.getElementById('conf-nome').focus();
+    return;
+  }
+  
+  // Prevent potential injection attempts (HTML/script tags)
+  if (/<|>|<|>|script|javascript|onerror|onclick/i.test(nome)) {
+    if (errEl) { errEl.textContent = 'O nome contém caracteres não permitidos.'; errEl.style.display = 'block'; }
+    document.getElementById('conf-nome').focus();
+    return;
+  }
+  
   if (errEl) errEl.style.display = 'none';
 
   var ativ = proximasAtiv[ativIdx];
@@ -404,9 +524,33 @@ function enviarConfirmacao() {
       confirmado = true;
       renderConfirmar();
     })
-    .catch(() => {
-      alert('Erro ao enviar. Tente novamente.');
-      if (btn) { btn.disabled = false; btn.textContent = 'Confirmar presença'; }
+    .catch((error) => {
+      // Log detailed error information for debugging
+      console.error('Erro ao enviar confirmação:', {
+        error: error,
+        errorCode: error.code,
+        errorMessage: error.message,
+        atividade: ativ.atividade,
+        timestamp: new Date().toISOString()
+      });
+      
+      // Provide specific, actionable error message
+      var errorMsg = 'Não foi possível enviar a confirmação. ';
+      if (error.code === 'PERMISSION_DENIED') {
+        errorMsg += 'Verifique sua conexão e tente novamente.';
+      } else if (error.code === 'NETWORK_ERROR' || !navigator.onLine) {
+        errorMsg += 'Verifique sua conexão com a internet.';
+      } else {
+        errorMsg += 'Tente novamente em alguns instantes.';
+      }
+      
+      showErrorNotification(errorMsg, false);
+      
+      // Re-enable button for retry
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = 'Tentar novamente';
+      }
     });
 }
 
