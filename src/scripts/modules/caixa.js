@@ -167,9 +167,10 @@ function saveLancamento() {
     showToast('Lançamento adicionado');
   }
   
-  fbSaveSection('caixa');
-  closeModals();
-  renderCaixa();
+  withModalSaveLoading(fbSaveSection('caixa')).then(() => {
+    closeModals();
+    renderCaixa();
+  });
 }
 
 // ===================== EDIT LANCAMENTO =====================
@@ -184,7 +185,7 @@ function editLanc(idx) {
   document.getElementById('lanc-cat').value = lanc.categoria || '';
   document.getElementById('lanc-valor').value = lanc.valor || '';
   
-  document.getElementById('modal-lanc').classList.add('open');
+  openModal('modal-lanc');
 }
 
 // ===================== DELETE LANCAMENTO =====================
@@ -205,7 +206,7 @@ function openAddLancamento() {
   document.getElementById('lanc-desc').value = '';
   document.getElementById('lanc-cat').value = '';
   document.getElementById('lanc-valor').value = '';
-  document.getElementById('modal-lanc').classList.add('open');
+  openModal('modal-lanc');
 }
 
 // Exporta funções para uso global

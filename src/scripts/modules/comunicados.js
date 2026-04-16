@@ -96,8 +96,8 @@ function renderConfirmacoes() {
         <h3>${ev.titulo}</h3>
         <p class="conf-data">${ev.dataEvento || 'Data não definida'}</p>
         <div class="conf-stats">
-          <span class="conf-stat">✅ ${confirmados} confirmados</span>
-          <span class="conf-stat">📊 ${total} respostas</span>
+          <span class="conf-stat"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" aria-hidden="true" style="vertical-align:-1px;margin-right:3px"><polyline points="20 6 9 17 4 12"/></svg>${confirmados} confirmados</span>
+          <span class="conf-stat">${total} respostas</span>
         </div>
         <button class="btn-secondary btn-sm" onclick="verConfirmacoes(${realIdx})">
           Ver Detalhes
@@ -139,9 +139,10 @@ function saveComunicado() {
     showToast('Comunicado criado');
   }
   
-  fbSaveSection('comunicados');
-  closeModals();
-  renderComunicados();
+  withModalSaveLoading(fbSaveSection('comunicados')).then(() => {
+    closeModals();
+    renderComunicados();
+  });
 }
 
 // ===================== EDIT COMUNICADO =====================
@@ -156,7 +157,7 @@ function editCom(idx) {
   document.getElementById('com-texto').value = com.texto || '';
   document.getElementById('com-fixado').checked = com.fixado || false;
   
-  document.getElementById('modal-com').classList.add('open');
+  openModal('modal-com');
 }
 
 // ===================== DELETE COMUNICADO =====================

@@ -10,6 +10,22 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 
+// ===================== LOADING STATE EM BOTÕES =====================
+// Envolve uma operação assíncrona adicionando .is-loading ao botão primário
+// do modal atualmente aberto enquanto a promise não resolve.
+function withModalSaveLoading(promiseOrFn) {
+  const openModal = document.querySelector('.modal-overlay.open');
+  const btn = openModal ? openModal.querySelector('.form-actions .btn-primary') : null;
+  if(btn) btn.classList.add('is-loading');
+  const p = (typeof promiseOrFn === 'function') ? promiseOrFn() : promiseOrFn;
+  const done = () => { if(btn) btn.classList.remove('is-loading'); };
+  if(p && typeof p.then === 'function') {
+    return p.then(r => { done(); return r; }).catch(e => { done(); throw e; });
+  }
+  done();
+  return Promise.resolve(p);
+}
+
 // ===================== CONSTANTES =====================
 const MESES_PT = ['','janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 const DIAS_PT = ['dom.','seg.','ter.','qua.','qui.','sex.','sáb.'];
@@ -83,6 +99,7 @@ function toggleTheme() {
 
 // Exporta funções para uso global
 window.showToast = showToast;
+window.withModalSaveLoading = withModalSaveLoading;
 window.toggleTheme = toggleTheme;
 window.MESES_PT = MESES_PT;
 window.DIAS_PT = DIAS_PT;

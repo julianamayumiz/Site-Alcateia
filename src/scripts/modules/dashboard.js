@@ -21,21 +21,20 @@ function renderProximasAtividades() {
     return;
   }
   
-  container.innerHTML = proximas.map(ev => {
-    const rowClass = getRowClass(ev);
-    return `
-      <div class="atividade-item ${rowClass}">
-        <div class="ativ-data">
-          <strong>${ev.data}</strong>
-          <span>${ev.dia}</span>
-        </div>
-        <div class="ativ-info">
-          <h4>${ev.atividade}</h4>
-          ${ev.categoria ? `<span class="badge">${ev.categoria}</span>` : ''}
-          ${ev.chefe ? `<p class="ativ-chefe">Chefe: ${ev.chefe}</p>` : ''}
-        </div>
-      </div>
-    `;
+  container.innerHTML = proximas.map((ev, i) => {
+    const rowCls = getRowClass(ev);
+    const dotColor = rowCls === 'row-feriado' ? '#ef5350'
+      : rowCls === 'row-local' ? '#1e88e5'
+      : rowCls === 'row-regional' ? '#8e24aa'
+      : rowCls === 'row-externa' ? '#f9a825'
+      : '#4caf50';
+    const badge = i === 0 ? 'next' : '';
+    return `<div class="dash-row">
+      <span class="dash-date-badge ${badge}">${ev.data}</span>
+      <span style="width:8px;height:8px;border-radius:50%;background:${dotColor};flex-shrink:0"></span>
+      <span class="dash-activity-name">${ev.atividade}</span>
+      <span class="dash-activity-chefe">${ev.chefe || ''}</span>
+    </div>`;
   }).join('');
 }
 

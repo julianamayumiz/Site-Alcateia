@@ -311,7 +311,8 @@
           <p>2026 · 1º semestre — lideranças e pontuação</p>
         </div>
         <button class="btn" onclick="confirmResetPontuacao()" style="color:var(--red);border-color:var(--red-light);font-size:12px">
-          🔄 Resetar pontuação
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          Resetar pontuação
         </button>
       </div>
 
@@ -369,9 +370,18 @@
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center">
           <span style="font-size:12px;font-weight:500;color:var(--text2)">Filtrar:</span>
           <button class="filter-btn active" id="conf-f-todos"   onclick="filterConfs('todos',this)">Todos</button>
-          <button class="filter-btn" id="conf-f-sim"    onclick="filterConfs('sim',this)">✅ Vão</button>
-          <button class="filter-btn" id="conf-f-nao"    onclick="filterConfs('nao',this)">❌ Não vão</button>
-          <button class="filter-btn" id="conf-f-talvez" onclick="filterConfs('talvez',this)">⚠️ Talvez</button>
+          <button class="filter-btn conf-f-sim" id="conf-f-sim"    onclick="filterConfs('sim',this)" aria-label="Vão">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Vão
+          </button>
+          <button class="filter-btn conf-f-nao" id="conf-f-nao"    onclick="filterConfs('nao',this)" aria-label="Não vão">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Não vão
+          </button>
+          <button class="filter-btn conf-f-talvez" id="conf-f-talvez" onclick="filterConfs('talvez',this)" aria-label="Talvez">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Talvez
+          </button>
           <select id="conf-f-ativ" onchange="filterConfs(null,null)" style="margin-left:auto;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:12.5px;background:var(--surface);color:var(--text);font-family:'DM Sans',sans-serif">
             <option value="">Todas as atividades</option>
           </select>
@@ -431,30 +441,56 @@
     </div>
 
   </div><!-- end .main -->
+
+  <!-- BOTTOM NAV (mobile) -->
+  <nav class="bottom-nav" aria-label="Navegação principal">
+    <div class="bottom-nav-inner">
+      <button class="bottom-nav-btn active" id="bnav-dashboard" type="button" onclick="goTo('dashboard')" aria-label="Dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        <span>Dashboard</span>
+      </button>
+      <button class="bottom-nav-btn" id="bnav-calendario" type="button" onclick="goTo('calendario')" aria-label="Calendário">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>Calendário</span>
+      </button>
+      <button class="bottom-nav-btn" id="bnav-presenca" type="button" onclick="goTo('presenca')" aria-label="Presença">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
+        <span>Presença</span>
+      </button>
+      <button class="bottom-nav-btn" id="bnav-especialidades" type="button" onclick="goTo('especialidades')" aria-label="Especialidades">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span>Especial.</span>
+      </button>
+      <button class="bottom-nav-btn" id="bnav-matilhas" type="button" onclick="goTo('matilhas')" aria-label="Matilhas">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>Matilhas</span>
+      </button>
+    </div>
+  </nav>
 </div><!-- end .app -->
 
 <!-- MODALS -->
 <div class="modal-overlay" id="modal-cal">
-  <div class="modal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-cal-title">
     <h2 id="modal-cal-title">Nova atividade</h2>
     <div class="form-row">
-      <div class="form-group"><label>Mês</label>
+      <div class="form-group"><label for="add-mes">Mês</label>
         <select id="add-mes"><option>janeiro</option><option>fevereiro</option><option>março</option><option>abril</option><option>maio</option><option>junho</option><option>julho</option><option>agosto</option><option>setembro</option><option>outubro</option><option>novembro</option><option>dezembro</option></select>
       </div>
-      <div class="form-group"><label>Data (DD/MM)</label><input type="text" id="add-data" placeholder="18/04"></div>
+      <div class="form-group"><label for="add-data">Data (DD/MM)</label><input type="text" id="add-data" placeholder="18/04"></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>Dia</label>
+      <div class="form-group"><label for="add-dia">Dia</label>
         <select id="add-dia"><option>seg.</option><option>ter.</option><option>qua.</option><option>qui.</option><option>sex.</option><option>sáb.</option><option>dom.</option></select>
       </div>
-      <div class="form-group"><label>Categoria</label>
+      <div class="form-group"><label for="add-cat">Categoria</label>
         <select id="add-cat"><option></option><option>Local</option><option>Distrital</option><option>Regional</option></select>
       </div>
     </div>
-    <div class="form-group"><label>Atividade</label><input type="text" id="add-ativ" placeholder="Normal Sede / Externa / Acampamento..."></div>
-    <div class="form-group"><label>Chefe Responsável</label><input type="text" id="add-chefe" placeholder="Nome(s) do chefe"></div>
-    <div class="form-group"><label>Datas especiais / comemorativas</label><input type="text" id="add-datas"></div>
-    <div class="form-group"><label>OBS</label><input type="text" id="add-obs"></div>
+    <div class="form-group"><label for="add-ativ">Atividade</label><input type="text" id="add-ativ" placeholder="Normal Sede / Externa / Acampamento..."></div>
+    <div class="form-group"><label for="add-chefe">Chefe Responsável</label><input type="text" id="add-chefe" placeholder="Nome(s) do chefe"></div>
+    <div class="form-group"><label for="add-datas">Datas especiais / comemorativas</label><input type="text" id="add-datas"></div>
+    <div class="form-group"><label for="add-obs">OBS</label><input type="text" id="add-obs"></div>
     <div class="form-actions">
       <button class="btn" onclick="closeModals()">Cancelar</button>
       <button class="btn btn-primary" onclick="saveCalEvent()">Salvar</button>
@@ -463,27 +499,27 @@
 </div>
 
 <div class="modal-overlay" id="modal-esp">
-  <div class="modal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-esp-title">
     <h2 id="modal-esp-title">Nova especialidade</h2>
     <div class="form-row">
-      <div class="form-group"><label>Nome do Lobinho</label><select id="esp-nome"><option value="">Selecione...</option></select></div>
-      <div class="form-group"><label>Especialidade</label><input type="text" id="esp-esp" placeholder="Ex: Natação"></div>
+      <div class="form-group"><label for="esp-nome">Nome do Lobinho</label><select id="esp-nome"><option value="">Selecione...</option></select></div>
+      <div class="form-group"><label for="esp-esp">Especialidade</label><input type="text" id="esp-esp" placeholder="Ex: Natação"></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>Nível</label>
+      <div class="form-group"><label for="esp-nivel">Nível</label>
         <select id="esp-nivel"><option value="0">0 — Insígnia</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
       </div>
-      <div class="form-group"><label>Data apresentação</label><input type="text" id="esp-data" placeholder="DD/MM/AAAA"></div>
+      <div class="form-group"><label for="esp-data">Data apresentação</label><input type="text" id="esp-data" placeholder="DD/MM/AAAA"></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>Comprado?</label>
+      <div class="form-group"><label for="esp-comp">Comprado?</label>
         <select id="esp-comp"><option>OK</option><option>NÃO</option></select>
       </div>
-      <div class="form-group"><label>Entregue?</label>
+      <div class="form-group"><label for="esp-entregue">Entregue?</label>
         <select id="esp-entregue"><option>OK</option><option>NÃO</option><option>Sim</option></select>
       </div>
     </div>
-    <div class="form-group"><label>Chefe Avaliador</label><input type="text" id="esp-avaliador"></div>
+    <div class="form-group"><label for="esp-avaliador">Chefe Avaliador</label><input type="text" id="esp-avaliador"></div>
     <div class="form-actions">
       <button class="btn" onclick="closeModals()">Cancelar</button>
       <button class="btn btn-primary" onclick="saveEsp()">Salvar</button>
@@ -492,11 +528,11 @@
 </div>
 
 <div class="modal-overlay" id="modal-mat">
-  <div class="modal">
-    <h2>Adicionar membro</h2>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-mat-title">
+    <h2 id="modal-mat-title">Adicionar membro</h2>
     <div class="form-row">
-      <div class="form-group"><label>Nome</label><input type="text" id="mat-nome" placeholder="Nome completo"></div>
-      <div class="form-group"><label>Matilha</label>
+      <div class="form-group"><label for="mat-nome">Nome</label><input type="text" id="mat-nome" placeholder="Nome completo"></div>
+      <div class="form-group"><label for="mat-matilha">Matilha</label>
         <select id="mat-matilha"><option>Amarela</option><option>Branca</option><option>Cinza</option><option>Preta</option></select>
       </div>
     </div>
@@ -509,13 +545,13 @@
 
 <!-- MODAL FJ — Justificativa -->
 <div class="modal-overlay" id="modal-fj">
-  <div class="modal" style="max-width:380px">
-    <h2>Falta Justificada</h2>
+  <div class="modal" style="max-width:380px" role="dialog" aria-modal="true" aria-labelledby="modal-fj-title">
+    <h2 id="modal-fj-title">Falta Justificada</h2>
     <p style="font-size:13px;color:var(--text2);margin-bottom:16px">
       <strong id="fj-membro-nome"></strong> — <span id="fj-data"></span>
     </p>
     <div class="form-group">
-      <label>Justificativa</label>
+      <label for="fj-motivo">Justificativa</label>
       <textarea id="fj-motivo" placeholder="Descreva o motivo da falta..." style="min-height:90px"></textarea>
     </div>
     <div class="form-actions">
@@ -527,28 +563,28 @@
 
 <!-- MODAL LANÇAMENTO CAIXA -->
 <div class="modal-overlay" id="modal-lanc">
-  <div class="modal" style="max-width:440px">
+  <div class="modal" style="max-width:440px" role="dialog" aria-modal="true" aria-labelledby="modal-lanc-title">
     <h2 id="modal-lanc-title">Novo lançamento</h2>
     <div class="form-row">
-      <div class="form-group"><label>Tipo</label>
+      <div class="form-group"><label for="lanc-tipo">Tipo</label>
         <select id="lanc-tipo">
-          <option value="receita">💰 Receita</option>
-          <option value="despesa">💸 Despesa</option>
+          <option value="receita">Receita</option>
+          <option value="despesa">Despesa</option>
         </select>
       </div>
-      <div class="form-group"><label>Categoria</label>
+      <div class="form-group"><label for="lanc-cat">Categoria</label>
         <input type="text" id="lanc-cat" placeholder="Ex: mensalidade, evento...">
       </div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>Valor (R$)</label>
-        <input type="number" id="lanc-valor" placeholder="0,00" min="0" step="0.01">
+      <div class="form-group"><label for="lanc-valor">Valor (R$)</label>
+        <input type="number" id="lanc-valor" placeholder="0,00" min="0" step="0.01" inputmode="decimal">
       </div>
-      <div class="form-group"><label>Data</label>
+      <div class="form-group"><label for="lanc-data">Data</label>
         <input type="date" id="lanc-data">
       </div>
     </div>
-    <div class="form-group"><label>Descrição</label>
+    <div class="form-group"><label for="lanc-desc">Descrição</label>
       <textarea id="lanc-desc" placeholder="Descreva o lançamento..." style="min-height:70px;resize:vertical"></textarea>
     </div>
     <div class="form-actions">
@@ -560,19 +596,19 @@
 
 <!-- MODAL EDITAR CONFIRMAÇÃO -->
 <div class="modal-overlay" id="modal-conf-edit">
-  <div class="modal" style="max-width:380px">
-    <h2>Editar confirmação</h2>
+  <div class="modal" style="max-width:380px" role="dialog" aria-modal="true" aria-labelledby="modal-conf-edit-title">
+    <h2 id="modal-conf-edit-title">Editar confirmação</h2>
     <p style="font-size:13px;color:var(--text2);margin-bottom:14px" id="conf-edit-subtitle"></p>
     <div class="form-group">
-      <label>Presença</label>
+      <label for="conf-edit-status">Presença</label>
       <select id="conf-edit-status">
-        <option value="sim">✅ Vai participar</option>
-        <option value="nao">❌ Não vai poder ir</option>
-        <option value="talvez">⚠️ Talvez</option>
+        <option value="sim">Vai participar</option>
+        <option value="nao">Não vai poder ir</option>
+        <option value="talvez">Talvez</option>
       </select>
     </div>
     <div class="form-group">
-      <label>Observação</label>
+      <label for="conf-edit-obs">Observação</label>
       <textarea id="conf-edit-obs" style="min-height:70px;resize:vertical"></textarea>
     </div>
     <div class="form-actions">
@@ -584,11 +620,11 @@
 
 <!-- MODAL COMUNICADO -->
 <div class="modal-overlay" id="modal-com">
-  <div class="modal" style="max-width:520px">
+  <div class="modal" style="max-width:520px" role="dialog" aria-modal="true" aria-labelledby="modal-com-title">
     <h2 id="modal-com-title">Novo comunicado</h2>
-    <div class="form-group"><label>Título</label><input type="text" id="com-titulo" placeholder="Ex: Reunião de Pais — Outubro"></div>
+    <div class="form-group"><label for="com-titulo">Título</label><input type="text" id="com-titulo" placeholder="Ex: Reunião de Pais — Outubro"></div>
     <div class="form-row">
-      <div class="form-group"><label>Categoria</label>
+      <div class="form-group"><label for="com-cat">Categoria</label>
         <select id="com-cat">
           <option value="aviso">Aviso</option>
           <option value="externa">Atividade Externa</option>
@@ -596,12 +632,12 @@
           <option value="outros">Outros</option>
         </select>
       </div>
-      <div class="form-group"><label>Data do evento (DD/MM)</label><input type="text" id="com-data-evento" placeholder="02/05"></div>
+      <div class="form-group"><label for="com-data-evento">Data do evento (DD/MM)</label><input type="text" id="com-data-evento" placeholder="02/05"></div>
     </div>
-    <div class="form-group"><label>Mensagem</label><textarea id="com-texto" style="min-height:120px;resize:vertical" placeholder="Escreva o comunicado aqui..."></textarea></div>
+    <div class="form-group"><label for="com-texto">Mensagem</label><textarea id="com-texto" style="min-height:120px;resize:vertical" placeholder="Escreva o comunicado aqui..."></textarea></div>
     <div class="form-group" style="display:flex;align-items:center;gap:10px">
       <input type="checkbox" id="com-fixado" style="width:auto">
-      <label for="com-fixado" style="margin:0;cursor:pointer">📌 Fixar este comunicado no topo</label>
+      <label for="com-fixado" style="margin:0;cursor:pointer">Fixar este comunicado no topo</label>
     </div>
     <div class="form-actions">
       <button class="btn" onclick="closeModals()">Cancelar</button>

@@ -162,10 +162,11 @@ function saveMat() {
 
   state.matilhas[matilha].push(nome);
 
-  closeModals();
-  fbSaveSection('matilhas');
-  renderMatilhas();
-  showToast('Membro adicionado');
+  withModalSaveLoading(fbSaveSection('matilhas')).then(() => {
+    closeModals();
+    renderMatilhas();
+    showToast('Membro adicionado');
+  });
 }
 
 // Exporta funções para uso global

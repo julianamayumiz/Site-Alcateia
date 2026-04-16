@@ -90,7 +90,7 @@ function editEsp(idx) {
   document.getElementById('esp-entregue').value = e.entregue || 'OK';
   document.getElementById('esp-avaliador').value = e.avaliador || '';
   
-  document.getElementById('modal-esp').classList.add('open');
+  openModal('modal-esp');
 }
 
 // ===================== SAVE ESPECIALIDADE =====================
@@ -118,9 +118,10 @@ function saveEsp() {
     showToast('Especialidade adicionada');
   }
   
-  fbSaveSection('especialidades');
-  closeModals();
-  renderEsp();
+  withModalSaveLoading(fbSaveSection('especialidades')).then(() => {
+    closeModals();
+    renderEsp();
+  });
 }
 
 // ===================== DELETE ESPECIALIDADE =====================

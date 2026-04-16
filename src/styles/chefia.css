@@ -308,6 +308,9 @@ tr:hover td { background: var(--surface2); }
 }
 
 .filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   padding: 5px 12px;
   border-radius: 20px;
   border: 1px solid var(--border);
@@ -321,6 +324,11 @@ tr:hover td { background: var(--surface2); }
 
 .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 .filter-btn:hover:not(.active) { background: var(--surface2); }
+
+/* Cores semânticas dos filtros de confirmação (quando ativos) */
+.filter-btn.conf-f-sim.active    { background: var(--green); border-color: var(--green); }
+.filter-btn.conf-f-nao.active    { background: var(--red);   border-color: var(--red); }
+.filter-btn.conf-f-talvez.active { background: var(--accent2); border-color: var(--accent2); color: #fff; }
 
 /* Focus rings for keyboard navigation */
 .nav-item:focus-visible,
@@ -1728,3 +1736,144 @@ input[type="file"] { display: none; }
 }
 .lanc-mes-entrada { color: var(--accent); font-family: 'DM Mono', monospace; }
 .lanc-mes-saida { color: var(--red); font-family: 'DM Mono', monospace; }
+
+/* =====================================================================
+   A11Y & UX — correções globais
+   ===================================================================== */
+
+/* ----- Focus visível em todos os interativos ----- */
+button,
+a,
+input,
+select,
+textarea,
+[tabindex] {
+  outline: none;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible,
+.nav-item:focus-visible,
+.bottom-nav-btn:focus-visible,
+.hamburger:focus-visible,
+.btn-theme:focus-visible,
+.filter-btn:focus-visible,
+.btn:focus-visible,
+.btn-primary:focus-visible,
+.search-input:focus-visible,
+.com-subtab:focus-visible,
+.presence-cell:focus-visible,
+.pont-btn:focus-visible,
+.lanc-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Sidebar usa contraste inverso */
+.sidebar .nav-item:focus-visible {
+  outline-color: #f5c200;
+}
+
+/* ----- Reduced motion: desliga animações não essenciais ----- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ----- Inputs 16px em mobile (previne auto-zoom iOS) ----- */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  input[type="tel"],
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+/* ----- Row colors do calendário respeitando dark mode ----- */
+body.dark tr.row-normal td { background: #1a2c1a; color: var(--text); }
+body.dark tr.row-feriado td { background: #2e1414; color: var(--text); }
+body.dark tr.row-local td { background: #132236; color: var(--text); }
+body.dark tr.row-externa td { background: #2b2410; color: var(--text); }
+body.dark tr.row-regional td { background: #1f1530; color: var(--text); }
+
+/* ----- Touch target mínimo — .btn-sm em mobile ----- */
+@media (hover: none) and (pointer: coarse) {
+  .btn-sm,
+  .lanc-btn {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 8px 12px;
+  }
+  .presence-cell {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* ----- Bottom nav: touch target 44px + active feedback ----- */
+.bottom-nav-btn {
+  min-height: 52px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.bottom-nav-btn:active {
+  background: var(--surface2);
+}
+.bottom-nav-btn.active svg {
+  color: var(--accent);
+}
+
+/* ----- Loading state em botões (spinner) ----- */
+.btn.is-loading {
+  pointer-events: none;
+  opacity: 0.7;
+  position: relative;
+  color: transparent !important;
+}
+.btn.is-loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  margin-top: -7px;
+  margin-left: -7px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: btn-spin 0.7s linear infinite;
+  color: var(--text);
+}
+.btn-primary.is-loading::after {
+  color: #fff;
+}
+@keyframes btn-spin {
+  to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn.is-loading::after { animation: none; }
+}
+
+/* ----- Tap highlight e touch-action nos interativos principais ----- */
+button, a, .nav-item, .bottom-nav-btn, .filter-btn, .presence-cell {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}

@@ -28,9 +28,9 @@ function initFirebase() {
 }
 
 function fbSet(path, data) {
-  if(!fbReady || !db) return;
-  db.ref('alcateia/' + path).set(data)
-    .then(() => showSyncStatus('salvo'))
+  if(!fbReady || !db) return Promise.resolve();
+  return db.ref('alcateia/' + path).set(data)
+    .then(() => { showSyncStatus('salvo'); })
     .catch(e => { console.warn('fbSet error', e); showSyncStatus('erro'); });
 }
 
@@ -86,10 +86,10 @@ function listenAll() {
 
 // Save entire state section to Firebase
 function fbSaveSection(section) {
-  if(!fbReady || !db) return;
-  db.ref('alcateia/' + section).set(state[section])
-    .then(() => showSyncStatus('salvo'))
-    .catch(() => showSyncStatus('erro'));
+  if(!fbReady || !db) return Promise.resolve();
+  return db.ref('alcateia/' + section).set(state[section])
+    .then(() => { showSyncStatus('salvo'); })
+    .catch(() => { showSyncStatus('erro'); });
 }
 
 // Sync indicator

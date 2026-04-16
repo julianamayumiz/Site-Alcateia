@@ -76,7 +76,7 @@ function editCal(idx) {
   document.getElementById('add-datas').value = ev.datas || '';
   document.getElementById('add-obs').value = ev.obs || '';
   
-  document.getElementById('modal-cal').classList.add('open');
+  openModal('modal-cal');
 }
 
 // ===================== SAVE CALENDARIO =====================
@@ -116,9 +116,10 @@ function saveCalEvent() {
     return da1 - db1;
   });
   
-  fbSaveSection('calendario');
-  closeModals();
-  renderCal();
+  withModalSaveLoading(fbSaveSection('calendario')).then(() => {
+    closeModals();
+    renderCal();
+  });
 }
 
 // ===================== DELETE CALENDARIO =====================

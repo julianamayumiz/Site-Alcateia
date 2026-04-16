@@ -120,7 +120,7 @@ function openFJModal(mi, ri) {
     document.getElementById('fj-motivo').value = state.justificativas[key];
   }
   
-  document.getElementById('modal-fj').classList.add('open');
+  openModal('modal-fj');
 }
 
 // ===================== SAVE FALTA JUSTIFICADA =====================
@@ -143,12 +143,14 @@ function saveFJ() {
   if(!state.presenca.membros[mi].reg) state.presenca.membros[mi].reg = [];
   state.presenca.membros[mi].reg[ri] = 'FJ';
   
-  fbSet('justificativas', state.justificativas);
-  fbSaveSection('presenca');
-  
-  closeModals();
-  renderPresenca();
-  showToast('Falta justificada registrada');
+  withModalSaveLoading(Promise.all([
+    fbSet('justificativas', state.justificativas),
+    fbSaveSection('presenca')
+  ])).then(() => {
+    closeModals();
+    renderPresenca();
+    showToast('Falta justificada registrada');
+  });
 }
 
 // ===================== CANCEL FALTA JUSTIFICADA =====================

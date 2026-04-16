@@ -13,7 +13,8 @@
       "Bash(python \"C:/Users/julia/.claude/plugins/cache/ui-ux-pro-max-skill/ui-ux-pro-max/2.5.0/skills/ui-ux-pro-max/scripts/search.py\" \"scout cubs youth group portal mobile web dashboard\" --design-system -p \"Alcateia Kotick\")",
       "Bash(python remove_inline_style.py)",
       "Bash(python3 -c \"print\\(sum\\(1 for _ in open\\(r'C:/Users/julia/Desktop/Site Alcateia/src/pages/chefia.html', encoding='utf-8'\\)\\)\\)\")",
-      "Bash(python limpar_legado.py)"
+      "Bash(python limpar_legado.py)",
+      "Bash(git -C \"C:/Users/julia/Desktop/Site Alcateia\" diff src/scripts/modules/dashboard.js)"
     ]
   }
 }
