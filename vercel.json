@@ -3,6 +3,8 @@
     { "source": "/styles/(.*)",       "destination": "/src/styles/$1" },
     { "source": "/scripts/(.*)",      "destination": "/src/scripts/$1" },
     { "source": "/assets/(.*)",       "destination": "/src/assets/$1" },
+    { "source": "/images/logo_jpeg.jpeg", "destination": "/src/images/logo_jpeg.jpeg" },
+    { "source": "/images/logo_png.png",   "destination": "/src/images/logo_png.png" },
     { "source": "/images/(.*)",       "destination": "/src/assets/images/$1" },
     { "source": "/pais",              "destination": "/src/pages/pais.html" },
     { "source": "/pais.html",         "destination": "/src/pages/pais.html" },
