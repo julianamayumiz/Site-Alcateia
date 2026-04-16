@@ -12,6 +12,10 @@
     { "source": "/chefia.html",       "destination": "/src/pages/chefia.html" },
     { "source": "/chefia-login",      "destination": "/src/pages/chefia-login.html" },
     { "source": "/chefia-login.html", "destination": "/src/pages/chefia-login.html" },
+    { "source": "/sobre-o-site",      "destination": "/src/pages/sobre-o-site.html" },
+    { "source": "/sobre-o-site.html", "destination": "/src/pages/sobre-o-site.html" },
+    { "source": "/como-instalar",     "destination": "/src/pages/como-instalar.html" },
+    { "source": "/como-instalar.html", "destination": "/src/pages/como-instalar.html" },
     { "source": "/",                  "destination": "/src/pages/index.html" }
   ]
 }
