@@ -522,6 +522,29 @@ tr.row-regional:hover td { background: #e6d9ff; }
   font-size: 12px;
 }
 
+/* ===== Sub-tabs da Presença ===== */
+.presenca-subtabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.subtab-badge {
+  background: var(--accent-light);
+  color: var(--accent);
+  padding: 1px 7px;
+  border-radius: 20px;
+  font-size: 11px;
+  margin-left: 4px;
+  font-family: 'DM Mono', monospace;
+}
+.subtab-badge-alert {
+  background: var(--red-light);
+  color: var(--red);
+}
+.sort-header { user-select: none; }
+.sort-header:hover { color: var(--accent); }
+
 /* STATS ROW */
 .stat-row td {
   background: var(--surface2);

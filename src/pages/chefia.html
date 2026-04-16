@@ -245,10 +245,22 @@
         </div>
       </div>
       <div class="stats-row" id="presence-stats"></div>
+
+      <!-- Sub-tabs: Todos / Baixa frequência -->
+      <div class="presenca-subtabs" role="tablist" aria-label="Filtrar lobinhos">
+        <button class="com-subtab active" id="pres-subtab-todos" role="tab" aria-selected="true" onclick="showPresencaSubtab('todos')">
+          Todos <span class="subtab-badge" id="pres-badge-todos">0</span>
+        </button>
+        <button class="com-subtab" id="pres-subtab-alerta" role="tab" aria-selected="false" onclick="showPresencaSubtab('alerta')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="vertical-align:-2px;margin-right:4px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Abaixo de 50% <span class="subtab-badge subtab-badge-alert" id="pres-badge-alerta">0</span>
+        </button>
+      </div>
+
       <div class="card">
         <div class="scrollable-table">
           <table class="presence-table" id="pres-table">
-            <thead id="presenca-thead"></thead>
+            <thead><tr id="presenca-thead"></tr></thead>
             <tbody id="presenca-tbody"></tbody>
           </table>
         </div>
