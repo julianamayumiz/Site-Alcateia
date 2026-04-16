@@ -409,11 +409,22 @@
       <!-- Header card: saldo + pills + novo lançamento -->
       <div id="caixa-stats"></div>
 
-      <!-- Gráfico: barras entrada/saída -->
-      <div class="card" style="padding:20px;margin-bottom:24px">
-        <div class="card-header" style="margin-bottom:12px"><span class="card-title">Resumo geral</span></div>
+      <!-- Gráfico: evolução mensal -->
+      <div class="card" style="padding:20px;margin-bottom:16px">
+        <div class="card-header" style="margin-bottom:12px">
+          <span class="card-title">Evolução mensal</span>
+          <div id="caixa-grafico-legend" class="caixa-legend"></div>
+        </div>
         <div id="caixa-grafico"></div>
-        <div id="caixa-grafico-legend"></div>
+      </div>
+
+      <!-- Por categoria -->
+      <div class="card" style="padding:20px;margin-bottom:24px">
+        <div class="card-header" style="margin-bottom:16px">
+          <span class="card-title">Por categoria</span>
+          <span id="caixa-categorias-periodo" class="caixa-cat-periodo"></span>
+        </div>
+        <div id="caixa-categorias"></div>
       </div>
 
       <!-- Filtros da lista -->

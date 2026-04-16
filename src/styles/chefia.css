@@ -1777,7 +1777,7 @@ input[type="file"] { display: none; }
 }
 .caixa-filter-select:focus { border-color: var(--accent); }
 
-/* ===== CAIXA — BARRAS ENTRADAS/SAÍDAS ===== */
+/* ===== CAIXA — BARRAS ENTRADAS/SAÍDAS (legado) ===== */
 .caixa-barra-row {
   display: flex;
   align-items: center;
@@ -1809,6 +1809,166 @@ input[type="file"] { display: none; }
   font-family: 'DM Mono', monospace;
   min-width: 80px;
   text-align: right;
+}
+
+/* ===== CAIXA — GRÁFICO MENSAL (BARRAS VERTICAIS) ===== */
+.caixa-legend {
+  display: flex;
+  gap: 14px;
+  font-size: 12px;
+  color: var(--text2);
+}
+.caixa-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.caixa-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.caixa-cols {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  overflow-x: auto;
+  padding: 4px 2px;
+}
+.caixa-col {
+  flex: 1 1 0;
+  min-width: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: default;
+}
+.caixa-col-bars {
+  width: 100%;
+  height: 140px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+}
+.caixa-col-bar {
+  flex: 1;
+  max-width: 16px;
+  min-height: 2px;
+  border-radius: 4px 4px 0 0;
+  transition: height 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.caixa-col-bar-e { background: var(--accent); }
+.caixa-col-bar-s { background: var(--red); }
+.caixa-col-saldo {
+  font-family: 'DM Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  line-height: 1;
+}
+.caixa-col-label {
+  font-size: 11px;
+  color: var(--text2);
+  text-align: center;
+  line-height: 1.2;
+  text-transform: capitalize;
+}
+.caixa-col-label span {
+  color: var(--text3);
+  font-size: 10px;
+}
+
+/* ===== CAIXA — POR CATEGORIA ===== */
+.caixa-cat-periodo {
+  font-size: 12px;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+}
+#caixa-categorias {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+.caixa-cat-col { min-width: 0; }
+.caixa-cat-title {
+  margin-bottom: 14px;
+}
+.caixa-cat-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.caixa-cat-tag-e { background: var(--accent-light); color: var(--accent); }
+.caixa-cat-tag-s { background: var(--red-light); color: var(--red); }
+.caixa-cat-row {
+  display: grid;
+  grid-template-columns: 1fr 40px;
+  column-gap: 10px;
+  row-gap: 4px;
+  margin-bottom: 12px;
+}
+.caixa-cat-head {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 12.5px;
+  align-items: baseline;
+}
+.caixa-cat-nome {
+  color: var(--text);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.caixa-cat-valor {
+  color: var(--text2);
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.caixa-cat-track {
+  grid-column: 1;
+  background: var(--surface2);
+  border-radius: 20px;
+  height: 8px;
+  overflow: hidden;
+  align-self: center;
+}
+.caixa-cat-fill {
+  height: 100%;
+  border-radius: 20px;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.caixa-cat-fill-e { background: var(--accent); }
+.caixa-cat-fill-s { background: var(--red); }
+.caixa-cat-pct {
+  grid-column: 2;
+  font-size: 11.5px;
+  color: var(--text2);
+  font-family: 'DM Mono', monospace;
+  text-align: right;
+  align-self: center;
+}
+
+.empty-state-small {
+  font-size: 13px;
+  color: var(--text3);
+  text-align: center;
+  padding: 20px 0;
+}
+
+@media (max-width: 700px) {
+  #caixa-categorias { grid-template-columns: 1fr; gap: 20px; }
+  .caixa-col { min-width: 40px; }
+  .caixa-col-bars { height: 110px; }
 }
 
 /* ===== CAIXA — BOTÕES DE LANÇAMENTO ===== */

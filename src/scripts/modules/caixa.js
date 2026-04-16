@@ -11,6 +11,7 @@ const isEntrada = l => l.tipo === 'receita';
 function renderCaixa() {
   renderCaixaStats();
   renderCaixaGrafico();
+  renderCaixaCategorias();
   renderCaixaFiltros();
   renderCaixaLista();
 }
@@ -49,28 +50,125 @@ function renderCaixaStats() {
   `;
 }
 
-// Gráfico: barras horizontais entrada vs saída
+// Gráfico: barras verticais por mês (últimos 12 meses com dados)
 function renderCaixaGrafico() {
   const grafico = document.getElementById('caixa-grafico');
+  const legend = document.getElementById('caixa-grafico-legend');
   if(!grafico) return;
 
   const lancs = state.caixa || [];
-  const totalE = lancs.filter(isEntrada).reduce((s, l) => s + (parseFloat(l.valor) || 0), 0);
-  const totalS = lancs.filter(l => !isEntrada(l)).reduce((s, l) => s + (parseFloat(l.valor) || 0), 0);
-  const maxVal = Math.max(totalE, totalS, 1);
-  const pctE = Math.max(totalE > 0 ? 4 : 0, Math.round(totalE / maxVal * 100));
-  const pctS = Math.max(totalS > 0 ? 4 : 0, Math.round(totalS / maxVal * 100));
+  const byMonth = {};
+  lancs.forEach(l => {
+    if(!l.data) return;
+    const key = l.data.substring(0, 7);
+    if(!byMonth[key]) byMonth[key] = { e: 0, s: 0 };
+    const v = parseFloat(l.valor) || 0;
+    if(isEntrada(l)) byMonth[key].e += v;
+    else byMonth[key].s += v;
+  });
 
-  grafico.innerHTML = `
-    <div class="caixa-barra-row">
-      <span class="caixa-barra-label">Entradas</span>
-      <div class="caixa-barra-track"><div class="caixa-barra-fill caixa-barra-entrada" style="width:${pctE}%"></div></div>
-      <span class="caixa-barra-valor" style="color:var(--accent)">${fmtBRL(totalE)}</span>
+  const keys = Object.keys(byMonth).sort().slice(-12);
+
+  if(!keys.length) {
+    grafico.innerHTML = '<div class="empty-state-small">Sem lançamentos ainda.</div>';
+    if(legend) legend.innerHTML = '';
+    return;
+  }
+
+  const maxVal = Math.max(1, ...keys.flatMap(k => [byMonth[k].e, byMonth[k].s]));
+
+  const fmtCompact = v => {
+    if(v >= 1000) return 'R$ ' + (v / 1000).toFixed(v >= 10000 ? 0 : 1).replace('.', ',') + 'k';
+    return 'R$ ' + Math.round(v);
+  };
+
+  const cols = keys.map(k => {
+    const { e, s } = byMonth[k];
+    const [y, m] = k.split('-');
+    const mesLabel = MESES_PT_CAP[parseInt(m) - 1].substring(0, 3);
+    const yearLabel = y.substring(2);
+    const saldo = e - s;
+    const saldoColor = saldo >= 0 ? 'var(--green)' : 'var(--red)';
+    const hE = Math.max(e > 0 ? 4 : 0, Math.round(e / maxVal * 100));
+    const hS = Math.max(s > 0 ? 4 : 0, Math.round(s / maxVal * 100));
+    const tip = `${mesLabel}/${y}\nEntradas: ${fmtBRL(e)}\nSaídas: ${fmtBRL(s)}\nSaldo: ${fmtBRL(saldo)}`;
+    return `
+      <div class="caixa-col" title="${tip}">
+        <div class="caixa-col-bars">
+          <div class="caixa-col-bar caixa-col-bar-e" style="height:${hE}%"></div>
+          <div class="caixa-col-bar caixa-col-bar-s" style="height:${hS}%"></div>
+        </div>
+        <div class="caixa-col-saldo" style="color:${saldoColor}">${saldo >= 0 ? '+' : '−'}${fmtCompact(Math.abs(saldo))}</div>
+        <div class="caixa-col-label">${mesLabel}<span>/${yearLabel}</span></div>
+      </div>
+    `;
+  }).join('');
+
+  grafico.innerHTML = `<div class="caixa-cols">${cols}</div>`;
+
+  if(legend) {
+    legend.innerHTML = `
+      <span class="caixa-legend-item"><span class="caixa-legend-dot" style="background:var(--accent)"></span>Entradas</span>
+      <span class="caixa-legend-item"><span class="caixa-legend-dot" style="background:var(--red)"></span>Saídas</span>
+    `;
+  }
+}
+
+// Ranking de categorias (receitas + despesas), respeita filtro de mês
+function renderCaixaCategorias() {
+  const el = document.getElementById('caixa-categorias');
+  const periodoEl = document.getElementById('caixa-categorias-periodo');
+  if(!el) return;
+
+  const lancs = state.caixa || [];
+  const filtered = caixaFilter.mes
+    ? lancs.filter(l => l.data && l.data.startsWith(caixaFilter.mes))
+    : lancs;
+
+  if(periodoEl) {
+    if(caixaFilter.mes) {
+      const [y, m] = caixaFilter.mes.split('-');
+      periodoEl.textContent = `${MESES_PT_CAP[parseInt(m) - 1]} ${y}`;
+    } else {
+      periodoEl.textContent = 'Todo o período';
+    }
+  }
+
+  const buildTop = (tipo) => {
+    const map = {};
+    filtered.filter(l => tipo === 'receita' ? isEntrada(l) : !isEntrada(l)).forEach(l => {
+      const cat = l.categoria || 'Sem categoria';
+      map[cat] = (map[cat] || 0) + (parseFloat(l.valor) || 0);
+    });
+    const entries = Object.entries(map).sort((a, b) => b[1] - a[1]);
+    const total = entries.reduce((s, [, v]) => s + v, 0);
+    if(!entries.length) {
+      return '<div class="empty-state-small">Nenhum lançamento no período.</div>';
+    }
+    const fillClass = tipo === 'receita' ? 'caixa-cat-fill-e' : 'caixa-cat-fill-s';
+    return entries.map(([cat, val]) => {
+      const pct = total > 0 ? Math.round(val / total * 100) : 0;
+      const barPct = total > 0 ? Math.max(2, Math.round(val / total * 100)) : 0;
+      return `
+        <div class="caixa-cat-row">
+          <div class="caixa-cat-head">
+            <span class="caixa-cat-nome">${cat}</span>
+            <span class="caixa-cat-valor">${fmtBRL(val)}</span>
+          </div>
+          <div class="caixa-cat-track"><div class="caixa-cat-fill ${fillClass}" style="width:${barPct}%"></div></div>
+          <div class="caixa-cat-pct">${pct}%</div>
+        </div>`;
+    }).join('');
+  };
+
+  el.innerHTML = `
+    <div class="caixa-cat-col">
+      <div class="caixa-cat-title"><span class="caixa-cat-tag caixa-cat-tag-e">Receitas</span></div>
+      ${buildTop('receita')}
     </div>
-    <div class="caixa-barra-row">
-      <span class="caixa-barra-label">Saídas</span>
-      <div class="caixa-barra-track"><div class="caixa-barra-fill caixa-barra-saida" style="width:${pctS}%"></div></div>
-      <span class="caixa-barra-valor" style="color:var(--red)">${fmtBRL(totalS)}</span>
+    <div class="caixa-cat-col">
+      <div class="caixa-cat-title"><span class="caixa-cat-tag caixa-cat-tag-s">Despesas</span></div>
+      ${buildTop('despesa')}
     </div>
   `;
 }
@@ -184,6 +282,7 @@ function filterCaixa(tipo, btn) {
   const selCat = document.getElementById('caixa-filter-cat');
   caixaFilter.mes = selMes ? selMes.value : '';
   caixaFilter.cat = selCat ? selCat.value : '';
+  renderCaixaCategorias();
   renderCaixaLista();
 }
 
@@ -277,6 +376,7 @@ function exportarCaixa() {
 // Exporta funções para uso global
 window.renderCaixa = renderCaixa;
 window.renderCaixaGrafico = renderCaixaGrafico;
+window.renderCaixaCategorias = renderCaixaCategorias;
 window.renderCaixaLista = renderCaixaLista;
 window.filterCaixa = filterCaixa;
 window.saveLancamento = saveLancamento;
