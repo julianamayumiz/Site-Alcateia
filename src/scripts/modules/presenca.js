@@ -1,5 +1,5 @@
 // ===================== PRESENCA MODULE =====================
-// Gerencia a lista de presença dos lobinhos (render rico + sort + filtro <50%)
+// Gerencia a lista de presença dos lobinhos (render rico + sort + filtro <75%)
 
 // Estado de ordenação: null (ordem original) | 'desc' | 'asc'
 let presencaSortDir = null;
@@ -56,10 +56,10 @@ function renderPresenca() {
     originalIndex
   }));
 
-  // Filtro do sub-tab (alerta = <50% com pelo menos 1 registro)
+  // Filtro do sub-tab (alerta = <75% com pelo menos 1 registro)
   let visible = membersWithStats;
   if(presencaSubtab === 'alerta') {
-    visible = visible.filter(m => m.stats.percentage !== null && m.stats.percentage < 50);
+    visible = visible.filter(m => m.stats.percentage !== null && m.stats.percentage < 75);
   }
 
   // Ordenação
@@ -116,7 +116,7 @@ function renderPresenca() {
   const todosBadge = document.getElementById('pres-badge-todos');
   const alertaBadge = document.getElementById('pres-badge-alerta');
   if(todosBadge) todosBadge.textContent = membros.length;
-  if(alertaBadge) alertaBadge.textContent = membersWithStats.filter(m => m.stats.percentage !== null && m.stats.percentage < 50).length;
+  if(alertaBadge) alertaBadge.textContent = membersWithStats.filter(m => m.stats.percentage !== null && m.stats.percentage < 75).length;
 }
 
 // ===================== SUB-TAB =====================
@@ -292,6 +292,89 @@ function cancelFJ() {
   closeModals();
 }
 
+// ===================== GERENCIAR LOBINHOS =====================
+function openLobinhosModal() {
+  const input = document.getElementById('lobinho-novo-nome');
+  if(input) input.value = '';
+  renderLobinhosList();
+  openModal('modal-lobinhos');
+}
+
+function renderLobinhosList() {
+  const cont = document.getElementById('lobinhos-list');
+  const count = document.getElementById('lobinhos-count');
+  if(!cont) return;
+  const membros = state.presenca.membros || [];
+  if(count) count.textContent = membros.length;
+  if(membros.length === 0) {
+    cont.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text3);font-size:13px">Nenhum lobinho cadastrado.</div>';
+    return;
+  }
+  cont.innerHTML = membros.map((m, i) => {
+    const nome = (m.nome || '').replace(/"/g, '&quot;');
+    return `<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--border)">
+      <span style="font-size:11px;color:var(--text3);min-width:22px;font-family:'DM Mono',monospace">${i+1}</span>
+      <input type="text" value="${nome}" data-idx="${i}" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;background:var(--surface);color:var(--text);font-family:inherit" onchange="renameLobinho(${i}, this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();}" aria-label="Editar nome do lobinho">
+      <button class="btn" onclick="deleteLobinho(${i})" style="color:var(--red);border-color:var(--red-light);padding:4px 10px;font-size:14px;line-height:1" title="Remover lobinho" aria-label="Remover lobinho">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function addLobinho() {
+  const input = document.getElementById('lobinho-novo-nome');
+  if(!input) return;
+  const nome = input.value.trim().toUpperCase();
+  if(!nome) { showToast('Digite um nome'); return; }
+  const datas = state.presenca.datas || [];
+  if(!state.presenca.membros) state.presenca.membros = [];
+  state.presenca.membros.push({ nome, reg: new Array(datas.length).fill('') });
+  input.value = '';
+  fbSaveSection('presenca');
+  renderLobinhosList();
+  renderPresenca();
+  showToast('Lobinho adicionado');
+  input.focus();
+}
+
+function renameLobinho(idx, novoNome) {
+  const m = state.presenca.membros[idx];
+  if(!m) return;
+  const nome = (novoNome || '').trim().toUpperCase();
+  if(!nome) { showToast('Nome não pode ser vazio'); renderLobinhosList(); return; }
+  if(m.nome === nome) return;
+  m.nome = nome;
+  fbSaveSection('presenca');
+  renderPresenca();
+  showToast('Nome atualizado');
+}
+
+function deleteLobinho(idx) {
+  const m = state.presenca.membros[idx];
+  if(!m) return;
+  if(!confirm(`Remover "${m.nome}" da lista de presença?\n\nO histórico de presença e as justificativas desse lobinho serão apagados.`)) return;
+  state.presenca.membros.splice(idx, 1);
+
+  // Reindexa justificativas (chaves "mi-ri")
+  if(state.justificativas) {
+    const novas = {};
+    Object.entries(state.justificativas).forEach(([key, val]) => {
+      const [miStr, riStr] = key.split('-');
+      const mi = parseInt(miStr, 10);
+      if(isNaN(mi)) { novas[key] = val; return; }
+      if(mi === idx) return;
+      const novoMi = mi > idx ? mi - 1 : mi;
+      novas[`${novoMi}-${riStr}`] = val;
+    });
+    state.justificativas = novas;
+    fbSet('justificativas', state.justificativas);
+  }
+
+  fbSaveSection('presenca');
+  renderLobinhosList();
+  renderPresenca();
+  showToast('Lobinho removido');
+}
+
 // Exporta funções para uso global
 window.renderPresenca = renderPresenca;
 window.togglePresencaSort = togglePresencaSort;
@@ -301,3 +384,8 @@ window.setCell = setCell;
 window.openFJModal = openFJModal;
 window.saveFJ = saveFJ;
 window.cancelFJ = cancelFJ;
+window.openLobinhosModal = openLobinhosModal;
+window.renderLobinhosList = renderLobinhosList;
+window.addLobinho = addLobinho;
+window.renameLobinho = renameLobinho;
+window.deleteLobinho = deleteLobinho;

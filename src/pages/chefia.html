@@ -236,6 +236,10 @@
           <span class="badge badge-yellow">FJ = Falta Justificada</span>
           <span class="badge badge-gray">· = vazio</span>
           <span style="font-size:12px;color:var(--text3)">— clique na célula para alterar</span>
+          <button class="btn" onclick="openLobinhosModal()" style="font-size:12px;display:inline-flex;align-items:center;gap:6px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+            Gerenciar lobinhos
+          </button>
         </div>
       </div>
       <div class="stats-row" id="presence-stats"></div>
@@ -247,7 +251,7 @@
         </button>
         <button class="com-subtab" id="pres-subtab-alerta" role="tab" aria-selected="false" onclick="showPresencaSubtab('alerta')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="vertical-align:-2px;margin-right:4px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          Abaixo de 50% <span class="subtab-badge subtab-badge-alert" id="pres-badge-alerta">0</span>
+          Abaixo de 75% <span class="subtab-badge subtab-badge-alert" id="pres-badge-alerta">0</span>
         </button>
       </div>
 
@@ -532,6 +536,26 @@
     <div class="form-actions">
       <button class="btn" onclick="closeModals()">Cancelar</button>
       <button class="btn btn-primary" onclick="saveMat()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL GERENCIAR LOBINHOS -->
+<div class="modal-overlay" id="modal-lobinhos">
+  <div class="modal" style="max-width:480px" role="dialog" aria-modal="true" aria-labelledby="modal-lobinhos-title">
+    <h2 id="modal-lobinhos-title">Gerenciar lobinhos</h2>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:16px">Adicione, edite ou remova lobinhos da lista de presença.</p>
+    <div class="form-group">
+      <label for="lobinho-novo-nome">Adicionar lobinho</label>
+      <div style="display:flex;gap:8px">
+        <input type="text" id="lobinho-novo-nome" placeholder="Nome completo" style="flex:1" onkeydown="if(event.key==='Enter'){event.preventDefault();addLobinho();}">
+        <button class="btn btn-primary" onclick="addLobinho()" style="white-space:nowrap">+ Adicionar</button>
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--text3);margin:10px 0 6px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase">Lista atual (<span id="lobinhos-count">0</span>)</div>
+    <div id="lobinhos-list" style="max-height:50vh;overflow-y:auto;border:1px solid var(--border);border-radius:8px"></div>
+    <div class="form-actions">
+      <button class="btn" onclick="closeModals()">Fechar</button>
     </div>
   </div>
 </div>
