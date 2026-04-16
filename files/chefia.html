@@ -2378,8 +2378,10 @@ function toggleSidebar() {
 }
 
 function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sidebar-overlay').classList.remove('open');
+  var sidebar = document.getElementById('sidebar');
+  var overlay = document.getElementById('sidebar-overlay');
+  if(sidebar) sidebar.classList.remove('open');
+  if(overlay) overlay.classList.remove('open');
 }
 
 // ===================== NAVIGATION =====================
@@ -2387,6 +2389,7 @@ var pageNames = {dashboard:'Dashboard',calendario:'Calendário',presenca:'Presen
 var pageList = ['dashboard','calendario','presenca','especialidades','matilhas','comunicados','caixa'];
 
 function goTo(page, updateHash = true) {
+  console.log('goTo chamado:', page, 'updateHash:', updateHash);
   if(!pageList.includes(page)) page = 'dashboard';
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => {
@@ -2395,25 +2398,37 @@ function goTo(page, updateHash = true) {
   });
   document.getElementById('p-'+page).classList.add('active');
   var activeNavItem = document.querySelectorAll('.nav-item')[pageList.indexOf(page)];
-  activeNavItem.classList.add('active');
-  activeNavItem.setAttribute('aria-current', 'page');
+  if(activeNavItem) {
+    activeNavItem.classList.add('active');
+    activeNavItem.setAttribute('aria-current', 'page');
+  }
   document.getElementById('topbar-title').textContent = pageNames[page];
   var addBtn = document.getElementById('btn-add');
   addBtn.style.display = (page === 'presenca' || page === 'dashboard' || page === 'caixa') ? 'none' : 'inline-flex';
   closeMaisMenu();
-  // Update URL hash without reloading
-  if (updateHash) {
-    var newHash = page === 'dashboard' ? '' : '#' + page;
-    if (window.location.hash !== newHash) {
-      window.location.hash = newHash;
-    }
-  }
   closeSidebar();
   render(page);
+  // Update URL hash AFTER rendering
+  if (updateHash) {
+    var newUrl = page === 'dashboard' ? window.location.pathname : window.location.pathname + '#' + page;
+    console.log('Atualizando URL de', window.location.href, 'para', newUrl);
+    if (window.location.href !== window.location.origin + newUrl) {
+      window.history.pushState({page: page}, '', newUrl);
+      console.log('URL atualizada para:', window.location.href);
+    } else {
+      console.log('URL já está correta, não atualizando');
+    }
+  }
 }
 
 // Handle browser back/forward and direct hash links
 window.addEventListener('hashchange', function() {
+  var hash = window.location.hash.replace('#','') || 'dashboard';
+  goTo(hash, false);
+});
+
+// Handle popstate (browser back/forward buttons)
+window.addEventListener('popstate', function(e) {
   var hash = window.location.hash.replace('#','') || 'dashboard';
   goTo(hash, false);
 });
@@ -4235,8 +4250,10 @@ function toggleMaisMenu() {
 }
 
 function closeMaisMenu() {
-  document.getElementById('mais-tray').classList.remove('open');
-  document.getElementById('mais-overlay').classList.remove('open');
+  var tray = document.getElementById('mais-tray');
+  var overlay = document.getElementById('mais-overlay');
+  if(tray) tray.classList.remove('open');
+  if(overlay) overlay.classList.remove('open');
 }
 
 // ===================== TEMA =====================
