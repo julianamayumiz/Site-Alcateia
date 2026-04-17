@@ -1,15 +1,9 @@
-// Firebase Configuration
-// IMPORTANT: Set the FIREBASE_API_KEY before loading this file
-// Example: <script>window.FIREBASE_API_KEY = 'your-api-key-here';</script>
-// Or load from a secure environment configuration
-
-// For production, this should be set via environment variables or a secure configuration management system
-// The API key should never be committed to version control
-window.FIREBASE_API_KEY = window.FIREBASE_API_KEY || "";
-
-// Centralized Firebase configuration
+// Firebase Web SDK config
+// A apiKey do Firebase Web é publica por design (identifica o projeto, nao autoriza acesso).
+// A seguranca real vem das Security Rules (database.rules.json) e da restricao de
+// dominio da API key no Google Cloud Console (HTTP referrers).
 window.firebaseConfig = {
-  apiKey: window.FIREBASE_API_KEY,
+  apiKey: "AIzaSyBqn10ZjuimbifYx_3813caY-s9boS7FKM",
   authDomain: "alcateiakotick-db12b.firebaseapp.com",
   databaseURL: "https://alcateiakotick-db12b-default-rtdb.firebaseio.com",
   projectId: "alcateiakotick-db12b",
@@ -18,4 +12,4 @@ window.firebaseConfig = {
   appId: "1:1038585867031:web:7ca99aa4523c4beda36552"
 };
 
-// Made with Bob
+window.ALCATEIA_EMAIL_DOMAIN = "escoteiros.com";

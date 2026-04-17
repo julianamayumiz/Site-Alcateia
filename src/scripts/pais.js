@@ -1,6 +1,6 @@
 // ===================== FIREBASE =====================
 // Use centralized Firebase configuration from firebase-config.js
-firebase.initializeApp(window.firebaseConfig);
+if (!firebase.apps.length) firebase.initializeApp(window.firebaseConfig);
 var db = firebase.database();
 
 var CALENDARIO_ESTATICO = [

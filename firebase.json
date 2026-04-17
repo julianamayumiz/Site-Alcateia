@@ -1,0 +1,33 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "backup/**",
+      "docs/**",
+      "memory/**",
+      "**/*.md",
+      "database.rules.json",
+      ".firebaserc"
+    ],
+    "cleanUrls": true,
+    "rewrites": [
+      { "source": "/chefia", "destination": "/src/pages/chefia.html" },
+      { "source": "/chefia-login", "destination": "/src/pages/chefia-login.html" },
+      { "source": "/pais", "destination": "/src/pages/pais.html" }
+    ],
+    "headers": [
+      {
+        "source": "**/*.@(html)",
+        "headers": [
+          { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+        ]
+      }
+    ]
+  },
+  "database": {
+    "rules": "database.rules.json"
+  }
+}

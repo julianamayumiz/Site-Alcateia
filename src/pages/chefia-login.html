@@ -16,6 +16,11 @@
   <link rel="icon" type="image/jpeg" href="../images/logo_jpeg.jpeg">
 
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="../scripts/firebase-config.js"></script>
+
   <script>
     (function() {
       var saved = localStorage.getItem('alcateiaTheme');
@@ -53,11 +58,7 @@
       --accent-hover: #4060d4;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'DM Sans', sans-serif;
@@ -75,81 +76,34 @@
       border-radius: var(--radius);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       padding: 40px;
-      max-width: 400px;
+      max-width: 420px;
       width: 100%;
       text-align: center;
     }
 
-    .logo {
-      font-size: 48px;
-      margin-bottom: 16px;
-    }
+    .logo { margin-bottom: 16px; }
+    h1 { font-size: 24px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
+    .subtitle { font-size: 14px; color: var(--text2); margin-bottom: 32px; }
 
-    h1 {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: var(--text);
-    }
-
-    .subtitle {
-      font-size: 14px;
-      color: var(--text2);
-      margin-bottom: 32px;
-    }
-
-    .form-group {
-      margin-bottom: 24px;
-      text-align: left;
-    }
-
-    label {
-      display: block;
-      font-size: 14px;
-      font-weight: 500;
-      margin-bottom: 8px;
-      color: var(--text);
-    }
-
-    input[type="password"] {
+    .btn-google {
       width: 100%;
       padding: 12px 16px;
+      background: var(--surface);
+      color: var(--text);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      transition: all 0.2s;
-    }
-
-    input[type="password"]:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(43, 58, 140, 0.1);
-    }
-
-    .btn-login {
-      width: 100%;
-      padding: 12px 24px;
-      background: var(--accent);
-      color: white;
-      border: none;
       border-radius: 8px;
       font-family: 'DM Sans', sans-serif;
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
     }
-
-    .btn-login:hover {
-      background: var(--accent-hover);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(43, 58, 140, 0.2);
-    }
-
-    .btn-login:active {
-      transform: translateY(0);
-    }
+    .btn-google:hover { border-color: var(--accent); box-shadow: 0 4px 12px rgba(43,58,140,0.1); }
+    .btn-google:disabled { opacity: 0.5; cursor: not-allowed; }
 
     .error-message {
       background: var(--red-light);
@@ -159,60 +113,22 @@
       font-size: 13px;
       margin-bottom: 20px;
       display: none;
+      text-align: left;
     }
-
-    .error-message.show {
-      display: block;
-      animation: shake 0.4s;
-    }
-
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-10px); }
-      75% { transform: translateX(10px); }
-    }
-
-    .back-link {
-      margin-top: 24px;
-      font-size: 13px;
-    }
-
-    .back-link a {
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .back-link a:hover {
-      text-decoration: underline;
-    }
-
-    .pw-wrapper {
-      position: relative;
-    }
-    .pw-toggle {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--text3);
-      padding: 4px;
-      display: flex;
-      align-items: center;
-    }
-    .pw-toggle:hover { color: var(--text); }
+    .error-message.show { display: block; }
 
     .info-text {
       font-size: 12px;
       color: var(--text2);
-      margin-top: 16px;
+      margin-top: 20px;
       padding: 12px;
       background: var(--surface2);
       border-radius: var(--radius-sm);
     }
+
+    .back-link { margin-top: 24px; font-size: 13px; }
+    .back-link a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    .back-link a:hover { text-decoration: underline; }
   </style>
 </head>
 
@@ -220,111 +136,90 @@
   <div class="login-container">
     <div class="logo">
       <svg width="48" height="48" viewBox="0 0 52 52" fill="none" aria-hidden="true">
-        <path d="M26 4L6 12v16c0 11 9.5 18 20 20 10.5-2 20-9 20-20V12L26 4z" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M26 4L6 12v16c0 11 9.5 18 20 20 10.5-2 20-9 20-20V12L26 4z" fill="#2b3a8c" stroke="#2b3a8c" stroke-width="1.5" stroke-linejoin="round"/>
         <polygon points="26,16 28.4,22.8 35.5,22.9 29.8,27.2 31.9,34.1 26,30 20.1,34.1 22.2,27.2 16.5,22.9 23.6,22.8" fill="white"/>
       </svg>
     </div>
     <h1>Portal da Chefia</h1>
-    <div class="subtitle">Acesso Restrito</div>
+    <div class="subtitle">Acesso restrito &middot; conta @escoteiros.com</div>
 
-    <div class="error-message" id="errorMessage">
-      Senha incorreta. Tente novamente.
-    </div>
+    <div class="error-message" id="errorMessage"></div>
 
-    <form id="loginForm">
-      <div class="form-group">
-        <label for="password">Senha de Acesso</label>
-        <div class="pw-wrapper">
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Digite a senha da chefia"
-            required
-            autocomplete="off"
-          >
-          <button type="button" class="pw-toggle" onclick="togglePw()" aria-label="Mostrar/ocultar senha">
-            <svg id="pw-eye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-            <svg id="pw-eye-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <button type="submit" class="btn-login">Acessar Portal</button>
-    </form>
+    <button type="button" class="btn-google" id="btnGoogle">
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+        <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.17-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.91c1.7-1.57 2.69-3.88 2.69-6.62z"/>
+        <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.91-2.26c-.81.54-1.84.86-3.05.86-2.34 0-4.33-1.58-5.04-3.71H.96v2.33A9 9 0 0 0 9 18z"/>
+        <path fill="#FBBC05" d="M3.96 10.71A5.41 5.41 0 0 1 3.68 9c0-.59.1-1.17.28-1.71V4.96H.96A9 9 0 0 0 0 9c0 1.45.35 2.82.96 4.04l3-2.33z"/>
+        <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.96l3 2.33C4.67 5.16 6.66 3.58 9 3.58z"/>
+      </svg>
+      <span id="btnText">Entrar com Google</span>
+    </button>
 
     <div class="info-text">
-      Esta área é exclusiva para membros da chefia da Alcateia Kotick
+      Apenas contas <strong>@escoteiros.com</strong> tem acesso ao portal.
     </div>
 
     <div class="back-link">
-      <a href="/">← Voltar para página inicial</a>
+      <a href="index.html">&larr; Voltar para pagina inicial</a>
     </div>
   </div>
 
   <script>
-    // Inicializa tema
     (function() {
       var saved = localStorage.getItem('alcateiaTheme');
       var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       if (saved === 'dark' || (!saved && prefersDark)) {
         document.body.classList.add('dark');
-        document.documentElement.classList.remove('dark-init');
-      } else {
-        document.documentElement.classList.remove('dark-init');
       }
+      document.documentElement.classList.remove('dark-init');
     })();
 
-    function togglePw() {
-      var inp = document.getElementById('password');
-      var eye = document.getElementById('pw-eye');
-      var eyeOff = document.getElementById('pw-eye-off');
-      var isHidden = inp.type === 'password';
-      inp.type = isHidden ? 'text' : 'password';
-      eye.style.display = isHidden ? 'none' : '';
-      eyeOff.style.display = isHidden ? '' : 'none';
+    if (!firebase.apps.length) firebase.initializeApp(window.firebaseConfig);
+    var DOM = window.ALCATEIA_EMAIL_DOMAIN || 'escoteiros.com';
+    var auth = firebase.auth();
+    var btn = document.getElementById('btnGoogle');
+    var btnText = document.getElementById('btnText');
+    var errEl = document.getElementById('errorMessage');
+
+    function showError(msg) {
+      errEl.textContent = msg;
+      errEl.classList.add('show');
     }
+    function clearError() { errEl.classList.remove('show'); }
 
-    // Configuração da senha (ALTERE AQUI A SENHA)
-    const SENHA_CHEFIA = 'kotick'; // Altere esta senha conforme necessário
-    const ERROR_MESSAGE_DURATION_MS = 3000; // 3 seconds
-
-    const loginForm = document.getElementById('loginForm');
-    const passwordInput = document.getElementById('password');
-    const errorMessage = document.getElementById('errorMessage');
-
-    // Verifica se já está autenticado
-    if (sessionStorage.getItem('chefiaAutenticada') === 'true') {
-      window.location.href = '/chefia.html';
-    }
-
-    loginForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const senhaDigitada = passwordInput.value;
-
-      if (senhaDigitada === SENHA_CHEFIA) {
-        // Senha correta - salva autenticação na sessão
-        sessionStorage.setItem('chefiaAutenticada', 'true');
-        
-        // Redireciona para o portal da chefia
-        window.location.href = '/chefia.html';
-      } else {
-        // Senha incorreta - mostra mensagem de erro
-        errorMessage.classList.add('show');
-        passwordInput.value = '';
-        passwordInput.focus();
-
-        // Remove a mensagem de erro após 3 segundos
-        setTimeout(() => {
-          errorMessage.classList.remove('show');
-        }, ERROR_MESSAGE_DURATION_MS);
+    // Se ja esta logado com dominio correto, redireciona
+    auth.onAuthStateChanged(function(user){
+      if (user && (user.email || '').toLowerCase().endsWith('@' + DOM)) {
+        window.location.href = 'chefia.html';
       }
     });
 
-    // Remove mensagem de erro quando o usuário começa a digitar
-    passwordInput.addEventListener('input', function() {
-      errorMessage.classList.remove('show');
+    btn.addEventListener('click', function() {
+      clearError();
+      btn.disabled = true;
+      btnText.textContent = 'Entrando...';
+      var provider = new firebase.auth.GoogleAuthProvider();
+      provider.setCustomParameters({ hd: DOM });
+      auth.signInWithPopup(provider).then(function(result) {
+        var email = (result.user && result.user.email || '').toLowerCase();
+        if (!email.endsWith('@' + DOM)) {
+          return auth.signOut().then(function(){
+            showError('Acesso permitido apenas para contas @' + DOM + '.');
+            btn.disabled = false;
+            btnText.textContent = 'Entrar com Google';
+          });
+        }
+        window.location.href = 'chefia.html';
+      }).catch(function(err) {
+        console.warn(err);
+        if (err && err.code === 'auth/popup-closed-by-user') {
+          clearError();
+        } else {
+          showError('Nao foi possivel entrar: ' + (err && err.message || 'erro desconhecido'));
+        }
+        btn.disabled = false;
+        btnText.textContent = 'Entrar com Google';
+      });
     });
   </script>
 

@@ -5,18 +5,8 @@ let db = null;
 let fbReady = false;
 
 function initFirebase() {
-  const config = {
-    apiKey: "AIzaSyBqn10ZjuimbifYx_3813caY-s9boS7FKM",
-    authDomain: "alcateiakotick-db12b.firebaseapp.com",
-    databaseURL: "https://alcateiakotick-db12b-default-rtdb.firebaseio.com",
-    projectId: "alcateiakotick-db12b",
-    storageBucket: "alcateiakotick-db12b.firebasestorage.app",
-    messagingSenderId: "1038585867031",
-    appId: "1:1038585867031:web:7ca99aa4523c4beda36552"
-  };
-
   try {
-    firebase.initializeApp(config);
+    if (!firebase.apps.length) firebase.initializeApp(window.firebaseConfig);
     db = firebase.database();
     fbReady = true;
     showSyncStatus('conectando');

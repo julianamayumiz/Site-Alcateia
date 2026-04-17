@@ -6,9 +6,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Portal dos Pais - Alcateia Kotick - Acompanhe atividades, comunicados e confirme presença">
   <title>Alcateia Kotick — Portal dos Pais</title>
-  <link rel="icon" type="image/png" href="/assets/images/logo-alcateia.png">
+  <link rel="icon" type="image/png" href="../assets/images/logo-alcateia.png">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/pais.css">
+  <link rel="stylesheet" href="../styles/pais.css">
+  <style>
+    #pais-gate {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--bg, #f4f6fb);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px; font-family: 'DM Sans', sans-serif;
+    }
+    #pais-gate .card {
+      background: var(--surface, #fff);
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      padding: 32px 28px; max-width: 380px; width: 100%;
+      text-align: center;
+    }
+    #pais-gate h2 { font-size: 20px; margin: 0 0 6px; color: var(--text, #12183a); }
+    #pais-gate p { font-size: 13px; color: var(--text2, #5a6480); margin: 0 0 20px; }
+    #pais-gate input {
+      width: 100%; padding: 12px 14px; border: 1px solid var(--border, #d6dcea);
+      border-radius: 8px; font-family: inherit; font-size: 14px; margin-bottom: 12px;
+      background: var(--surface, #fff); color: var(--text, #12183a);
+    }
+    #pais-gate button {
+      width: 100%; padding: 12px; background: #2b3a8c; color: #fff;
+      border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer;
+      font-family: inherit;
+    }
+    #pais-gate button:disabled { opacity: 0.6; cursor: not-allowed; }
+    #pais-gate .err { color: #c0392b; font-size: 13px; margin-top: 10px; min-height: 18px; }
+    #pais-gate .hint { color: var(--text3, #677090); font-size: 12px; margin-top: 16px; }
+    body.dark #pais-gate { background: #0f1117; }
+    body.dark #pais-gate .card { background: #181b2a; }
+    body.dark #pais-gate h2 { color: #e8ebf5; }
+    body.dark #pais-gate p, body.dark #pais-gate .hint { color: #9ba6c8; }
+    body.dark #pais-gate input { background: #1e2236; color: #e8ebf5; border-color: #2a304d; }
+  </style>
   <script>
     // Aplica o tema antes do render para evitar flash
     (function() {
@@ -101,7 +136,87 @@
   </div>
 </div>
 
-<script src="/scripts/firebase-config.js"></script>
-<script src="/scripts/pais.js"></script>
+<!-- Gate de senha dos pais -->
+<div id="pais-gate" role="dialog" aria-label="Acesso ao portal dos pais">
+  <div class="card">
+    <h2>Portal dos Pais</h2>
+    <p>Digite a senha compartilhada da Alcateia para continuar.</p>
+    <form id="pais-gate-form" autocomplete="off">
+      <input type="password" id="pais-gate-pw" placeholder="Senha" autocomplete="off" required>
+      <button type="submit" id="pais-gate-btn">Entrar</button>
+    </form>
+    <div class="err" id="pais-gate-err"></div>
+    <div class="hint">Nao tem a senha? Peca para a chefia da Alcateia.</div>
+  </div>
+</div>
+
+<script src="../scripts/firebase-config.js"></script>
+<script>
+(function(){
+  if (!firebase.apps.length) firebase.initializeApp(window.firebaseConfig);
+
+  async function sha256Hex(str) {
+    var buf = new TextEncoder().encode(str);
+    var hash = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(hash)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+  }
+
+  var gate = document.getElementById('pais-gate');
+  var form = document.getElementById('pais-gate-form');
+  var input = document.getElementById('pais-gate-pw');
+  var btn = document.getElementById('pais-gate-btn');
+  var err = document.getElementById('pais-gate-err');
+
+  function loadPaisApp() {
+    gate.remove();
+    var s = document.createElement('script');
+    s.src = '../scripts/pais.js';
+    document.body.appendChild(s);
+  }
+
+  function showErr(msg) { err.textContent = msg; }
+
+  // Sessao ja liberada
+  if (sessionStorage.getItem('paisUnlocked') === '1') {
+    loadPaisApp();
+    return;
+  }
+
+  firebase.database().ref('alcateia/_config/paisPasswordHash').once('value').then(function(snap){
+    var storedHash = snap.val();
+    if (!storedHash) {
+      showErr('Portal ainda nao configurado. Peca para a chefia definir a senha.');
+      btn.disabled = true;
+      input.disabled = true;
+      return;
+    }
+    form.addEventListener('submit', async function(e){
+      e.preventDefault();
+      showErr('');
+      btn.disabled = true;
+      try {
+        var h = await sha256Hex(input.value.trim());
+        if (h === storedHash) {
+          sessionStorage.setItem('paisUnlocked', '1');
+          loadPaisApp();
+        } else {
+          showErr('Senha incorreta.');
+          input.value = '';
+          input.focus();
+          btn.disabled = false;
+        }
+      } catch (ex) {
+        console.warn(ex);
+        showErr('Erro ao validar. Tente novamente.');
+        btn.disabled = false;
+      }
+    });
+    setTimeout(function(){ input.focus(); }, 50);
+  }).catch(function(e){
+    console.warn(e);
+    showErr('Sem conexao com o servidor. Verifique sua internet.');
+  });
+})();
+</script>
 </body>
 </html>
