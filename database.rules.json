@@ -2,11 +2,11 @@
   "rules": {
     "alcateia": {
       ".read": true,
-      ".write": "auth != null && auth.token.email_verified === true && auth.token.email.matches(/.*@escoteiros[.]com$/)",
+      ".write": "auth != null && auth.token.email_verified === true && auth.token.email.matches(/.*@escoteiros[.]org[.]br$/)",
 
       "confirmacoes": {
         "$id": {
-          ".write": "(!data.exists() && newData.hasChildren(['nome','data','presenca'])) || (auth != null && auth.token.email.matches(/.*@escoteiros[.]com$/))",
+          ".write": "(!data.exists() && newData.hasChildren(['nome','data','presenca'])) || (auth != null && auth.token.email.matches(/.*@escoteiros[.]org[.]br$/))",
           ".validate": "newData.hasChild('nome') && newData.hasChild('data') && newData.hasChild('presenca') && newData.child('nome').isString() && newData.child('nome').val().length < 120 && newData.child('data').isString() && newData.child('data').val().length < 40"
         }
       },
@@ -14,7 +14,7 @@
       "_config": {
         "paisPasswordHash": {
           ".read": true,
-          ".write": "auth != null && auth.token.email.matches(/.*@escoteiros[.]com$/)",
+          ".write": "auth != null && auth.token.email.matches(/.*@escoteiros[.]org[.]br$/)",
           ".validate": "newData.isString() && newData.val().length == 64"
         }
       }

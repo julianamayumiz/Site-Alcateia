@@ -12,4 +12,4 @@ window.firebaseConfig = {
   appId: "1:1038585867031:web:7ca99aa4523c4beda36552"
 };
 
-window.ALCATEIA_EMAIL_DOMAIN = "escoteiros.com";
+window.ALCATEIA_EMAIL_DOMAIN = "escoteiros.org.br";

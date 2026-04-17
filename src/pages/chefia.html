@@ -696,11 +696,11 @@
 
 <div class="toast" id="toast"></div>
 
-<!-- Proteção de acesso: Firebase Auth + dominio @escoteiros.com -->
+<!-- Proteção de acesso: Firebase Auth + dominio @escoteiros.org.br -->
 <script>
 (function(){
   if (!firebase.apps.length) firebase.initializeApp(window.firebaseConfig);
-  var DOM = window.ALCATEIA_EMAIL_DOMAIN || 'escoteiros.com';
+  var DOM = window.ALCATEIA_EMAIL_DOMAIN || 'escoteiros.org.br';
   firebase.auth().onAuthStateChanged(function(user){
     if (!user) { window.location.href = 'chefia-login.html'; return; }
     var email = (user.email || '').toLowerCase();

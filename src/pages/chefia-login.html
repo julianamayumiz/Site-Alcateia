@@ -141,7 +141,7 @@
       </svg>
     </div>
     <h1>Portal da Chefia</h1>
-    <div class="subtitle">Acesso restrito &middot; conta @escoteiros.com</div>
+    <div class="subtitle">Acesso restrito &middot; conta @escoteiros.org.br</div>
 
     <div class="error-message" id="errorMessage"></div>
 
@@ -156,7 +156,7 @@
     </button>
 
     <div class="info-text">
-      Apenas contas <strong>@escoteiros.com</strong> tem acesso ao portal.
+      Apenas contas <strong>@escoteiros.org.br</strong> tem acesso ao portal.
     </div>
 
     <div class="back-link">
@@ -175,7 +175,7 @@
     })();
 
     if (!firebase.apps.length) firebase.initializeApp(window.firebaseConfig);
-    var DOM = window.ALCATEIA_EMAIL_DOMAIN || 'escoteiros.com';
+    var DOM = window.ALCATEIA_EMAIL_DOMAIN || 'escoteiros.org.br';
     var auth = firebase.auth();
     var btn = document.getElementById('btnGoogle');
     var btnText = document.getElementById('btnText');
