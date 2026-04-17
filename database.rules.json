@@ -2,7 +2,7 @@
   "rules": {
     "alcateia": {
       ".read": true,
-      ".write": "auth != null && auth.token.email_verified === true && auth.token.email.matches(/.*@escoteiros[.]org[.]br$/)",
+      ".write": "auth != null && auth.token.email.matches(/.*@escoteiros[.]org[.]br$/)",
 
       "confirmacoes": {
         "$id": {
