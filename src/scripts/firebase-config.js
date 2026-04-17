@@ -3,7 +3,7 @@
 // A seguranca real vem das Security Rules (database.rules.json) e da restricao de
 // dominio da API key no Google Cloud Console (HTTP referrers).
 window.firebaseConfig = {
-  apiKey: "AIzaSyBqn10ZjuimbifYx_3813caY-s9boS7FKM",
+  apiKey: "AIzaSyBqn10Zjuimbifyx_3813caY-s9boS7FKM",
   authDomain: "alcateiakotick-db12b.firebaseapp.com",
   databaseURL: "https://alcateiakotick-db12b-default-rtdb.firebaseio.com",
   projectId: "alcateiakotick-db12b",
