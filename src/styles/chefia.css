@@ -1931,6 +1931,85 @@ input[type="file"] { display: none; }
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* ===================== PROGRESSÃO ===================== */
+.prog-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .prog-grid { grid-template-columns: 1fr; }
+}
+.prog-col { min-width: 0; }
+.prog-cat, .prog-bloco { padding: 14px 16px; margin-bottom: 14px; }
+.prog-cat-head, .prog-bloco-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.prog-cat-head b, .prog-bloco-head b { font-size: 13.5px; color: var(--text); }
+.prog-item {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  padding: 7px 0;
+  border-top: 1px solid var(--border);
+  cursor: pointer;
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+.prog-item input[type="checkbox"] {
+  width: 16px; height: 16px;
+  margin-top: 1px;
+  flex-shrink: 0;
+  cursor: pointer;
+  accent-color: var(--accent);
+}
+.prog-cod {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  flex-shrink: 0;
+  min-width: 30px;
+}
+.prog-desc { color: var(--text2); }
+.prog-item.done .prog-desc { color: var(--text3); text-decoration: line-through; }
+.prog-sub {
+  font-size: 11.5px;
+  color: var(--text2);
+  margin: 8px 0 6px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.prog-bar {
+  height: 6px;
+  background: var(--surface2);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.prog-bar-fill { height: 100%; border-radius: 3px; transition: width .2s; }
+.prog-var-codes { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0; align-items: center; }
+.prog-fixas { margin-top: 8px; border-top: 1px dashed var(--border); padding-top: 6px; }
+.prog-details { margin-top: 6px; }
+.prog-details > summary {
+  cursor: pointer;
+  font-size: 11.5px;
+  color: var(--accent);
+  padding: 5px 0;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  list-style: revert;
+}
+.prog-details > summary:hover { color: var(--text); }
+.prog-details[open] > summary { font-weight: 600; }
 .caixa-cat-valor {
   color: var(--text2);
   font-family: 'DM Mono', monospace;

@@ -19,6 +19,8 @@ function render(page) {
     }
   } else if (page === 'caixa' && typeof window.renderCaixa === 'function') {
     window.renderCaixa();
+  } else if (page === 'progressao' && typeof window.renderProgressao === 'function') {
+    window.renderProgressao();
   }
 }
 

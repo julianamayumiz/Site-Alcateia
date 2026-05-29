@@ -8,10 +8,11 @@ const pageNames = {
   especialidades: 'Especialidades',
   matilhas: 'Matilhas',
   comunicados: 'Comunicados',
-  caixa: 'Fluxo de Caixa'
+  caixa: 'Fluxo de Caixa',
+  progressao: 'Progressão'
 };
 
-const pageList = ['dashboard','calendario','presenca','especialidades','matilhas','comunicados','caixa'];
+const pageList = ['dashboard','calendario','presenca','especialidades','matilhas','comunicados','caixa','progressao'];
 
 // ===================== SIDEBAR MOBILE =====================
 function toggleSidebar() {
