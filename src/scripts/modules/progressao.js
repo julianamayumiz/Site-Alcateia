@@ -335,7 +335,7 @@ function renderProgBloco(bloco, bi, data, espSet) {
   const subMarks = data.subs[bloco.nome] || {};
   const subTem = bloco.substitutas.filter(s => espSet.has(progNorm(s))).length;
   const substitutasHtml = bloco.substitutas.length ? `
-    <details class="prog-details"${v.subs || subTem ? ' open' : ''}>
+    <details class="prog-details" open>
       <summary>Substitui o requisito de variáveis
         <span class="badge badge-gray" style="font-size:10px">${v.subs}/${bloco.substitutas.length}</span>
         ${subTem ? `<span class="badge badge-green" style="font-size:10px">${subTem} já tem</span>` : ''}

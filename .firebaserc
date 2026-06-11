@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "alcateiakotick-db12b"
-  }
+    "default": "alcateiakotick-db12b",
+    "alcateia-site": "alcateiakotick-db12b"
+  },
+  "targets": {},
+  "etags": {}
 }
