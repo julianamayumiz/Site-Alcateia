@@ -81,6 +81,24 @@ function progVarAntigo(blocoNome, antigo) {
   return PROG_ATIVIDADES_ANTIGAS.filter(a => a.bloco === blocoNome && antigo[a.codigo]).map(a => a.codigo);
 }
 
+// Equivalência item-a-item: códigos antigos CUMPRIDOS que satisfazem uma ação
+// variável NOVA específica (mesmo bloco + texto igual em PROG_EQUIVALENCIAS).
+function progEquivCodes(blocoNome, varTexto, antigo) {
+  if (typeof PROG_EQUIVALENCIAS === 'undefined') return [];
+  return PROG_ATIVIDADES_ANTIGAS
+    .filter(a => a.bloco === blocoNome && antigo[a.codigo] && PROG_EQUIVALENCIAS[a.codigo] === varTexto)
+    .map(a => a.codigo);
+}
+
+// Índices das ações variáveis de um bloco já satisfeitas por equivalência antiga.
+function progAutoVarIdx(bloco, antigo) {
+  const set = new Set();
+  bloco.variaveis.forEach((t, i) => {
+    if (progEquivCodes(bloco.nome, t, antigo).length) set.add(i);
+  });
+  return set;
+}
+
 function progFixasDone(bloco, fixas) {
   return progCountMarks(fixas[bloco.nome]);
 }
@@ -88,7 +106,11 @@ function progFixasDone(bloco, fixas) {
 // Resumo de variáveis de um bloco
 function progVarResumo(bloco, data) {
   const antigo = progVarAntigo(bloco.nome, data.antigo).length;
-  const novoVar = progCountMarks(data.variaveis[bloco.nome]);
+  // Marcações manuais nas variáveis, exceto as já satisfeitas por equivalência
+  // antiga (essas já estão contadas no lado "antigo" — evita contar em dobro).
+  const autoIdx = progAutoVarIdx(bloco, data.antigo);
+  const varMarks = data.variaveis[bloco.nome] || {};
+  const novoVar = Object.keys(varMarks).filter(k => varMarks[k] && !autoIdx.has(Number(k))).length;
   const novoEsp = progCountMarks(data.esp[bloco.nome]);
   const subs = progCountMarks(data.subs[bloco.nome]);
   const total = antigo + novoVar + novoEsp;
@@ -279,10 +301,21 @@ function renderProgBloco(bloco, bi, data, espSet) {
     ? `<div class="prog-var-codes"><span style="font-size:10.5px;color:var(--text3)">do antigo:</span> ${codigos.map(c => `<span class="badge badge-blue" style="font-size:10px">${c}</span>`).join(' ')}</div>`
     : '';
 
-  // Variáveis descritivas (sempre visíveis)
+  // Variáveis descritivas (sempre visíveis). As que têm equivalência com uma
+  // atividade antiga já cumprida aparecem marcadas e travadas, com selo do antigo.
   const varMarks = data.variaveis[bloco.nome] || {};
   const variaveisHtml = bloco.variaveis.length
-    ? bloco.variaveis.map((t, i) => progCheckItem('variaveis', bi, i, t, !!varMarks[i])).join('')
+    ? bloco.variaveis.map((t, i) => {
+        const equivCodes = progEquivCodes(bloco.nome, t, data.antigo);
+        if (equivCodes.length) {
+          const badge = ` <span class="badge badge-blue" style="font-size:10px">✓ do antigo ${equivCodes.join(', ')}</span>`;
+          return `<label class="prog-item done" title="Concluído automaticamente pela atividade antiga equivalente (${equivCodes.join(', ')})">
+            <input type="checkbox" checked disabled>
+            <span class="prog-desc">${t}${badge}</span>
+          </label>`;
+        }
+        return progCheckItem('variaveis', bi, i, t, !!varMarks[i]);
+      }).join('')
     : '';
 
   // Especialidades (recolhíveis) — destaca as que o lobinho já tem
