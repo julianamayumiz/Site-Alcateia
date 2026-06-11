@@ -172,6 +172,94 @@ function progToggle(group, blocoIdx, idx) {
   if (bloco) progToggleMark(group, bloco.nome, idx);
 }
 
+// ===================== DASHBOARD GERAL =====================
+function renderProgDashboardGeral(wrap, stats) {
+  const lobinhos = progGetLobinhos();
+
+  if (stats) {
+    if (!lobinhos.length) {
+      stats.innerHTML = '';
+    } else {
+      let totalCompletos = 0, totalAndamento = 0, totalNaoIniciado = 0;
+      lobinhos.forEach(nome => {
+        const data = progGetData(nome);
+        PROG_BLOCOS.forEach(b => {
+          const s = progBlocoStatus(b, data);
+          if (s === 'completo') totalCompletos++;
+          else if (s === 'andamento') totalAndamento++;
+          else totalNaoIniciado++;
+        });
+      });
+      stats.innerHTML = `
+        <div class="stat-mini"><div class="val">${lobinhos.length}</div><div class="lbl">Lobinhos</div></div>
+        <div class="stat-mini"><div class="val" style="color:var(--green)">${totalCompletos}</div><div class="lbl">Blocos completos</div></div>
+        <div class="stat-mini"><div class="val" style="color:var(--accent2)">${totalAndamento}</div><div class="lbl">Em andamento</div></div>
+        <div class="stat-mini"><div class="val" style="color:var(--text3)">${totalNaoIniciado}</div><div class="lbl">Não iniciados</div></div>
+      `;
+    }
+  }
+
+  if (!lobinhos.length) {
+    wrap.innerHTML = `<div class="card" style="padding:40px;text-align:center;color:var(--text3)">
+      Nenhum lobinho cadastrado.
+    </div>`;
+    return;
+  }
+
+  const STATUS_ICON = { 'completo': '✓', 'andamento': '◑', 'nao-iniciado': '○' };
+  const STATUS_COLOR = { 'completo': 'var(--green)', 'andamento': 'var(--accent2)', 'nao-iniciado': 'var(--text3)' };
+
+  const colHeaders = PROG_BLOCOS.map(b =>
+    `<th style="font-size:10px;font-weight:600;color:var(--text2);padding:6px 8px;white-space:nowrap;max-width:90px;overflow:hidden;text-overflow:ellipsis" title="${b.nome}">${b.nome}</th>`
+  ).join('');
+
+  const rows = lobinhos.map(nome => {
+    const data = progGetData(nome);
+    const cells = PROG_BLOCOS.map(b => {
+      const s = progBlocoStatus(b, data);
+      const v = progVarResumo(b, data);
+      const fixasDone = progFixasDone(b, data.fixas);
+      const tooltip = `Fixas: ${fixasDone}/${b.fixas.length} | Variáveis: ${v.total}/${b.minVar}`;
+      return `<td style="text-align:center;padding:6px 4px" title="${tooltip}">
+        <span style="color:${STATUS_COLOR[s]};font-size:15px;line-height:1">${STATUS_ICON[s]}</span>
+      </td>`;
+    }).join('');
+
+    const completos = PROG_BLOCOS.filter(b => progBlocoStatus(b, data) === 'completo').length;
+    const pct = Math.round(completos / PROG_BLOCOS.length * 100);
+    const barFill = `<div style="height:4px;border-radius:2px;background:var(--green);width:${pct}%"></div>`;
+    const bar = `<div style="width:48px;height:4px;border-radius:2px;background:var(--border);margin:3px auto 0">${barFill}</div>`;
+
+    return `<tr style="border-bottom:1px solid var(--border)">
+      <td style="padding:8px 12px;white-space:nowrap">
+        <button class="lanc-btn" style="font-size:13px;font-weight:600;color:var(--text1);background:none;border:none;cursor:pointer;padding:0;text-align:left"
+          onclick="progSelectDashboard('${nome.replace(/'/g, "\\'")}')">${nome}</button>
+        <div style="font-size:10px;color:var(--text3)">${completos}/${PROG_BLOCOS.length} blocos${bar}</div>
+      </td>
+      ${cells}
+    </tr>`;
+  }).join('');
+
+  const legend = `<div style="display:flex;gap:16px;font-size:11px;color:var(--text3);margin-top:12px;flex-wrap:wrap">
+    <span><span style="color:var(--green)">✓</span> Completo</span>
+    <span><span style="color:var(--accent2)">◑</span> Em andamento</span>
+    <span><span style="color:var(--text3)">○</span> Não iniciado</span>
+  </div>`;
+
+  wrap.innerHTML = `<div class="card" style="overflow-x:auto;padding:16px">
+    <table style="width:100%;border-collapse:collapse;min-width:600px">
+      <thead>
+        <tr style="border-bottom:2px solid var(--border)">
+          <th style="text-align:left;padding:6px 12px;font-size:12px;color:var(--text2);white-space:nowrap">Lobinho</th>
+          ${colHeaders}
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+    ${legend}
+  </div>`;
+}
+
 // ===================== RENDER =====================
 function renderProgressao() {
   progPopulateSelect();
@@ -181,10 +269,7 @@ function renderProgressao() {
 
   const nome = window.progSelected || '';
   if (!nome) {
-    if (stats) stats.innerHTML = '';
-    wrap.innerHTML = `<div class="card" style="padding:40px;text-align:center;color:var(--text3)">
-      Selecione um lobinho acima para ver e marcar a progressão.
-    </div>`;
+    renderProgDashboardGeral(wrap, stats);
     return;
   }
 
@@ -366,8 +451,16 @@ function renderProgBloco(bloco, bi, data, espSet) {
   </div>`;
 }
 
+function progSelectDashboard(nome) {
+  window.progSelected = nome;
+  const sel = document.getElementById('prog-lobinho');
+  if (sel) sel.value = nome;
+  renderProgressao();
+}
+
 // Exporta funções para uso global
 window.renderProgressao = renderProgressao;
 window.progSelectLobinho = progSelectLobinho;
+window.progSelectDashboard = progSelectDashboard;
 window.progToggleAntigo = progToggleAntigo;
 window.progToggle = progToggle;
