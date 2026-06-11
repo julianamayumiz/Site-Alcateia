@@ -323,7 +323,7 @@ function renderProgBloco(bloco, bi, data, espSet) {
   const espDone = progCountMarks(espMarks);
   const espTem = bloco.especialidades.filter(e => espSet.has(progNorm(e))).length;
   const especialidadesHtml = bloco.especialidades.length ? `
-    <details class="prog-details"${espDone || espTem ? ' open' : ''}>
+    <details class="prog-details" open>
       <summary>Conquistar especialidade — conta como variável
         <span class="badge badge-gray" style="font-size:10px">${espDone}/${bloco.especialidades.length}</span>
         ${espTem ? `<span class="badge badge-green" style="font-size:10px">${espTem} já tem</span>` : ''}
