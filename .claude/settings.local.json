@@ -16,7 +16,8 @@
       "Bash(python limpar_legado.py)",
       "Bash(git -C \"C:/Users/julia/Desktop/Site Alcateia\" diff src/scripts/modules/dashboard.js)",
       "Bash(xargs wc *)",
-      "PowerShell(node --version)"
+      "PowerShell(node --version)",
+      "PowerShell(git -C \"C:\\\\Users\\\\julia\\\\Desktop\\\\Site Alcateia\" log --oneline -40)"
     ]
   }
 }

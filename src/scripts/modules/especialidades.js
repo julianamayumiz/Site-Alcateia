@@ -27,6 +27,14 @@ function populateEspLobinhos() {
     nomes.map(n => `<option value="${n}"${n === cur ? ' selected' : ''}>${n}</option>`).join('');
 }
 
+function populateEspNomeModal(selectedNome) {
+  const sel = document.getElementById('esp-nome');
+  if(!sel) return;
+  const nomes = (state.presenca?.membros || []).map(m => m.nome).filter(Boolean).sort();
+  sel.innerHTML = '<option value="">Selecione...</option>' +
+    nomes.map(n => `<option value="${n}"${n === selectedNome ? ' selected' : ''}>${n}</option>`).join('');
+}
+
 function filterEsp() {
   renderEsp();
 }
@@ -110,7 +118,7 @@ function editEsp(idx) {
   const e = state.especialidades[idx];
   document.getElementById('modal-esp-title').textContent = 'Editar especialidade';
   populateEspLobinhos();
-  document.getElementById('esp-nome').value = e.nome || '';
+  populateEspNomeModal(e.nome || '');
   document.getElementById('esp-esp').value = e.esp || '';
   document.getElementById('esp-nivel').value = e.nivel || '1';
   document.getElementById('esp-data').value = e.data || '';
@@ -165,6 +173,7 @@ window.renderEsp = renderEsp;
 window.filterEsp = filterEsp;
 window.limparFiltrosEsp = limparFiltrosEsp;
 window.populateEspLobinhos = populateEspLobinhos;
+window.populateEspNomeModal = populateEspNomeModal;
 window.editEsp = editEsp;
 window.saveEsp = saveEsp;
 window.delEsp = delEsp;

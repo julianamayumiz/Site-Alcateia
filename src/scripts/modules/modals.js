@@ -34,8 +34,8 @@ function openAdd() {
     window.editingEspIdx = -1;
     document.getElementById('modal-esp-title').textContent = 'Nova especialidade';
     if(typeof window.populateEspLobinhos === 'function') window.populateEspLobinhos();
+    if(typeof window.populateEspNomeModal === 'function') window.populateEspNomeModal('');
     ['esp-esp','esp-data','esp-avaliador'].forEach(id => document.getElementById(id).value = '');
-    document.getElementById('esp-nome').selectedIndex = 0;
     document.getElementById('esp-nivel').value = '1';
     document.getElementById('esp-comp').value = 'OK';
     document.getElementById('esp-entregue').value = 'OK';
