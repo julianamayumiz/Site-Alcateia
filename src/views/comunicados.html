@@ -1,0 +1,44 @@
+<div class="page-header">
+  <div class="page-header-left">
+    <h1>Comunicados</h1>
+    <p>Publicações visíveis no portal dos pais</p>
+  </div>
+</div>
+
+<div style="display:flex;gap:0;margin-bottom:20px;border-bottom:1px solid var(--border)">
+  <button class="com-subtab active" id="subtab-coms" onclick="showComSubtab('coms')">
+    📢 Comunicados <span id="badge-coms" style="background:var(--accent-light);color:var(--accent);padding:1px 7px;border-radius:20px;font-size:11px;margin-left:4px">0</span>
+  </button>
+  <button class="com-subtab" id="subtab-confs" onclick="showComSubtab('confs')">
+    ✅ Confirmações <span id="badge-confs" style="background:var(--accent-light);color:var(--accent);padding:1px 7px;border-radius:20px;font-size:11px;margin-left:4px">0</span>
+  </button>
+</div>
+
+<div class="stats-row" id="com-stats"></div>
+
+<div id="panel-coms">
+  <div id="comunicados-list"></div>
+</div>
+
+<div id="panel-confs" style="display:none">
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center">
+    <span style="font-size:12px;font-weight:500;color:var(--text2)">Filtrar:</span>
+    <button class="filter-btn active" id="conf-f-todos"   onclick="filterConfs('todos',this)">Todos</button>
+    <button class="filter-btn conf-f-sim" id="conf-f-sim"    onclick="filterConfs('sim',this)" aria-label="Vão">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+      Vão
+    </button>
+    <button class="filter-btn conf-f-nao" id="conf-f-nao"    onclick="filterConfs('nao',this)" aria-label="Não vão">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      Não vão
+    </button>
+    <button class="filter-btn conf-f-talvez" id="conf-f-talvez" onclick="filterConfs('talvez',this)" aria-label="Talvez">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Talvez
+    </button>
+    <select id="conf-f-ativ" onchange="filterConfs(null,null)" style="margin-left:auto;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:12.5px;background:var(--surface);color:var(--text);font-family:'DM Sans',sans-serif">
+      <option value="">Todas as atividades</option>
+    </select>
+  </div>
+  <div id="confs-lista"></div>
+</div>

@@ -1,0 +1,42 @@
+<div class="page-header">
+  <div class="page-header-left">
+    <h1>Fluxo de Caixa</h1>
+    <p>Controle financeiro da Alcateia Kotick</p>
+  </div>
+</div>
+
+<div id="caixa-stats"></div>
+
+<div class="card" style="padding:20px;margin-bottom:16px">
+  <div class="card-header" style="margin-bottom:12px">
+    <span class="card-title">Evolução mensal</span>
+    <div id="caixa-grafico-legend" class="caixa-legend"></div>
+  </div>
+  <div id="caixa-grafico"></div>
+</div>
+
+<div class="card" style="padding:20px;margin-bottom:24px">
+  <div class="card-header" style="margin-bottom:16px">
+    <span class="card-title">Por categoria</span>
+    <span id="caixa-categorias-periodo" class="caixa-cat-periodo"></span>
+  </div>
+  <div id="caixa-categorias"></div>
+</div>
+
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center">
+  <button class="filter-btn active" data-filter="todos"   onclick="filterCaixa('todos',this)">Todos</button>
+  <button class="filter-btn"        data-filter="receita" onclick="filterCaixa('receita',this)">Receitas</button>
+  <button class="filter-btn"        data-filter="despesa" onclick="filterCaixa('despesa',this)">Despesas</button>
+  <label for="caixa-filter-mes" class="sr-only">Filtrar por mês</label>
+  <select id="caixa-filter-mes" onchange="filterCaixa(null,null)" class="caixa-filter-select">
+    <option value="">Todos os meses</option>
+  </select>
+  <label for="caixa-filter-cat" class="sr-only">Filtrar por categoria</label>
+  <select id="caixa-filter-cat" onchange="filterCaixa(null,null)" class="caixa-filter-select">
+    <option value="">Todas as categorias</option>
+  </select>
+</div>
+
+<div class="card">
+  <div id="caixa-lista"></div>
+</div>

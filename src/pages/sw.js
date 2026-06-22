@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'alcateia-chefia-v3';
+const CACHE_VERSION = 'alcateia-chefia-v4';
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -21,7 +21,16 @@ const APP_SHELL = [
   '../scripts/modules/caixa.js',
   '../scripts/modules/dashboard.js',
   '../scripts/modules/import-export.js',
+  '../scripts/modules/view-loader.js',
   '../scripts/firebase-config.js',
+  '../views/dashboard.html',
+  '../views/calendario.html',
+  '../views/presenca.html',
+  '../views/especialidades.html',
+  '../views/matilhas.html',
+  '../views/comunicados.html',
+  '../views/caixa.html',
+  '../views/progressao.html',
   '../images/logo_png.png',
   '../images/logo_jpeg.jpeg'
 ];

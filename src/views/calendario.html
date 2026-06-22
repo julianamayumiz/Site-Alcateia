@@ -1,0 +1,33 @@
+<div class="page-header">
+  <div class="page-header-left">
+    <h1>Calendário de Atividades</h1>
+    <p>Programação anual do grupo escoteiro</p>
+  </div>
+</div>
+<div class="cat-legend">
+  <span class="cat-chip"><span class="cat-dot" style="background:#4caf50"></span>Normal Sede</span>
+  <span class="cat-chip"><span class="cat-dot" style="background:#ef5350"></span>Feriado / Emenda</span>
+  <span class="cat-chip"><span class="cat-dot" style="background:#1e88e5"></span>Local</span>
+  <span class="cat-chip"><span class="cat-dot" style="background:#f9a825"></span>Externa</span>
+  <span class="cat-chip"><span class="cat-dot" style="background:#8e24aa"></span>Regional / Distrital</span>
+</div>
+<div class="cal-filters" id="cal-filters">
+  <span style="font-size:12px;font-weight:500;color:var(--text2);margin-right:4px">Filtrar:</span>
+  <button class="filter-btn active" data-filter="todos"    onclick="filterCal('todos')">Todos</button>
+  <button class="filter-btn"        data-filter="externos" onclick="filterCal('externos')">Externas</button>
+  <button class="filter-btn"        data-filter="sede"     onclick="filterCal('sede')">Sede</button>
+  <button class="filter-btn"        data-filter="feriados" onclick="filterCal('feriados')">Feriados</button>
+</div>
+<div class="card">
+  <div class="table-wrap">
+    <table id="cal-table">
+      <thead>
+        <tr>
+          <th>Data</th><th>Dia</th><th>Atividade</th>
+          <th>Chefe Responsável</th><th>Datas Especiais</th><th>OBS</th><th></th>
+        </tr>
+      </thead>
+      <tbody id="cal-tbody"></tbody>
+    </table>
+  </div>
+</div>

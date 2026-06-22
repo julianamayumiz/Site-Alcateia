@@ -1,0 +1,44 @@
+<div class="page-header">
+  <div class="page-header-left">
+    <h1>Especialidades</h1>
+    <p>Controle de insígnias e especialidades dos lobinhos</p>
+  </div>
+</div>
+<div class="esp-filters">
+  <input class="search-input" type="text" id="esp-search" placeholder="Buscar lobinho ou especialidade..." oninput="filterEsp()">
+  <select class="search-input" id="esp-filter-lobinho" onchange="filterEsp()" style="width:auto;min-width:160px">
+    <option value="">Todos os lobinhos</option>
+  </select>
+  <select class="search-input" id="esp-filter-nivel" onchange="filterEsp()" style="width:auto">
+    <option value="">Todos os níveis</option>
+    <option value="0">Nível 0 — Insígnia</option>
+    <option value="1">Nível 1</option>
+    <option value="2">Nível 2</option>
+    <option value="3">Nível 3</option>
+  </select>
+  <select class="search-input" id="esp-filter-comprado" onchange="filterEsp()" style="width:auto">
+    <option value="">Comprado: todos</option>
+    <option value="ok">Comprado: sim</option>
+    <option value="nao">Comprado: não</option>
+  </select>
+  <select class="search-input" id="esp-filter-entregue" onchange="filterEsp()" style="width:auto">
+    <option value="">Entregue: todos</option>
+    <option value="sim">Entregue: sim</option>
+    <option value="nao">Entregue: não</option>
+  </select>
+  <button class="filter-btn" onclick="limparFiltrosEsp()" style="white-space:nowrap">✕ Limpar</button>
+</div>
+<div class="stats-row" id="esp-stats"></div>
+<div class="card">
+  <div class="table-wrap">
+    <table id="esp-table">
+      <thead>
+        <tr>
+          <th>Lobinho</th><th>Especialidade</th><th>Nível</th>
+          <th>Apresentação</th><th>Comprado</th><th>Entregue</th><th>Avaliador</th><th></th>
+        </tr>
+      </thead>
+      <tbody id="esp-tbody"></tbody>
+    </table>
+  </div>
+</div>

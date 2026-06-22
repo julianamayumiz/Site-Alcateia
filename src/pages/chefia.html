@@ -23,8 +23,8 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
   <script src="../scripts/firebase-config.js"></script>
   <link rel="stylesheet" href="../styles/chefia.css">
-
 </head>
+
 <body>
 
 <div class="app">
@@ -128,362 +128,8 @@
       </div>
     </header>
 
-    <!-- DASHBOARD -->
-    <div class="page active" id="p-dashboard" aria-live="polite">
-      <div class="page-header">
-        <div class="page-header-left">
-          <h1 id="dash-greeting">Bom dia, Chefia!</h1>
-          <p id="dash-date"></p>
-        </div>
-      </div>
-
-      <!-- KPI row -->
-      <div class="dash-kpi-row" id="dash-kpis"></div>
-
-      <!-- TO-DO + Avisos (linha destacada) -->
-      <div class="dash-highlight-row">
-        <!-- TO-DO Chefia -->
-        <div class="card dash-card dash-highlight">
-          <div class="card-header">
-            <span class="card-title">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" aria-hidden="true" style="vertical-align:-3px;margin-right:4px"><polyline points="20 6 9 17 4 12"/></svg>
-              TO-DO Chefia
-            </span>
-          </div>
-          <div class="dash-input-row">
-            <label for="novo-todo-chefia" class="sr-only">Nova tarefa</label>
-            <input type="text" id="novo-todo-chefia" placeholder="Nova tarefa..." onkeydown="if(event.key==='Enter'){event.preventDefault();addTodoChefia();}">
-            <button class="btn btn-primary btn-sm" onclick="addTodoChefia()" aria-label="Adicionar tarefa">+</button>
-          </div>
-          <div id="todos-chefia-list"></div>
-        </div>
-
-        <!-- Avisos Internos Importantes -->
-        <div class="card dash-card dash-highlight">
-          <div class="card-header">
-            <span class="card-title">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" aria-hidden="true" style="vertical-align:-3px;margin-right:4px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-              Avisos Internos Importantes
-            </span>
-          </div>
-          <div class="dash-input-row">
-            <label for="novo-aviso-interno" class="sr-only">Novo aviso</label>
-            <input type="text" id="novo-aviso-interno" placeholder="Novo aviso..." onkeydown="if(event.key==='Enter'){event.preventDefault();addAvisoInterno();}">
-            <button class="btn btn-primary btn-sm" onclick="addAvisoInterno()" aria-label="Adicionar aviso">+</button>
-          </div>
-          <div id="avisos-internos-list"></div>
-        </div>
-      </div>
-
-      <!-- Main grid -->
-      <div class="dash-grid">
-
-        <!-- Próximas atividades -->
-        <div class="card dash-card">
-          <div class="card-header">
-            <span class="card-title">Próximas atividades</span>
-            <button class="btn btn-sm" onclick="goTo('calendario')" style="font-size:11px">Ver calendário →</button>
-          </div>
-          <div id="proximas-atividades"></div>
-        </div>
-
-        <!-- Presença geral (extremos) -->
-        <div class="card dash-card">
-          <div class="card-header">
-            <span class="card-title">Presença geral</span>
-            <button class="btn btn-sm" onclick="goTo('presenca')" style="font-size:11px">Ver presença →</button>
-          </div>
-          <div id="dash-presenca-chart" style="padding:16px 20px"></div>
-        </div>
-
-        <!-- Especialidades pendentes -->
-        <div class="card dash-card">
-          <div class="card-header">
-            <span class="card-title">Especialidades pendentes</span>
-            <button class="btn btn-sm" onclick="goTo('especialidades')" style="font-size:11px">Ver todas →</button>
-          </div>
-          <div id="dash-esp-pendentes"></div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- CALENDÁRIO -->
-    <div class="page" id="p-calendario" aria-live="polite">
-      <div class="page-header">
-        <div class="page-header-left">
-          <h1>Calendário de Atividades</h1>
-          <p>Programação anual do grupo escoteiro</p>
-        </div>
-      </div>
-      <div class="cat-legend">
-        <span class="cat-chip"><span class="cat-dot" style="background:#4caf50"></span>Normal Sede</span>
-        <span class="cat-chip"><span class="cat-dot" style="background:#ef5350"></span>Feriado / Emenda</span>
-        <span class="cat-chip"><span class="cat-dot" style="background:#1e88e5"></span>Local</span>
-        <span class="cat-chip"><span class="cat-dot" style="background:#f9a825"></span>Externa</span>
-        <span class="cat-chip"><span class="cat-dot" style="background:#8e24aa"></span>Regional / Distrital</span>
-      </div>
-      <div class="cal-filters" id="cal-filters">
-        <span style="font-size:12px;font-weight:500;color:var(--text2);margin-right:4px">Filtrar:</span>
-        <button class="filter-btn active" data-filter="todos"     onclick="filterCal('todos')">Todos</button>
-        <button class="filter-btn"        data-filter="externos"  onclick="filterCal('externos')">Externas</button>
-        <button class="filter-btn"        data-filter="sede"      onclick="filterCal('sede')">Sede</button>
-        <button class="filter-btn"        data-filter="feriados"  onclick="filterCal('feriados')">Feriados</button>
-      </div>
-      <div class="card">
-        <div class="table-wrap">
-          <table id="cal-table">
-            <thead>
-              <tr>
-                <th>Data</th><th>Dia</th><th>Atividade</th>
-                <th>Chefe Responsável</th><th>Datas Especiais</th><th>OBS</th><th></th>
-              </tr>
-            </thead>
-            <tbody id="cal-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- PRESENÇA -->
-    <div class="page" id="p-presenca" aria-live="polite">
-      <div class="page-header">
-        <div class="page-header-left">
-          <h1>Controle de Presença</h1>
-          <p>Alcateia Kotick — clique numa célula para alternar o status</p>
-        </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-          <span class="badge badge-green">P = Presente</span>
-          <span class="badge badge-red">A = Ausente</span>
-          <span class="badge badge-yellow">FJ = Falta Justificada</span>
-          <span class="badge badge-gray">· = vazio</span>
-          <span style="font-size:12px;color:var(--text3)">— clique na célula para alterar</span>
-          <button class="btn" onclick="openLobinhosModal()" style="font-size:12px;display:inline-flex;align-items:center;gap:6px">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
-            Gerenciar lobinhos
-          </button>
-        </div>
-      </div>
-      <div class="stats-row" id="presence-stats"></div>
-
-      <!-- Sub-tabs: Todos / Baixa frequência -->
-      <div class="presenca-subtabs" role="tablist" aria-label="Filtrar lobinhos">
-        <button class="com-subtab active" id="pres-subtab-todos" role="tab" aria-selected="true" onclick="showPresencaSubtab('todos')">
-          Todos <span class="subtab-badge" id="pres-badge-todos">0</span>
-        </button>
-        <button class="com-subtab" id="pres-subtab-alerta" role="tab" aria-selected="false" onclick="showPresencaSubtab('alerta')">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="vertical-align:-2px;margin-right:4px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          Abaixo de 75% <span class="subtab-badge subtab-badge-alert" id="pres-badge-alerta">0</span>
-        </button>
-      </div>
-
-      <div class="card">
-        <div class="scrollable-table">
-          <table class="presence-table" id="pres-table">
-            <thead><tr id="presenca-thead"></tr></thead>
-            <tbody id="presenca-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- ESPECIALIDADES -->
-    <div class="page" id="p-especialidades" aria-live="polite">
-      <div class="page-header">
-        <div class="page-header-left">
-          <h1>Especialidades</h1>
-          <p>Controle de insígnias e especialidades dos lobinhos</p>
-        </div>
-      </div>
-      <div class="esp-filters">
-        <input class="search-input" type="text" id="esp-search" placeholder="Buscar lobinho ou especialidade..." oninput="filterEsp()">
-        <select class="search-input" id="esp-filter-lobinho" onchange="filterEsp()" style="width:auto;min-width:160px">
-          <option value="">Todos os lobinhos</option>
-        </select>
-        <select class="search-input" id="esp-filter-nivel" onchange="filterEsp()" style="width:auto">
-          <option value="">Todos os níveis</option>
-          <option value="0">Nível 0 — Insígnia</option>
-          <option value="1">Nível 1</option>
-          <option value="2">Nível 2</option>
-          <option value="3">Nível 3</option>
-        </select>
-        <select class="search-input" id="esp-filter-comprado" onchange="filterEsp()" style="width:auto">
-          <option value="">Comprado: todos</option>
-          <option value="ok">Comprado: sim</option>
-          <option value="nao">Comprado: não</option>
-        </select>
-        <select class="search-input" id="esp-filter-entregue" onchange="filterEsp()" style="width:auto">
-          <option value="">Entregue: todos</option>
-          <option value="sim">Entregue: sim</option>
-          <option value="nao">Entregue: não</option>
-        </select>
-        <button class="filter-btn" onclick="limparFiltrosEsp()" style="white-space:nowrap">✕ Limpar</button>
-      </div>
-      <div class="stats-row" id="esp-stats"></div>
-      <div class="card">
-        <div class="table-wrap">
-          <table id="esp-table">
-            <thead>
-              <tr>
-                <th>Lobinho</th><th>Especialidade</th><th>Nível</th>
-                <th>Apresentação</th><th>Comprado</th><th>Entregue</th><th>Avaliador</th><th></th>
-              </tr>
-            </thead>
-            <tbody id="esp-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- MATILHAS -->
-    <div class="page" id="p-matilhas" aria-live="polite">
-      <div class="page-header">
-        <div class="page-header-left">
-          <h1>Matilhas</h1>
-          <p>2026 · 1º semestre — lideranças e pontuação</p>
-        </div>
-        <button class="btn" onclick="confirmResetPontuacao()" style="color:var(--red);border-color:var(--red-light);font-size:12px">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-          Resetar pontuação
-        </button>
-      </div>
-
-      <!-- RANKING VISUAL -->
-      <p class="section-label">🏆 Ranking — <span id="mat-semester-label"></span></p>
-      <div id="ranking-visual" style="margin-bottom:24px"></div>
-
-      <!-- PONTUAÇÃO por matilha -->
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
-        <p class="section-label" style="margin:0">Pontuação por sábado</p>
-        <div id="pont-date-controls" style="display:flex;align-items:center;gap:6px"></div>
-      </div>
-      <div class="pontuacao-grid" id="pontuacao-grid" style="margin-bottom:12px"></div>
-      <div id="pont-history-toggle" style="margin-bottom:24px"></div>
-      <div id="pont-history" style="margin-bottom:24px;display:none"></div>
-
-      <!-- MATILHAS cards -->
-      <p class="section-label">Composição e lideranças</p>
-      <div class="stats-row" id="matilhas-stats"></div>
-      <div class="matilhas-grid" id="matilhas-container"></div>
-    </div>
-
-    <!-- COMUNICADOS -->
-    <div class="page" id="p-comunicados" aria-live="polite">
-      <div class="page-header">
-        <div class="page-header-left">
-          <h1>Comunicados</h1>
-          <p>Publicações visíveis no portal dos pais</p>
-        </div>
-      </div>
-
-      <!-- Sub-tabs -->
-      <div style="display:flex;gap:0;margin-bottom:20px;border-bottom:1px solid var(--border)">
-        <button class="com-subtab active" id="subtab-coms" onclick="showComSubtab('coms')">
-          📢 Comunicados <span id="badge-coms" style="background:var(--accent-light);color:var(--accent);padding:1px 7px;border-radius:20px;font-size:11px;margin-left:4px">0</span>
-        </button>
-        <button class="com-subtab" id="subtab-confs" onclick="showComSubtab('confs')">
-          ✅ Confirmações <span id="badge-confs" style="background:var(--accent-light);color:var(--accent);padding:1px 7px;border-radius:20px;font-size:11px;margin-left:4px">0</span>
-        </button>
-      </div>
-
-      <!-- Stats row -->
-      <div class="stats-row" id="com-stats"></div>
-
-      <!-- Comunicados panel -->
-      <div id="panel-coms">
-        <div id="comunicados-list"></div>
-      </div>
-
-      <!-- Confirmações panel -->
-      <div id="panel-confs" style="display:none">
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center">
-          <span style="font-size:12px;font-weight:500;color:var(--text2)">Filtrar:</span>
-          <button class="filter-btn active" id="conf-f-todos"   onclick="filterConfs('todos',this)">Todos</button>
-          <button class="filter-btn conf-f-sim" id="conf-f-sim"    onclick="filterConfs('sim',this)" aria-label="Vão">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            Vão
-          </button>
-          <button class="filter-btn conf-f-nao" id="conf-f-nao"    onclick="filterConfs('nao',this)" aria-label="Não vão">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            Não vão
-          </button>
-          <button class="filter-btn conf-f-talvez" id="conf-f-talvez" onclick="filterConfs('talvez',this)" aria-label="Talvez">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-            Talvez
-          </button>
-          <select id="conf-f-ativ" onchange="filterConfs(null,null)" style="margin-left:auto;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:12.5px;background:var(--surface);color:var(--text);font-family:'DM Sans',sans-serif">
-            <option value="">Todas as atividades</option>
-          </select>
-        </div>
-        <div id="confs-lista"></div>
-      </div>
-    </div>
-
-    <!-- CAIXA -->
-    <div class="page" id="p-caixa" aria-live="polite">
-      <div class="page-header">
-        <div class="page-header-left">
-          <h1>Fluxo de Caixa</h1>
-          <p>Controle financeiro da Alcateia Kotick</p>
-        </div>
-      </div>
-
-      <!-- Header card: saldo + pills + novo lançamento -->
-      <div id="caixa-stats"></div>
-
-      <!-- Gráfico: evolução mensal -->
-      <div class="card" style="padding:20px;margin-bottom:16px">
-        <div class="card-header" style="margin-bottom:12px">
-          <span class="card-title">Evolução mensal</span>
-          <div id="caixa-grafico-legend" class="caixa-legend"></div>
-        </div>
-        <div id="caixa-grafico"></div>
-      </div>
-
-      <!-- Por categoria -->
-      <div class="card" style="padding:20px;margin-bottom:24px">
-        <div class="card-header" style="margin-bottom:16px">
-          <span class="card-title">Por categoria</span>
-          <span id="caixa-categorias-periodo" class="caixa-cat-periodo"></span>
-        </div>
-        <div id="caixa-categorias"></div>
-      </div>
-
-      <!-- Filtros da lista -->
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center">
-        <button class="filter-btn active" data-filter="todos"    onclick="filterCaixa('todos',this)">Todos</button>
-        <button class="filter-btn"        data-filter="receita"  onclick="filterCaixa('receita',this)">Receitas</button>
-        <button class="filter-btn"        data-filter="despesa"  onclick="filterCaixa('despesa',this)">Despesas</button>
-        <label for="caixa-filter-mes" class="sr-only">Filtrar por mês</label>
-        <select id="caixa-filter-mes" onchange="filterCaixa(null,null)" class="caixa-filter-select">
-          <option value="">Todos os meses</option>
-        </select>
-        <label for="caixa-filter-cat" class="sr-only">Filtrar por categoria</label>
-        <select id="caixa-filter-cat" onchange="filterCaixa(null,null)" class="caixa-filter-select">
-          <option value="">Todas as categorias</option>
-        </select>
-      </div>
-
-      <!-- Lista agrupada por mês -->
-      <div class="card">
-        <div id="caixa-lista"></div>
-      </div>
-    </div>
-
-    <!-- PROGRESSÃO -->
-    <div class="page" id="p-progressao" aria-live="polite">
-      <div class="page-header">
-        <div class="page-header-left">
-          <h1>Progressão</h1>
-          <p>Modelo antigo → equivalência no modelo novo (eixos e blocos)</p>
-        </div>
-        <select class="search-input" id="prog-lobinho" onchange="progSelectLobinho()" style="width:auto;min-width:220px">
-          <option value="">Selecione um lobinho...</option>
-        </select>
-      </div>
-      <div class="stats-row" id="prog-stats"></div>
-      <div id="prog-content"></div>
-    </div>
+    <!-- Views são injetadas aqui pelo view-loader.js -->
+    <div id="view-container"></div>
 
   </div><!-- end .main -->
 
@@ -514,7 +160,8 @@
   </nav>
 </div><!-- end .app -->
 
-<!-- MODALS -->
+<!-- ==================== MODALS ==================== -->
+
 <div class="modal-overlay" id="modal-cal">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-cal-title">
     <h2 id="modal-cal-title">Nova atividade</h2>
@@ -588,7 +235,6 @@
   </div>
 </div>
 
-<!-- MODAL GERENCIAR LOBINHOS -->
 <div class="modal-overlay" id="modal-lobinhos">
   <div class="modal" style="max-width:480px" role="dialog" aria-modal="true" aria-labelledby="modal-lobinhos-title">
     <h2 id="modal-lobinhos-title">Gerenciar lobinhos</h2>
@@ -608,7 +254,6 @@
   </div>
 </div>
 
-<!-- MODAL FJ — Justificativa -->
 <div class="modal-overlay" id="modal-fj">
   <div class="modal" style="max-width:380px" role="dialog" aria-modal="true" aria-labelledby="modal-fj-title">
     <h2 id="modal-fj-title">Falta Justificada</h2>
@@ -626,7 +271,6 @@
   </div>
 </div>
 
-<!-- MODAL LANÇAMENTO CAIXA -->
 <div class="modal-overlay" id="modal-lanc">
   <div class="modal" style="max-width:440px" role="dialog" aria-modal="true" aria-labelledby="modal-lanc-title">
     <h2 id="modal-lanc-title">Novo lançamento</h2>
@@ -659,7 +303,6 @@
   </div>
 </div>
 
-<!-- MODAL EDITAR CONFIRMAÇÃO -->
 <div class="modal-overlay" id="modal-conf-edit">
   <div class="modal" style="max-width:380px" role="dialog" aria-modal="true" aria-labelledby="modal-conf-edit-title">
     <h2 id="modal-conf-edit-title">Editar confirmação</h2>
@@ -683,7 +326,6 @@
   </div>
 </div>
 
-<!-- MODAL COMUNICADO -->
 <div class="modal-overlay" id="modal-com">
   <div class="modal" style="max-width:520px" role="dialog" aria-modal="true" aria-labelledby="modal-com-title">
     <h2 id="modal-com-title">Novo comunicado</h2>
@@ -711,11 +353,9 @@
   </div>
 </div>
 
-</div>
-
 <div class="toast" id="toast"></div>
 
-<!-- Proteção de acesso: Firebase Auth + dominio @escoteiros.org.br -->
+<!-- Proteção de acesso: Firebase Auth + domínio @escoteiros.org.br -->
 <script>
 (function(){
   if (!firebase.apps.length) firebase.initializeApp(window.firebaseConfig);
@@ -768,6 +408,7 @@ function sairChefia() {
 <!-- Módulos JS -->
 <script src="../scripts/modules/state.js"></script>
 <script src="../scripts/modules/utils.js"></script>
+<script src="../scripts/modules/view-loader.js"></script>
 <script src="../scripts/modules/navigation.js"></script>
 <script src="../scripts/modules/modals.js"></script>
 <script src="../scripts/modules/firebase.js"></script>

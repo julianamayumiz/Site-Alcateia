@@ -1,0 +1,71 @@
+<div class="page-header">
+  <div class="page-header-left">
+    <h1 id="dash-greeting">Bom dia, Chefia!</h1>
+    <p id="dash-date"></p>
+  </div>
+</div>
+
+<!-- KPI row -->
+<div class="dash-kpi-row" id="dash-kpis"></div>
+
+<!-- TO-DO + Avisos (linha destacada) -->
+<div class="dash-highlight-row">
+  <!-- TO-DO Chefia -->
+  <div class="card dash-card dash-highlight">
+    <div class="card-header">
+      <span class="card-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" aria-hidden="true" style="vertical-align:-3px;margin-right:4px"><polyline points="20 6 9 17 4 12"/></svg>
+        TO-DO Chefia
+      </span>
+    </div>
+    <div class="dash-input-row">
+      <label for="novo-todo-chefia" class="sr-only">Nova tarefa</label>
+      <input type="text" id="novo-todo-chefia" placeholder="Nova tarefa..." onkeydown="if(event.key==='Enter'){event.preventDefault();addTodoChefia();}">
+      <button class="btn btn-primary btn-sm" onclick="addTodoChefia()" aria-label="Adicionar tarefa">+</button>
+    </div>
+    <div id="todos-chefia-list"></div>
+  </div>
+
+  <!-- Avisos Internos Importantes -->
+  <div class="card dash-card dash-highlight">
+    <div class="card-header">
+      <span class="card-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" aria-hidden="true" style="vertical-align:-3px;margin-right:4px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Avisos Internos Importantes
+      </span>
+    </div>
+    <div class="dash-input-row">
+      <label for="novo-aviso-interno" class="sr-only">Novo aviso</label>
+      <input type="text" id="novo-aviso-interno" placeholder="Novo aviso..." onkeydown="if(event.key==='Enter'){event.preventDefault();addAvisoInterno();}">
+      <button class="btn btn-primary btn-sm" onclick="addAvisoInterno()" aria-label="Adicionar aviso">+</button>
+    </div>
+    <div id="avisos-internos-list"></div>
+  </div>
+</div>
+
+<!-- Main grid -->
+<div class="dash-grid">
+  <div class="card dash-card">
+    <div class="card-header">
+      <span class="card-title">Próximas atividades</span>
+      <button class="btn btn-sm" onclick="goTo('calendario')" style="font-size:11px">Ver calendário →</button>
+    </div>
+    <div id="proximas-atividades"></div>
+  </div>
+
+  <div class="card dash-card">
+    <div class="card-header">
+      <span class="card-title">Presença geral</span>
+      <button class="btn btn-sm" onclick="goTo('presenca')" style="font-size:11px">Ver presença →</button>
+    </div>
+    <div id="dash-presenca-chart" style="padding:16px 20px"></div>
+  </div>
+
+  <div class="card dash-card">
+    <div class="card-header">
+      <span class="card-title">Especialidades pendentes</span>
+      <button class="btn btn-sm" onclick="goTo('especialidades')" style="font-size:11px">Ver todas →</button>
+    </div>
+    <div id="dash-esp-pendentes"></div>
+  </div>
+</div>

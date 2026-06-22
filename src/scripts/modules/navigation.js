@@ -28,8 +28,11 @@ function closeSidebar() {
 }
 
 // ===================== NAVIGATION =====================
-function goTo(page) {
+async function goTo(page) {
   if(!pageList.includes(page)) page = 'dashboard';
+
+  // Garante que o fragment HTML da view está no DOM antes de renderizar
+  await loadView(page);
   
   // Remove active class from all pages
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
