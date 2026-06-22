@@ -488,6 +488,63 @@ const PROG_BLOCOS = [
   }
 ];
 
+// ===================== EQUIVALÊNCIA ITEM-A-ITEM =====================
+// Mapeia uma atividade ANTIGA (código) para a AÇÃO VARIÁVEL específica do
+// modelo NOVO que ela satisfaz (texto exato, dentro do mesmo bloco).
+// Quando a atividade antiga está cumprida, a ação variável nova correspondente
+// é marcada automaticamente como completa (e fica travada para não contar em
+// dobro — a contribuição já está computada no lado "antigo" do bloco).
+const PROG_EQUIVALENCIAS = {
+  // ----- Vínculos Saudáveis -----
+  A03: 'Convidar um amigo ou parente para conhecer e participar de uma atividade da alcateia.',
+  A14: 'Manter contato com amigos da alcateia, além da atividade semanal.',
+  A16: 'Acolher os novos lobinhos e ajudá-los a se integrar na alcateia.',
+  S13: 'Conhecer as seções do seu grupo escoteiro e participar de uma atividade com outra seção.',
+  S15: 'Participar de uma atividade entre diferentes Unidades Escoteiras ou atividade regional do Ramo Lobinho.',
+  // ----- Valores -----
+  A08: 'Contar a um Velho Lobo sobre três boas ações que praticou.',
+  C01: 'Saber quem é Baloo e o motivo dele ensinar a viver de acordo com a Lei da Jângal.',
+  // ----- Espiritualidade -----
+  E04: 'Realizar orações de agradecimento ou momento de reflexão nas atividades da alcateia.',
+  E05: 'Representar artisticamente um símbolo de sua religião e explicá-lo à alcateia.',
+  // ----- Promoção da Paz -----
+  E08: 'Visitar um templo de uma religião diferente da sua e, após a visita, expressar suas impressões por meio de um desenho ou depoimento.',
+  // ----- Comunidade -----
+  E10: 'Identificar uma forma de praticar uma Boa Ação e realizá-la.',
+  // ----- Hábitos Saudáveis -----
+  F02: 'Utilizar o vestuário ou uniforme de lobinho adequadamente, demonstrando aplicação correta dos distintivos.',
+  F09: 'Conhecer Bagheera e entender como ela ensina a viver de forma saudável.',
+  F11: 'Escolher um esporte, aprender sobre ele e praticá-lo. Contar para a alcateia sobre o esporte que você pratica, suas características e regras.',
+  // ----- Cuidado com o Corpo -----
+  F13: 'Participar de atividades voltadas à prevenção das doenças mais comuns na infância (viroses, febre, gripe, dengue, catapora, caxumba, sarampo etc.), identificando seus sintomas e aprendendo formas de prevenção.',
+  F18: 'Realizar atividades físicas desafiadoras como passar por uma falsa baiana, subir em uma árvore, dar cambalhota ou fazer estrela.',
+  // ----- Aprendizagem Contínua e Desenvolvimento Vocacional -----
+  I02: 'Escolher um novo idioma e aprender cinco frases úteis.',
+  I05: 'Contar para a alcateia a história de um livro que tenha lido.',
+  I22: 'Ouvir a história "O aguilhão do rei" e contar suas conclusões.',
+  I29: 'Apresentar à alcateia uma profissão de seu interesse, explicando os requisitos necessários para exercê-la.',
+  // ----- Autonomia e Liderança -----
+  I15: 'Fazer uma compra e prestar contas do pagamento.',
+  // ----- Criatividade e Inovação -----
+  I10: 'Criar e apresentar com sua matilha uma esquete em uma Flor Vermelha.',
+  I11: 'Apresentar um trabalho artístico para sua alcateia, como: pintura, modelagem, colagem etc.',
+  // ----- Inteligência Emocional -----
+  C16: 'Conversar com a família, responsáveis ou Velhos Lobos sobre pontos que gosta e não gosta em si mesmo e como melhorá-los.',
+  // ----- Consumo Responsável -----
+  S17: 'Separar e classificar materiais para coleta seletiva do lixo em casa.',
+  // ----- Preservação da Biodiversidade -----
+  S22: 'Em uma atividade ao ar livre com a alcateia, identificar as características da região onde mora, como relevo, clima, hidrografia, bioma, fauna e flora.',
+  S26: 'Visitar um zoológico, jardim botânico, abrigo de animais, horto florestal, viveiro de plantas ou propriedade rural de produção agrícola.',
+  // ----- Mudanças Climáticas -----
+  S25: 'Cultivar uma horta sozinho ou com a alcateia, promovendo o cuidado com a natureza.',
+  // ----- Democracia -----
+  S08: 'Participar de um jogo democrático com a alcateia.',
+  // ----- Herança Cultural -----
+  S10: 'Aprender e cantar o Hino Nacional Brasileiro com a alcateia e conhecer os elementos e o simbolismo da Bandeira Nacional, demonstrando respeito por estes símbolos.',
+  S11: 'Aprender e cantar o Hino Nacional Brasileiro com a alcateia e conhecer os elementos e o simbolismo da Bandeira Nacional, demonstrando respeito por estes símbolos.',
+  S23: 'Participar de atividades sobre a cultura popular brasileira.'
+};
+
 // Categorias do modelo antigo (prefixo do código → rótulo)
 const PROG_CATEGORIAS = {
   A: 'Caminho do Crescer / Integrar',
@@ -502,6 +559,7 @@ const PROG_CATEGORIAS = {
 const PROG_EIXOS = ['Habilidades para a Vida', 'Meio Ambiente', 'Paz e Desenvolvimento', 'Saúde e Bem-Estar'];
 
 window.PROG_ATIVIDADES_ANTIGAS = PROG_ATIVIDADES_ANTIGAS;
+window.PROG_EQUIVALENCIAS = PROG_EQUIVALENCIAS;
 window.PROG_BLOCOS = PROG_BLOCOS;
 window.PROG_CATEGORIAS = PROG_CATEGORIAS;
 window.PROG_EIXOS = PROG_EIXOS;
