@@ -145,6 +145,15 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  min-width: 0;
+}
+
+#view-container {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .topbar {
