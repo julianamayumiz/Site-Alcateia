@@ -28,11 +28,16 @@ function populateEspLobinhos() {
 }
 
 function populateEspNomeModal(selectedNome) {
-  const sel = document.getElementById('esp-nome');
-  if(!sel) return;
+  const container = document.getElementById('esp-nome-list');
+  if(!container) return;
   const nomes = (state.presenca?.membros || []).map(m => m.nome).filter(Boolean).sort();
-  sel.innerHTML = '<option value="">Selecione...</option>' +
-    nomes.map(n => `<option value="${n}"${n === selectedNome ? ' selected' : ''}>${n}</option>`).join('');
+  if(!nomes.length) {
+    container.innerHTML = '<span style="font-size:12px;color:var(--text2)">Nenhum lobinho cadastrado</span>';
+    return;
+  }
+  container.innerHTML = nomes.map(n =>
+    `<label class="checklist-item"><input type="checkbox" value="${n}"${n === selectedNome ? ' checked' : ''}><span>${n}</span></label>`
+  ).join('');
 }
 
 function filterEsp() {
@@ -130,7 +135,7 @@ function editEsp(idx) {
 
 // ===================== SAVE =====================
 function saveEsp() {
-  const nome = document.getElementById('esp-nome').value.trim();
+  const checkedNomes = [...document.querySelectorAll('#esp-nome-list input[type="checkbox"]:checked')].map(cb => cb.value);
   const esp = document.getElementById('esp-esp').value.trim();
   const nivel = parseInt(document.getElementById('esp-nivel').value) || 1;
   const data = document.getElementById('esp-data').value.trim();
@@ -138,19 +143,17 @@ function saveEsp() {
   const entregue = document.getElementById('esp-entregue').value.trim();
   const avaliador = document.getElementById('esp-avaliador').value.trim();
 
-  if(!nome || !esp) {
-    showToast('Preencha nome e especialidade');
+  if(!checkedNomes.length || !esp) {
+    showToast('Selecione ao menos um lobinho e preencha a especialidade');
     return;
   }
 
-  const espObj = { nome, esp, nivel, data, comprado, entregue, avaliador };
-
   if(window.editingEspIdx >= 0) {
-    state.especialidades[window.editingEspIdx] = espObj;
+    state.especialidades[window.editingEspIdx] = { nome: checkedNomes[0], esp, nivel, data, comprado, entregue, avaliador };
     showToast('Especialidade atualizada');
   } else {
-    state.especialidades.push(espObj);
-    showToast('Especialidade adicionada');
+    checkedNomes.forEach(nome => state.especialidades.push({ nome, esp, nivel, data, comprado, entregue, avaliador }));
+    showToast(checkedNomes.length > 1 ? `${checkedNomes.length} especialidades adicionadas` : 'Especialidade adicionada');
   }
 
   withModalSaveLoading(fbSaveSection('especialidades')).then(() => {
