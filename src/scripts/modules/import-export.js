@@ -5,43 +5,51 @@
 function importFile(event) {
   const file = event.target.files[0];
   if(!file) return;
-  
+
+  const activePage = document.querySelector('.page.active');
+  const currentPage = activePage ? activePage.id.replace('p-','') : '';
+
+  const pageToSheet = {
+    calendario: 'Calendario',
+    presenca: 'Presenca',
+    especialidades: 'Especialidades',
+    matilhas: 'Matilhas',
+    caixa: 'Caixa'
+  };
+
   const reader = new FileReader();
   reader.onload = function(e) {
     try {
       const data = new Uint8Array(e.target.result);
       const workbook = XLSX.read(data, {type: 'array'});
-      
-      // Detect which sheets exist and import accordingly
       const sheetNames = workbook.SheetNames;
-      
-      if(sheetNames.includes('Calendario')) {
-        importCal(workbook);
+      const expectedSheet = pageToSheet[currentPage];
+
+      if(!expectedSheet) {
+        showToast('Esta página não suporta importação');
+        return;
       }
-      if(sheetNames.includes('Presenca')) {
-        importPresenca(workbook);
+
+      if(!sheetNames.includes(expectedSheet)) {
+        showToast(`Arquivo não contém aba "${expectedSheet}"`);
+        return;
       }
-      if(sheetNames.includes('Especialidades')) {
-        importEsp(workbook);
-      }
-      if(sheetNames.includes('Matilhas')) {
-        importMat(workbook);
-      }
-      
-      showToast('Importação concluída com sucesso');
-      
-      // Re-render current page
-      const activePage = document.querySelector('.page.active');
-      if(activePage) render(activePage.id.replace('p-',''));
-      
+
+      if(currentPage === 'calendario') importCal(workbook);
+      else if(currentPage === 'presenca') importPresenca(workbook);
+      else if(currentPage === 'especialidades') importEsp(workbook);
+      else if(currentPage === 'matilhas') importMat(workbook);
+      else if(currentPage === 'caixa') importCaixaSheet(workbook);
+
+      render(currentPage);
+
     } catch(err) {
       console.error('Import error:', err);
       showToast('Erro ao importar arquivo');
     }
   };
   reader.readAsArrayBuffer(file);
-  
-  // Reset input
+
   event.target.value = '';
 }
 
@@ -185,18 +193,60 @@ function importMat(wb) {
   showToast('Matilhas importadas');
 }
 
+// ===================== IMPORT CAIXA =====================
+function importCaixaSheet(wb) {
+  const sheet = wb.Sheets['Caixa'];
+  if(!sheet) return;
+
+  const rows = XLSX.utils.sheet_to_json(sheet);
+
+  rows.forEach(row => {
+    const lanc = {
+      data: row.Data || row.data || '',
+      tipo: row.Tipo || row.tipo || '',
+      descricao: row.Descricao || row.descricao || '',
+      categoria: row.Categoria || row.categoria || '',
+      valor: parseFloat(row.Valor || row.valor || 0)
+    };
+
+    const exists = state.caixa.some(l =>
+      l.data === lanc.data && l.descricao === lanc.descricao && l.valor === lanc.valor
+    );
+
+    if(!exists && lanc.descricao) {
+      state.caixa.push(lanc);
+    }
+  });
+
+  fbSaveSection('caixa');
+  showToast('Caixa importada');
+}
+
 // ===================== EXPORT EXCEL =====================
 function exportarExcel() {
+  const activePage = document.querySelector('.page.active');
+  const currentPage = activePage ? activePage.id.replace('p-','') : '';
+
   const wb = XLSX.utils.book_new();
-  
-  // Export all sections
-  exportCalendario(wb);
-  exportPresenca(wb);
-  exportEspecialidades(wb);
-  exportMatilhas(wb);
-  exportarCaixa(wb);
-  
-  downloadXlsx(wb, `alcateia_backup_${todayStr()}.xlsx`, 'Exportação concluída');
+
+  if(currentPage === 'calendario') {
+    exportCalendario(wb);
+    downloadXlsx(wb, `calendario_${todayStr()}.xlsx`, 'Calendário exportado');
+  } else if(currentPage === 'presenca') {
+    exportPresenca(wb);
+    downloadXlsx(wb, `presenca_${todayStr()}.xlsx`, 'Presença exportada');
+  } else if(currentPage === 'especialidades') {
+    exportEspecialidades(wb);
+    downloadXlsx(wb, `especialidades_${todayStr()}.xlsx`, 'Especialidades exportadas');
+  } else if(currentPage === 'matilhas') {
+    exportMatilhas(wb);
+    downloadXlsx(wb, `matilhas_${todayStr()}.xlsx`, 'Matilhas exportadas');
+  } else if(currentPage === 'caixa') {
+    exportarCaixa(wb);
+    downloadXlsx(wb, `caixa_${todayStr()}.xlsx`, 'Caixa exportada');
+  } else {
+    showToast('Esta página não suporta exportação');
+  }
 }
 
 // ===================== EXPORT CALENDARIO =====================
@@ -321,6 +371,7 @@ function exportarMatilhas() {
 
 // Exporta funções para uso global
 window.importFile = importFile;
+window.importCaixaSheet = importCaixaSheet;
 window.importCal = importCal;
 window.importPresenca = importPresenca;
 window.importEsp = importEsp;

@@ -60,10 +60,11 @@ async function goTo(page) {
   const addBtn = document.getElementById('btn-add');
   addBtn.style.display = (page === 'presenca' || page === 'dashboard') ? 'none' : 'inline-flex';
 
-  // Importar/Exportar: ocultos no dashboard
-  const hideData = page === 'dashboard';
+  // Importar/Exportar: visíveis apenas nas páginas com dados estruturados
+  const pagesComDados = ['calendario','presenca','especialidades','matilhas','caixa'];
+  const showData = pagesComDados.includes(page);
   document.querySelectorAll('.btn-data').forEach(b => {
-    b.style.display = hideData ? 'none' : '';
+    b.style.display = showData ? '' : 'none';
   });
   
   // Update bottom navigation (mobile)
