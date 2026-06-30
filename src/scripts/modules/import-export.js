@@ -14,7 +14,8 @@ function importFile(event) {
     presenca: 'Presenca',
     especialidades: 'Especialidades',
     matilhas: 'Matilhas',
-    caixa: 'Caixa'
+    caixa: 'Caixa',
+    passagem: 'Passagem'
   };
 
   const reader = new FileReader();
@@ -40,6 +41,7 @@ function importFile(event) {
       else if(currentPage === 'especialidades') importEsp(workbook);
       else if(currentPage === 'matilhas') importMat(workbook);
       else if(currentPage === 'caixa') importCaixaSheet(workbook);
+      else if(currentPage === 'passagem') importPassagem(workbook);
 
       render(currentPage);
 
@@ -222,6 +224,40 @@ function importCaixaSheet(wb) {
   showToast('Caixa importada');
 }
 
+// ===================== IMPORT PASSAGEM =====================
+function importPassagem(wb) {
+  const sheet = wb.Sheets['Passagem'];
+  if (!sheet) return;
+
+  const rows = XLSX.utils.sheet_to_json(sheet);
+  if (!state.passagem) state.passagem = {};
+
+  const colMap = {
+    'Integração': 'integracao', 'Integracao': 'integracao',
+    'Promessa': 'promessa',
+    'Pata Tenra': 'pata_tenra', 'Pata_Tenra': 'pata_tenra',
+    'Saltador': 'saltador',
+    'Rastreador': 'rastreador',
+    'Caçador': 'cacador', 'Cacador': 'cacador'
+  };
+
+  rows.forEach(row => {
+    const nome = row['Lobinho'] || row['Nome'] || row['nome'] || '';
+    if (!nome) return;
+    if (!state.passagem[nome]) state.passagem[nome] = {};
+    Object.entries(colMap).forEach(([col, key]) => {
+      if (row[col] !== undefined && row[col] !== '') {
+        let val = row[col];
+        if (typeof val === 'number') val = formatDateBR(excelSerialToDate(val));
+        state.passagem[nome][key] = val;
+      }
+    });
+  });
+
+  fbSaveSection('passagem');
+  showToast('Passagem importada');
+}
+
 // ===================== EXPORT EXCEL =====================
 function exportarExcel() {
   ensureXLSX().then(() => {
@@ -245,6 +281,9 @@ function exportarExcel() {
   } else if(currentPage === 'caixa') {
     exportarCaixa(wb);
     downloadXlsx(wb, `caixa_${todayStr()}.xlsx`, 'Caixa exportada');
+  } else if(currentPage === 'passagem') {
+    exportPassagem(wb);
+    downloadXlsx(wb, `passagem_${todayStr()}.xlsx`, 'Passagem exportada');
   } else {
     showToast('Esta página não suporta exportação');
   }
@@ -319,6 +358,25 @@ function exportMatilhas(wb) {
   XLSX.utils.book_append_sheet(wb, ws, 'Matilhas');
 }
 
+// ===================== EXPORT PASSAGEM =====================
+function exportPassagem(wb) {
+  const lobinhos = Object.keys(state.passagem || {}).sort((a, b) => a.localeCompare(b, 'pt-BR'));
+  const data = lobinhos.map(nome => {
+    const d = state.passagem[nome] || {};
+    return {
+      'Lobinho':    nome,
+      'Integração': d.integracao  || '',
+      'Promessa':   d.promessa    || '',
+      'Pata Tenra': d.pata_tenra  || '',
+      'Saltador':   d.saltador    || '',
+      'Rastreador': d.rastreador  || '',
+      'Caçador':    d.cacador     || ''
+    };
+  });
+  const ws = XLSX.utils.json_to_sheet(data);
+  XLSX.utils.book_append_sheet(wb, ws, 'Passagem');
+}
+
 // ===================== EXPORT CAIXA =====================
 function exportarCaixa(wb) {
   const data = state.caixa.map(lanc => ({
@@ -373,6 +431,8 @@ function exportarMatilhas() {
 
 // Exporta funções para uso global
 window.importFile = importFile;
+window.importPassagem = importPassagem;
+window.exportPassagem = exportPassagem;
 window.importCaixaSheet = importCaixaSheet;
 window.importCal = importCal;
 window.importPresenca = importPresenca;
