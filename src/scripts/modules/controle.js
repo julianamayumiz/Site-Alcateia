@@ -134,8 +134,18 @@ function abrirEditarLobinho(idx) {
 
 function salvarEdicaoLobinho() {
   if (editandoLobinhoIndex === null) return;
+  const nomeNovo = document.getElementById('edit-lobinho-nome').value.trim().toUpperCase();
   const apelido = document.getElementById('edit-lobinho-apelido').value.trim();
+  if (!nomeNovo) { alert('Informe o nome do lobinho.'); return; }
+  const nomeAntigo = state.lobinhos[editandoLobinhoIndex].nome;
+  state.lobinhos[editandoLobinhoIndex].nome = nomeNovo;
   state.lobinhos[editandoLobinhoIndex].apelido = apelido;
+  // Atualiza o nome na lista de presença também
+  if (nomeAntigo !== nomeNovo && state.presenca && state.presenca.membros) {
+    const membro = state.presenca.membros.find(m => m.nome === nomeAntigo);
+    if (membro) membro.nome = nomeNovo;
+    fbSet('presenca', state.presenca);
+  }
   fbSet('lobinhos', state.lobinhos);
   closeModals();
   editandoLobinhoIndex = null;
