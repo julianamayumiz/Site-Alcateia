@@ -24,6 +24,28 @@ function debounce(fn, wait = 250) {
 }
 window.debounce = debounce;
 
+// ===================== CARREGAMENTO SOB DEMANDA: XLSX =====================
+// A biblioteca XLSX (~600KB) só é usada para importar/exportar planilhas.
+// Em vez de baixá-la em toda visita, carregamos sob demanda no primeiro
+// import/export. O service worker (stale-while-revalidate em cdnjs) mantém
+// o arquivo em cache para uso offline depois da primeira vez.
+let _xlsxPromise = null;
+function ensureXLSX() {
+  if (typeof XLSX !== 'undefined') return Promise.resolve();
+  if (_xlsxPromise) return _xlsxPromise;
+  _xlsxPromise = new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+    s.integrity = 'sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw';
+    s.crossOrigin = 'anonymous';
+    s.onload = () => resolve();
+    s.onerror = () => { _xlsxPromise = null; reject(new Error('Falha ao carregar XLSX')); };
+    document.head.appendChild(s);
+  });
+  return _xlsxPromise;
+}
+window.ensureXLSX = ensureXLSX;
+
 // ===================== TOAST =====================
 function showToast(msg) {
   const t = document.getElementById('toast');

@@ -38,20 +38,23 @@ async function goTo(page) {
   
   // Remove active class from all pages
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  
-  // Remove active class from all nav items
-  document.querySelectorAll('.nav-item').forEach(n => {
+
+  // Nav items: uma única query reaproveitada para limpar e marcar o ativo
+  const navItems = document.querySelectorAll('.nav-item');
+  navItems.forEach(n => {
     n.classList.remove('active');
     n.removeAttribute('aria-current');
   });
-  
+
   // Add active class to current page
   document.getElementById('p-'+page).classList.add('active');
-  
+
   // Add active class to current nav item
-  const activeNavItem = document.querySelectorAll('.nav-item')[pageList.indexOf(page)];
-  activeNavItem.classList.add('active');
-  activeNavItem.setAttribute('aria-current', 'page');
+  const activeNavItem = navItems[pageList.indexOf(page)];
+  if(activeNavItem) {
+    activeNavItem.classList.add('active');
+    activeNavItem.setAttribute('aria-current', 'page');
+  }
   
   // Update topbar title
   document.getElementById('topbar-title').textContent = pageNames[page];

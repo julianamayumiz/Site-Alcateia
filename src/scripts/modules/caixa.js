@@ -348,10 +348,7 @@ function openAddLancamento() {
 
 // ===================== EXPORT =====================
 function exportarCaixa() {
-  if(typeof XLSX === 'undefined') {
-    showToast('Biblioteca de export indisponível');
-    return;
-  }
+  ensureXLSX().then(() => {
   const wb = XLSX.utils.book_new();
   const rows = [['Data','Tipo','Categoria','Valor (R$)','Descrição']];
   const sorted = [...(state.caixa || [])].sort((a, b) => (a.data || '').localeCompare(b.data || ''));
@@ -371,6 +368,7 @@ function exportarCaixa() {
   XLSX.utils.book_append_sheet(wb, ws, 'Fluxo de Caixa');
   XLSX.writeFile(wb, 'FluxoCaixa_Alcateia.xlsx');
   showToast('Exportado!');
+  }).catch(() => showToast('Erro ao carregar biblioteca de planilhas'));
 }
 
 // Exporta funções para uso global

@@ -19,7 +19,7 @@ function importFile(event) {
 
   const reader = new FileReader();
   reader.onload = function(e) {
-    try {
+    ensureXLSX().then(() => {
       const data = new Uint8Array(e.target.result);
       const workbook = XLSX.read(data, {type: 'array'});
       const sheetNames = workbook.SheetNames;
@@ -43,10 +43,10 @@ function importFile(event) {
 
       render(currentPage);
 
-    } catch(err) {
+    }).catch(err => {
       console.error('Import error:', err);
       showToast('Erro ao importar arquivo');
-    }
+    });
   };
   reader.readAsArrayBuffer(file);
 
@@ -224,6 +224,7 @@ function importCaixaSheet(wb) {
 
 // ===================== EXPORT EXCEL =====================
 function exportarExcel() {
+  ensureXLSX().then(() => {
   const activePage = document.querySelector('.page.active');
   const currentPage = activePage ? activePage.id.replace('p-','') : '';
 
@@ -247,6 +248,7 @@ function exportarExcel() {
   } else {
     showToast('Esta página não suporta exportação');
   }
+  }).catch(() => showToast('Erro ao carregar biblioteca de planilhas'));
 }
 
 // ===================== EXPORT CALENDARIO =====================
