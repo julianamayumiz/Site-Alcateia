@@ -413,6 +413,57 @@ function sairChefia() {
 }
 </script>
 
+<!-- Modais de Controle de Lobinhos -->
+<div class="modal-overlay" id="modal-add-lobinho">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-lobinho-title">
+    <h2 id="modal-lobinho-title">Adicionar Lobinho</h2>
+    <div class="form-group">
+      <label for="lobinho-nome-input">Nome completo (maiúsculas)</label>
+      <input class="form-control" id="lobinho-nome-input" placeholder="Ex: NOME SOBRENOME" style="text-transform:uppercase">
+    </div>
+    <div class="form-group">
+      <label for="lobinho-apelido-input">Apelido / nome curto</label>
+      <input class="form-control" id="lobinho-apelido-input" placeholder="Ex: Lucas Masaki">
+      <small style="color:var(--text3);font-size:11px;display:block;margin-top:4px">Usado em especialidades e matilhas para diferenciar lobinhos com mesmo nome.</small>
+    </div>
+    <div class="form-actions">
+      <button class="btn" onclick="closeModals()">Cancelar</button>
+      <button class="btn btn-primary" onclick="salvarNovoLobinho()">Adicionar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-editar-lobinho">
+  <div class="modal" role="dialog" aria-modal="true">
+    <h2>Editar Lobinho</h2>
+    <div class="form-group">
+      <label>Nome completo</label>
+      <input class="form-control" id="edit-lobinho-nome" disabled style="opacity:0.6;cursor:not-allowed">
+    </div>
+    <div class="form-group">
+      <label for="edit-lobinho-apelido">Apelido / nome curto</label>
+      <input class="form-control" id="edit-lobinho-apelido" placeholder="Ex: Lucas Masaki">
+      <small style="color:var(--text3);font-size:11px;display:block;margin-top:4px">Usado em especialidades e matilhas para diferenciar lobinhos com mesmo nome.</small>
+    </div>
+    <div class="form-actions">
+      <button class="btn" onclick="closeModals()">Cancelar</button>
+      <button class="btn btn-primary" onclick="salvarEdicaoLobinho()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-saida-lobinho">
+  <div class="modal" role="dialog" aria-modal="true">
+    <h2>Registrar Saída</h2>
+    <p style="margin:0 0 8px;color:var(--text2)">Confirma a saída de <strong id="saida-lobinho-nome"></strong>?</p>
+    <p style="margin:0;font-size:13px;color:var(--text3)">O histórico de presença e especialidades é mantido. Você poderá reativar depois se necessário.</p>
+    <div class="form-actions">
+      <button class="btn" onclick="closeModals()">Cancelar</button>
+      <button class="btn" style="color:var(--red);border-color:var(--red-light)" onclick="confirmarSaida()">Confirmar Saída</button>
+    </div>
+  </div>
+</div>
+
 <!-- Módulos JS -->
 <script src="../scripts/modules/state.js"></script>
 <script src="../scripts/modules/utils.js"></script>

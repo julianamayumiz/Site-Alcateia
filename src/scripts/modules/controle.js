@@ -93,13 +93,8 @@ function setControleTab(tab) {
 function openAddLobinho() {
   document.getElementById('lobinho-nome-input').value = '';
   document.getElementById('lobinho-apelido-input').value = '';
-  document.getElementById('modal-lobinho-title').textContent = 'Adicionar Lobinho';
-  document.getElementById('modal-add-lobinho').style.display = 'flex';
+  openModal('modal-add-lobinho');
   setTimeout(() => document.getElementById('lobinho-nome-input').focus(), 50);
-}
-
-function closeAddLobinho() {
-  document.getElementById('modal-add-lobinho').style.display = 'none';
 }
 
 function salvarNovoLobinho() {
@@ -133,13 +128,8 @@ function abrirEditarLobinho(idx) {
   editandoLobinhoIndex = idx;
   document.getElementById('edit-lobinho-nome').value = l.nome;
   document.getElementById('edit-lobinho-apelido').value = l.apelido || '';
-  document.getElementById('modal-editar-lobinho').style.display = 'flex';
+  openModal('modal-editar-lobinho');
   setTimeout(() => document.getElementById('edit-lobinho-apelido').focus(), 50);
-}
-
-function closeEditarLobinho() {
-  document.getElementById('modal-editar-lobinho').style.display = 'none';
-  editandoLobinhoIndex = null;
 }
 
 function salvarEdicaoLobinho() {
@@ -147,7 +137,8 @@ function salvarEdicaoLobinho() {
   const apelido = document.getElementById('edit-lobinho-apelido').value.trim();
   state.lobinhos[editandoLobinhoIndex].apelido = apelido;
   fbSet('lobinhos', state.lobinhos);
-  closeEditarLobinho();
+  closeModals();
+  editandoLobinhoIndex = null;
   renderControle();
 }
 
@@ -157,19 +148,15 @@ function abrirSaidaLobinho(idx) {
   saidaLobinhoIndex = idx;
   const l = state.lobinhos[idx];
   document.getElementById('saida-lobinho-nome').textContent = l.apelido || l.nome;
-  document.getElementById('modal-saida-lobinho').style.display = 'flex';
-}
-
-function closeSaidaLobinho() {
-  document.getElementById('modal-saida-lobinho').style.display = 'none';
-  saidaLobinhoIndex = null;
+  openModal('modal-saida-lobinho');
 }
 
 function confirmarSaida() {
   if (saidaLobinhoIndex === null) return;
   state.lobinhos[saidaLobinhoIndex].ativo = false;
   fbSet('lobinhos', state.lobinhos);
-  closeSaidaLobinho();
+  closeModals();
+  saidaLobinhoIndex = null;
   renderControle();
 }
 
@@ -184,12 +171,9 @@ function reativarLobinho(idx) {
 window.renderControle = renderControle;
 window.setControleTab = setControleTab;
 window.openAddLobinho = openAddLobinho;
-window.closeAddLobinho = closeAddLobinho;
 window.salvarNovoLobinho = salvarNovoLobinho;
 window.abrirEditarLobinho = abrirEditarLobinho;
-window.closeEditarLobinho = closeEditarLobinho;
 window.salvarEdicaoLobinho = salvarEdicaoLobinho;
 window.abrirSaidaLobinho = abrirSaidaLobinho;
-window.closeSaidaLobinho = closeSaidaLobinho;
 window.confirmarSaida = confirmarSaida;
 window.reativarLobinho = reativarLobinho;
