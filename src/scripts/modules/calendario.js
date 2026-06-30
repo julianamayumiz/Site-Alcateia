@@ -64,14 +64,14 @@ function renderCal() {
     const header = `<tr class="month-header"><td colspan="7">${mes.toUpperCase()}</td></tr>`;
     const rows = evs.map(ev => {
       const rowCls = getRowClass(ev);
-      const chefeBadge = ev.chefe ? `<span class="badge badge-gray">${ev.chefe}</span>` : '';
+      const chefeBadge = ev.chefe ? `<span class="badge badge-gray">${esc(ev.chefe)}</span>` : '';
       return `<tr class="event-row ${rowCls}">
-        <td><b>${ev.data || ''}</b></td>
-        <td style="color:var(--text2)">${ev.dia || ''}</td>
-        <td>${ev.atividade || ''}</td>
+        <td><b>${esc(ev.data || '')}</b></td>
+        <td style="color:var(--text2)">${esc(ev.dia || '')}</td>
+        <td>${esc(ev.atividade || '')}</td>
         <td>${chefeBadge}</td>
-        <td style="font-size:12px;color:var(--text2)">${ev.datas || ''}</td>
-        <td style="font-size:12px;color:var(--text2)">${ev.obs || ''}</td>
+        <td style="font-size:12px;color:var(--text2)">${esc(ev.datas || '')}</td>
+        <td style="font-size:12px;color:var(--text2)">${esc(ev.obs || '')}</td>
         <td style="white-space:nowrap">
           <button class="lanc-btn" onclick="editCal(${ev._idx})" aria-label="Editar atividade" title="Editar">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>

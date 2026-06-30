@@ -93,7 +93,7 @@ function renderPresenca() {
     const pct = m.stats.percentage;
     const pctColor = getPresencePercentageColor(pct);
     const pctText = pct !== null ? pct + '%' : '—';
-    return `<tr><td class="name-col">${m.nome}</td>${cells}<td class="percentage-cell" style="color:${pctColor}">${pctText}</td></tr>`;
+    return `<tr><td class="name-col">${esc(m.nome)}</td>${cells}<td class="percentage-cell" style="color:${pctColor}">${pctText}</td></tr>`;
   }).join('');
 
   // Stats gerais

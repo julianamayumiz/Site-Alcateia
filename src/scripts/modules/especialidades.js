@@ -86,13 +86,13 @@ function renderEsp() {
       const compOK = e.comprado === 'OK';
       const entOK = isDelivered(e.entregue);
       return `<tr>
-        <td><b>${e.nome || ''}</b></td>
-        <td>${e.esp || ''}</td>
+        <td><b>${esc(e.nome || '')}</b></td>
+        <td>${esc(e.esp || '')}</td>
         <td><span class="nivel-badge nivel-${e.nivel}">${e.nivel}</span></td>
-        <td style="font-family:'DM Mono',monospace;font-size:12px">${e.data || '—'}</td>
-        <td><span class="badge ${compOK ? 'badge-green' : 'badge-red'}">${e.comprado || '—'}</span></td>
-        <td><span class="badge ${entOK ? 'badge-green' : 'badge-red'}">${e.entregue || '—'}</span></td>
-        <td style="color:var(--text2);font-size:12px">${e.avaliador || '—'}</td>
+        <td style="font-family:'DM Mono',monospace;font-size:12px">${esc(e.data || '—')}</td>
+        <td><span class="badge ${compOK ? 'badge-green' : 'badge-red'}">${esc(e.comprado || '—')}</span></td>
+        <td><span class="badge ${entOK ? 'badge-green' : 'badge-red'}">${esc(e.entregue || '—')}</span></td>
+        <td style="color:var(--text2);font-size:12px">${esc(e.avaliador || '—')}</td>
         <td style="white-space:nowrap">
           <button class="lanc-btn" onclick="editEsp(${e._idx})" aria-label="Editar" title="Editar">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>

@@ -57,10 +57,10 @@ function renderControle() {
           <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--card);border-radius:10px;border:1px solid var(--border)">
             <div style="flex:1;min-width:0">
               <div style="font-weight:500;font-size:14px;color:${isInativo ? 'var(--text3)' : 'var(--text1)'}">
-                ${l.nome}
+                ${esc(l.nome)}
                 ${isInativo ? '<span style="font-size:11px;color:var(--text3);font-weight:400;margin-left:6px">(inativo)</span>' : ''}
               </div>
-              ${l.apelido ? `<div style="font-size:12px;color:var(--text3);margin-top:2px">Apelido: ${l.apelido}</div>` : ''}
+              ${l.apelido ? `<div style="font-size:12px;color:var(--text3);margin-top:2px">Apelido: ${esc(l.apelido)}</div>` : ''}
             </div>
             <div style="display:flex;gap:6px;flex-shrink:0">
               <button class="btn" style="font-size:12px;padding:4px 10px" onclick="abrirEditarLobinho(${globalIdx})" title="Editar apelido">
