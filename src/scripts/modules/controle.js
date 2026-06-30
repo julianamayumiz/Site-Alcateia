@@ -115,7 +115,7 @@ function salvarNovoLobinho() {
   fbSet('lobinhos', state.lobinhos);
   fbSet('presenca', state.presenca);
 
-  closeAddLobinho();
+  closeModals();
   controleTab = 'ativos';
   renderControle();
 }
