@@ -44,6 +44,7 @@ function listenAll() {
       if(d.avisos_internos && Array.isArray(d.avisos_internos)) state.avisos_internos = d.avisos_internos;
       if(d.todos_chefia && Array.isArray(d.todos_chefia)) state.todos_chefia = d.todos_chefia;
       if(d.progressao) state.progressao = d.progressao;
+      if(d.passagem)   state.passagem   = d.passagem;
     }
     showSyncStatus('ok');
     // Re-render active page with fresh data
@@ -69,6 +70,7 @@ function listenAll() {
     if(d.avisos_internos && JSON.stringify(d.avisos_internos) !== JSON.stringify(state.avisos_internos)) { state.avisos_internos = d.avisos_internos; changed=true; }
     if(d.todos_chefia && JSON.stringify(d.todos_chefia) !== JSON.stringify(state.todos_chefia)) { state.todos_chefia = d.todos_chefia; changed=true; }
     if(d.progressao && JSON.stringify(d.progressao) !== JSON.stringify(state.progressao)) { state.progressao = d.progressao; changed=true; }
+    if(d.passagem   && JSON.stringify(d.passagem)   !== JSON.stringify(state.passagem))   { state.passagem   = d.passagem;   changed=true; }
     if(changed) {
       const activePage = document.querySelector('.page.active');
       if(activePage) render(activePage.id.replace('p-',''));

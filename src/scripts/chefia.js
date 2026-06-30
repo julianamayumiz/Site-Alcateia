@@ -21,6 +21,8 @@ function render(page) {
     window.renderCaixa();
   } else if (page === 'progressao' && typeof window.renderProgressao === 'function') {
     window.renderProgressao();
+  } else if (page === 'passagem' && typeof window.renderPassagem === 'function') {
+    window.renderPassagem();
   }
 }
 

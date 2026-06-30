@@ -145,7 +145,8 @@ const state = {
   pontuacao: {},
   avisos_internos: [],
   todos_chefia: [],
-  progressao: {}
+  progressao: {},
+  passagem: {}
 };
 
 // Exporta o estado para uso global

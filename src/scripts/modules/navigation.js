@@ -9,10 +9,11 @@ const pageNames = {
   matilhas: 'Matilhas',
   comunicados: 'Comunicados',
   caixa: 'Fluxo de Caixa',
-  progressao: 'Progressão'
+  progressao: 'Progressão',
+  passagem: 'Controle de Passagem'
 };
 
-const pageList = ['dashboard','calendario','presenca','especialidades','matilhas','comunicados','caixa','progressao'];
+const pageList = ['dashboard','calendario','presenca','especialidades','matilhas','comunicados','caixa','progressao','passagem'];
 
 // ===================== SIDEBAR MOBILE =====================
 function toggleSidebar() {
