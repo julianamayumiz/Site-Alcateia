@@ -24,6 +24,17 @@ function fbSet(path, data) {
     .catch(e => { console.warn('fbSet error', e); showSyncStatus('erro'); });
 }
 
+// Re-render coalescido: vários eventos do Firebase em sequência (ex.: salvar
+// várias seções de uma vez) disparam apenas UM re-render da página ativa.
+let _activeRenderTimer = null;
+function scheduleActiveRender() {
+  clearTimeout(_activeRenderTimer);
+  _activeRenderTimer = setTimeout(() => {
+    const activePage = document.querySelector('.page.active');
+    if(activePage) render(activePage.id.replace('p-',''));
+  }, 120);
+}
+
 function listenAll() {
   if(!db) return;
   const ref = db.ref('alcateia');
@@ -73,10 +84,7 @@ function listenAll() {
     if(d.progressao && JSON.stringify(d.progressao) !== JSON.stringify(state.progressao)) { state.progressao = d.progressao; changed=true; }
     if(d.passagem   && JSON.stringify(d.passagem)   !== JSON.stringify(state.passagem))   { state.passagem   = d.passagem;   changed=true; }
     if(d.lobinhos   && JSON.stringify(d.lobinhos)   !== JSON.stringify(state.lobinhos))   { state.lobinhos   = d.lobinhos;   changed=true; }
-    if(changed) {
-      const activePage = document.querySelector('.page.active');
-      if(activePage) render(activePage.id.replace('p-',''));
-    }
+    if(changed) scheduleActiveRender();
   });
 }
 

@@ -33,9 +33,17 @@ function renderDashKPIs() {
 
   const membros = state.presenca.membros || [];
   const totalMembros = membros.length;
-  const allRegs = membros.flatMap(m => m.reg || []).filter(r => r !== '');
-  const faltas = allRegs.filter(r => r === 'A').length;
-  const pctGeral = allRegs.length ? Math.round(allRegs.filter(r => r === 'P').length / allRegs.length * 100) : 0;
+  // Passagem única: conta preenchidos, presenças e faltas sem alocar arrays intermediários
+  let filled = 0, presencas = 0, faltas = 0;
+  for(const m of membros) {
+    for(const r of (m.reg || [])) {
+      if(r === '') continue;
+      filled++;
+      if(r === 'P') presencas++;
+      else if(r === 'A') faltas++;
+    }
+  }
+  const pctGeral = filled ? Math.round(presencas / filled * 100) : 0;
   const totalEsp = state.especialidades.length;
   const espPendentes = state.especialidades.filter(e => !['OK','Ok','ok','Sim'].includes(e.entregue)).length;
 
@@ -123,9 +131,13 @@ function renderPresencaExtremes() {
   if(!el) return;
 
   const membros = (state.presenca.membros || []).map(m => {
-    const reg = m.reg || [];
-    const filled = reg.filter(r => r !== '').length;
-    const pres = reg.filter(r => r === 'P').length;
+    // Passagem única em vez de dois .filter() sobre o mesmo array
+    let filled = 0, pres = 0;
+    for(const r of (m.reg || [])) {
+      if(r === '') continue;
+      filled++;
+      if(r === 'P') pres++;
+    }
     const pct = filled > 0 ? Math.round(pres / filled * 100) : null;
     return { nome: (m.nome || '').split(' ')[0], pct };
   }).filter(m => m.pct !== null);

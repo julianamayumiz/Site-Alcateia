@@ -16,12 +16,12 @@
   <link rel="icon" type="image/jpeg" href="../images/logo_jpeg.jpeg">
 
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw" crossorigin="anonymous"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw" crossorigin="anonymous"></script>
   <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js" integrity="sha384-ajMUFBUFMCyjh8uxJg6bkGcKe9RTolyjwbxB3yES0QQMenP3Oztj/W9vA2SJPcIh" crossorigin="anonymous"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js" integrity="sha384-xD1t9dGSVKobUztxDkv6xUI0H4AnFz0NxwlgDJJ7FDlblG9xxr1Z9iauCZuJYj6p" crossorigin="anonymous"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js" integrity="sha384-f6/UpzjTjIXASlp20cArQsaRh1EvHVJd5kegy/gYR9W2D0a32TnEqUEiW4Zm/5O0" crossorigin="anonymous"></script>
-  <script src="../scripts/firebase-config.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js" integrity="sha384-ajMUFBUFMCyjh8uxJg6bkGcKe9RTolyjwbxB3yES0QQMenP3Oztj/W9vA2SJPcIh" crossorigin="anonymous"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js" integrity="sha384-xD1t9dGSVKobUztxDkv6xUI0H4AnFz0NxwlgDJJ7FDlblG9xxr1Z9iauCZuJYj6p" crossorigin="anonymous"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js" integrity="sha384-f6/UpzjTjIXASlp20cArQsaRh1EvHVJd5kegy/gYR9W2D0a32TnEqUEiW4Zm/5O0" crossorigin="anonymous"></script>
+  <script defer src="../scripts/firebase-config.js"></script>
   <link rel="stylesheet" href="../styles/chefia.css">
 </head>
 
@@ -365,7 +365,9 @@
 
 <!-- Proteção de acesso: Firebase Auth + domínio @escoteiros.org.br -->
 <script>
-(function(){
+// Firebase agora carrega com defer; aguardamos o DOMContentLoaded para
+// garantir que os scripts deferidos (firebase-*) já estejam disponíveis.
+document.addEventListener('DOMContentLoaded', function(){
   if (!firebase.apps.length) firebase.initializeApp(window.firebaseConfig);
   var DOM = window.ALCATEIA_EMAIL_DOMAIN || 'escoteiros.org.br';
   firebase.auth().onAuthStateChanged(function(user){
@@ -379,7 +381,7 @@
     window.ALCATEIA_USER = user;
     document.body.dataset.authReady = '1';
   });
-})();
+});
 
 async function sha256Hex(str) {
   var buf = new TextEncoder().encode(str);
@@ -464,26 +466,26 @@ function sairChefia() {
   </div>
 </div>
 
-<!-- Módulos JS -->
-<script src="../scripts/modules/state.js"></script>
-<script src="../scripts/modules/utils.js"></script>
-<script src="../scripts/modules/view-loader.js"></script>
-<script src="../scripts/modules/navigation.js"></script>
-<script src="../scripts/modules/modals.js"></script>
-<script src="../scripts/modules/firebase.js"></script>
-<script src="../scripts/modules/calendario.js"></script>
-<script src="../scripts/modules/presenca.js"></script>
-<script src="../scripts/modules/especialidades.js"></script>
-<script src="../scripts/modules/matilhas.js"></script>
-<script src="../scripts/modules/comunicados.js"></script>
-<script src="../scripts/modules/caixa.js"></script>
-<script src="../scripts/modules/progressao-data.js"></script>
-<script src="../scripts/modules/progressao.js"></script>
-<script src="../scripts/modules/passagem.js"></script>
-<script src="../scripts/modules/controle.js"></script>
-<script src="../scripts/modules/dashboard.js"></script>
-<script src="../scripts/modules/import-export.js"></script>
-<script src="../scripts/chefia.js"></script>
+<!-- Módulos JS (defer: carregam sem bloquear o parse; ordem preservada) -->
+<script defer src="../scripts/modules/state.js"></script>
+<script defer src="../scripts/modules/utils.js"></script>
+<script defer src="../scripts/modules/view-loader.js"></script>
+<script defer src="../scripts/modules/navigation.js"></script>
+<script defer src="../scripts/modules/modals.js"></script>
+<script defer src="../scripts/modules/firebase.js"></script>
+<script defer src="../scripts/modules/calendario.js"></script>
+<script defer src="../scripts/modules/presenca.js"></script>
+<script defer src="../scripts/modules/especialidades.js"></script>
+<script defer src="../scripts/modules/matilhas.js"></script>
+<script defer src="../scripts/modules/comunicados.js"></script>
+<script defer src="../scripts/modules/caixa.js"></script>
+<script defer src="../scripts/modules/progressao-data.js"></script>
+<script defer src="../scripts/modules/progressao.js"></script>
+<script defer src="../scripts/modules/passagem.js"></script>
+<script defer src="../scripts/modules/controle.js"></script>
+<script defer src="../scripts/modules/dashboard.js"></script>
+<script defer src="../scripts/modules/import-export.js"></script>
+<script defer src="../scripts/chefia.js"></script>
 
 <script>
   if ('serviceWorker' in navigator) {

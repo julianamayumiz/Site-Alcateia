@@ -12,6 +12,18 @@ function esc(value) {
 }
 window.esc = esc;
 
+// ===================== DEBOUNCE =====================
+// Adia a execução de fn até passarem `wait` ms sem novas chamadas.
+// Usado para evitar re-render a cada tecla em campos de busca.
+function debounce(fn, wait = 250) {
+  let t = null;
+  return function(...args) {
+    clearTimeout(t);
+    t = setTimeout(() => fn.apply(this, args), wait);
+  };
+}
+window.debounce = debounce;
+
 // ===================== TOAST =====================
 function showToast(msg) {
   const t = document.getElementById('toast');

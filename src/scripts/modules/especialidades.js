@@ -40,8 +40,11 @@ function populateEspNomeModal(selectedNome) {
   ).join('');
 }
 
+// Debounce no render para não reconstruir a tabela a cada tecla digitada
+// no campo de busca (oninput). Chamadas diretas a renderEsp() seguem imediatas.
+const _renderEspDebounced = debounce(renderEsp, 250);
 function filterEsp() {
-  renderEsp();
+  _renderEspDebounced();
 }
 
 function limparFiltrosEsp() {
