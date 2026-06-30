@@ -10,10 +10,11 @@ const pageNames = {
   comunicados: 'Comunicados',
   caixa: 'Fluxo de Caixa',
   progressao: 'Progressão',
-  passagem: 'Controle de Passagem'
+  passagem: 'Controle de Passagem',
+  controle: 'Controle de Lobinhos'
 };
 
-const pageList = ['dashboard','calendario','presenca','especialidades','matilhas','comunicados','caixa','progressao','passagem'];
+const pageList = ['dashboard','calendario','presenca','especialidades','matilhas','comunicados','caixa','progressao','passagem','controle'];
 
 // ===================== SIDEBAR MOBILE =====================
 function toggleSidebar() {

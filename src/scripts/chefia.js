@@ -23,6 +23,8 @@ function render(page) {
     window.renderProgressao();
   } else if (page === 'passagem' && typeof window.renderPassagem === 'function') {
     window.renderPassagem();
+  } else if (page === 'controle' && typeof window.renderControle === 'function') {
+    window.renderControle();
   }
 }
 
