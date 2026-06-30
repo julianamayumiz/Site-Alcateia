@@ -96,11 +96,11 @@ function renderComunicados() {
     const idx = state.comunicados.indexOf(com);
     const catCls = 'com-cat-' + (com.categoria || 'aviso');
     const catLabel = CAT_LABELS[com.categoria] || 'Aviso';
-    const dataStr = com.dataEvento ? ` · ${com.dataEvento}` : '';
+    const dataStr = com.dataEvento ? ` · ${esc(com.dataEvento)}` : '';
     const pubDate = getTimestamp(com)
       ? new Date(getTimestamp(com)).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })
       : '';
-    const titulo = (com.fixado ? '📌 ' : '') + (com.titulo || '');
+    const titulo = (com.fixado ? '📌 ' : '') + esc(com.titulo || '');
     return `
       <div class="com-card${com.fixado ? ' fixado' : ''}">
         <div class="com-header">
@@ -108,7 +108,7 @@ function renderComunicados() {
           <span class="com-titulo">${titulo}</span>
         </div>
         <div class="com-meta">Publicado em ${pubDate}${dataStr}</div>
-        <div class="com-texto">${(com.texto || '').replace(/</g,'&lt;').replace(/\n/g,'<br>')}</div>
+        <div class="com-texto">${esc(com.texto || '').replace(/\n/g,'<br>')}</div>
         <div class="com-actions">
           <button class="btn btn-sm" onclick="editCom(${idx})">Editar</button>
           <button class="btn btn-sm" onclick="toggleFixarCom(${idx})" style="color:var(--accent2)">${com.fixado ? 'Desafixar' : 'Fixar'}</button>
@@ -159,13 +159,13 @@ function renderConfirmacoes() {
   const cards = filtered.map(([key, c]) => {
     const date = c.ts ? new Date(c.ts).toLocaleDateString('pt-BR') : '';
     const obsHtml = c.obs
-      ? `<div style="font-size:12px;color:var(--text2);margin-top:3px;font-style:italic">"${c.obs.replace(/</g,'&lt;')}"</div>`
+      ? `<div style="font-size:12px;color:var(--text2);margin-top:3px;font-style:italic">"${esc(c.obs)}"</div>`
       : '';
     return `
       <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border)">
         <div style="flex:1;min-width:0">
-          <div style="font-weight:500;font-size:13px">${c.nomeLobinho || ''}</div>
-          <div style="font-size:12px;color:var(--text3);margin-top:2px">${c.atividade || ''} · ${c.dataAtiv || ''}</div>
+          <div style="font-weight:500;font-size:13px">${esc(c.nomeLobinho || '')}</div>
+          <div style="font-size:12px;color:var(--text3);margin-top:2px">${esc(c.atividade || '')} · ${esc(c.dataAtiv || '')}</div>
           ${obsHtml}
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">

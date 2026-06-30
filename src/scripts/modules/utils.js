@@ -1,6 +1,17 @@
 // ===================== UTILS MODULE =====================
 // Funções utilitárias compartilhadas
 
+// ===================== SANITIZAÇÃO HTML =====================
+function esc(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;');
+}
+window.esc = esc;
+
 // ===================== TOAST =====================
 function showToast(msg) {
   const t = document.getElementById('toast');

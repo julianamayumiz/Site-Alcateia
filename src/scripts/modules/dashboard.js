@@ -142,7 +142,7 @@ function renderPresencaExtremes() {
 
   const barRow = (m, color) => `
     <div class="pres-bar-wrap">
-      <span class="pres-bar-name">${m.nome}</span>
+      <span class="pres-bar-name">${esc(m.nome)}</span>
       <div class="pres-bar-track"><div class="pres-bar-fill" style="width:${m.pct}%;background:${color}"></div></div>
       <span class="pres-bar-pct" style="color:${color}">${m.pct}%</span>
     </div>`;
@@ -173,8 +173,8 @@ function renderEspPendentes() {
     const compOK = e.comprado === 'OK';
     return `<div class="dash-row">
       <span class="nivel-badge nivel-${e.nivel}" style="flex-shrink:0">${e.nivel}</span>
-      <span style="flex:1;font-weight:500;font-size:13px">${e.nome}</span>
-      <span style="font-size:12px;color:var(--text2)">${e.esp}</span>
+      <span style="flex:1;font-weight:500;font-size:13px">${esc(e.nome)}</span>
+      <span style="font-size:12px;color:var(--text2)">${esc(e.esp)}</span>
       <span class="badge ${compOK ? 'badge-green' : 'badge-red'}" style="flex-shrink:0">${compOK ? 'Comprado' : 'Falta'}</span>
     </div>`;
   }).join('') + (pendentes.length > 6 ? `<div style="padding:10px 18px;font-size:12px;color:var(--text3)">+ ${pendentes.length - 6} outras pendências</div>` : '');
@@ -196,7 +196,7 @@ function renderAvisosInternos() {
     return `
     <div class="aviso-item">
       <span class="aviso-bullet"></span>
-      <span class="aviso-text">${texto}${data ? `<span class="aviso-data"> · ${data}</span>` : ''}</span>
+      <span class="aviso-text">${esc(texto)}${data ? `<span class="aviso-data"> · ${esc(data)}</span>` : ''}</span>
       <button class="aviso-remove" onclick="removeAvisoInterno(${idx})" aria-label="Remover aviso">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
@@ -238,7 +238,7 @@ function renderTodosChefia() {
   container.innerHTML = state.todos_chefia.map((todo, idx) => `
     <div class="todo-item ${todo.concluido ? 'todo-concluido' : ''}">
       <div class="todo-checkbox ${todo.concluido ? 'checked' : ''}" onclick="toggleTodoChefia(${idx})" role="checkbox" tabindex="0" aria-checked="${todo.concluido ? 'true' : 'false'}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTodoChefia(${idx});}"></div>
-      <span class="todo-text">${todo.texto}</span>
+      <span class="todo-text">${esc(todo.texto)}</span>
       <button class="todo-remove" onclick="removeTodoChefia(${idx})" aria-label="Remover tarefa">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
