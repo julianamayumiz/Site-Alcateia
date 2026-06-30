@@ -182,6 +182,12 @@ function renderPassagem() {
   <div style="margin-top:10px;font-size:11px;color:var(--text3)">
     Clique em <b>+</b> para registrar uma data · Clique numa data existente para editar · Linha verde = todos os níveis completos
   </div>`;
+
+  const progWrap = document.getElementById('pass-prog-content');
+  const progStats = document.getElementById('pass-prog-stats');
+  if (progWrap && typeof window.renderProgDashboardGeral === 'function') {
+    window.renderProgDashboardGeral(progWrap, progStats);
+  }
 }
 
 function passSaveFromInput(nome, key) {

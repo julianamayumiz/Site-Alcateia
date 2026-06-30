@@ -455,11 +455,16 @@ function progSelectDashboard(nome) {
   window.progSelected = nome;
   const sel = document.getElementById('prog-lobinho');
   if (sel) sel.value = nome;
+  if (!document.getElementById('prog-content')) {
+    if (typeof goTo === 'function') goTo('progressao');
+    return;
+  }
   renderProgressao();
 }
 
 // Exporta funções para uso global
 window.renderProgressao = renderProgressao;
+window.renderProgDashboardGeral = renderProgDashboardGeral;
 window.progSelectLobinho = progSelectLobinho;
 window.progSelectDashboard = progSelectDashboard;
 window.progToggleAntigo = progToggleAntigo;
