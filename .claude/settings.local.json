@@ -18,7 +18,8 @@
       "Bash(xargs wc *)",
       "PowerShell(node --version)",
       "PowerShell(git -C \"C:\\\\Users\\\\julia\\\\Desktop\\\\Site Alcateia\" log --oneline -40)",
-      "PowerShell(New-Item -ItemType Directory -Force -Path \"C:\\\\Users\\\\julia\\\\Desktop\\\\Site Alcateia\\\\src\\\\views\")"
+      "PowerShell(New-Item -ItemType Directory -Force -Path \"C:\\\\Users\\\\julia\\\\Desktop\\\\Site Alcateia\\\\src\\\\views\")",
+      "Bash(node -e ' *)"
     ]
   }
 }

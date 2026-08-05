@@ -96,7 +96,7 @@ const PROG_ATIVIDADES_ANTIGAS = [
   // ----- I — Intelectual -----
   {codigo:'I01', bloco:'Aprendizagem Contínua e Desenvolvimento Vocacional', desc:'Conhecer o material individual para um acampamento / acantonamento, arrumar a sua mochila e enrolar um saco de dormir.'},
   {codigo:'I02', bloco:'Aprendizagem Contínua e Desenvolvimento Vocacional', desc:'Aprender cinco frases úteis em outro idioma.'},
-  {codigo:'I03', bloco:'Aprendizagem Contínua e Desenvolvimento Vocacional', desc:'Acertar a maioria dos objetos num jogo do Kim (de visão, audição, tato, olfato ou paladar).'},
+  {codigo:'I03', bloco:'Cuidado com o Corpo', desc:'Acertar a maioria dos objetos num jogo do Kim (de visão, audição, tato, olfato ou paladar).'},
   {codigo:'I04', bloco:'Aprendizagem Contínua e Desenvolvimento Vocacional', desc:'Ler no Guia do Lobinho a história das Caçadas de Kaa.'},
   {codigo:'I05', bloco:'Aprendizagem Contínua e Desenvolvimento Vocacional', desc:'Contar resumidamente para a Alcateia um livro que tenha lido por recomendação de seus pais ou professores.'},
   {codigo:'I06', bloco:'Vida ao Ar Livre', desc:'Fazer os nós direito, direito alceado, aselha, de correr, saber para que servem e aplicá-los numa atividade.'},
@@ -112,8 +112,8 @@ const PROG_ATIVIDADES_ANTIGAS = [
   {codigo:'I16', bloco:'Autonomia e Liderança', desc:'Fazer os nós de escota, escota alceado, volta do fiel, saber para que servem e aplicá-los numa atividade.'},
   {codigo:'I17', bloco:'Inteligência Emocional', desc:'Dar corretamente um recado da Alcateia para seus pais ou vice-versa.'},
   {codigo:'I18', bloco:'Inteligência Emocional', desc:'Ensinar um jogo para os (as) lobinhos (as).'},
-  {codigo:'I19', bloco:'Inteligência Emocional', desc:'Escrever uma carta para um Velho Lobo e colocá-la no correio ou passar um telegrama ou mandar uma mensagem por e-mail.'},
-  {codigo:'I20', bloco:'Inteligência Emocional', desc:'Demonstrar para a Alcateia um conhecimento ou uma habilidade que possui.'},
+  {codigo:'I19', bloco:'Aprendizagem Contínua e Desenvolvimento Vocacional', desc:'Escrever uma carta para um Velho Lobo e colocá-la no correio ou passar um telegrama ou mandar uma mensagem por e-mail.'},
+  {codigo:'I20', bloco:'Aprendizagem Contínua e Desenvolvimento Vocacional', desc:'Demonstrar para a Alcateia um conhecimento ou uma habilidade que possui.'},
   {codigo:'I21', bloco:'Inteligência Emocional', desc:'Avaliar uma atividade de que tenha participado, identificando os pontos positivos e negativos e fazer sugestões de melhoria.'},
   {codigo:'I22', bloco:'Aprendizagem Contínua e Desenvolvimento Vocacional', desc:'Ler ou ouvir um dos episódios do Livro da Selva: "Os Cães Vermelhos", "O aguilhão do rei" ou "Como apareceu o medo" e expressar suas conclusões.'},
   {codigo:'I23', bloco:'Aprendizagem Contínua e Desenvolvimento Vocacional', desc:'Conhecer os personagens da Jângal e suas características, relacionando suas qualidades com as das pessoas com as quais convive.'},
@@ -151,7 +151,7 @@ const PROG_ATIVIDADES_ANTIGAS = [
   {codigo:'S24', bloco:'', desc:'Confeccionar um objeto reutilizando embalagens vazias e outros resíduos sólidos.'},
   {codigo:'S25', bloco:'Mudanças Climáticas', desc:'Ajudar na manutenção de um jardim ou de uma horta.'},
   {codigo:'S26', bloco:'Preservação da Biodiversidade', desc:'Visitar um Zoológico e/ou um Jardim Botânico (ou Horto Florestal, Viveiro de plantas, propriedade rural de produção agrícola etc.).'},
-  {codigo:'S27', bloco:'Comunidade', desc:'Localizar em um guia de ruas a sua casa, a escola, a sede do Grupo Escoteiro e outros pontos de interesse: farmácia, padaria, papelaria, correio, hospital, supermercado, ponto de ônibus.'},
+  {codigo:'S27', bloco:'Autonomia e Liderança', desc:'Localizar em um guia de ruas a sua casa, a escola, a sede do Grupo Escoteiro e outros pontos de interesse: farmácia, padaria, papelaria, correio, hospital, supermercado, ponto de ônibus.'},
   {codigo:'S28', bloco:'Comunidade', desc:'Visitar um lugar público como: grupamento de bombeiros, redação de jornal, emissora de rádio ou TV, museu, biblioteca pública etc.'},
   {codigo:'S29', bloco:'Promoção da Paz', desc:'Conhecer a história de Kotick, a foca branca.'},
   {codigo:'S30', bloco:'Promoção da Paz', desc:'Ler ou ouvir a história resumida da vida de Robert Baden-Powell e da criação do Movimento Escoteiro.'},
@@ -501,30 +501,44 @@ const PROG_EQUIVALENCIAS = {
   A16: 'Acolher os novos lobinhos e ajudá-los a se integrar na alcateia.',
   S13: 'Conhecer as seções do seu grupo escoteiro e participar de uma atividade com outra seção.',
   S15: 'Participar de uma atividade entre diferentes Unidades Escoteiras ou atividade regional do Ramo Lobinho.',
+  S14: 'Participar de uma atividade com outra alcateia.',
   // ----- Valores -----
   A08: 'Contar a um Velho Lobo sobre três boas ações que praticou.',
   C01: 'Saber quem é Baloo e o motivo dele ensinar a viver de acordo com a Lei da Jângal.',
   // ----- Espiritualidade -----
   E04: 'Realizar orações de agradecimento ou momento de reflexão nas atividades da alcateia.',
   E05: 'Representar artisticamente um símbolo de sua religião e explicá-lo à alcateia.',
+  E01: 'Participar de uma atividade que expressa gratidão sobre coisas da vida e da natureza.',
+  E03: 'Durante um momento de reflexão, fazer a leitura de um texto de sua crença ou religião.',
   // ----- Promoção da Paz -----
   E08: 'Visitar um templo de uma religião diferente da sua e, após a visita, expressar suas impressões por meio de um desenho ou depoimento.',
+  E07: 'Criar com sua alcateia um mural sobre as religiões do mundo, expressando artisticamente as principais características (símbolos, datas comemorativas etc).',
   // ----- Comunidade -----
   E10: 'Identificar uma forma de praticar uma Boa Ação e realizá-la.',
   // ----- Hábitos Saudáveis -----
   F02: 'Utilizar o vestuário ou uniforme de lobinho adequadamente, demonstrando aplicação correta dos distintivos.',
   F09: 'Conhecer Bagheera e entender como ela ensina a viver de forma saudável.',
   F11: 'Escolher um esporte, aprender sobre ele e praticá-lo. Contar para a alcateia sobre o esporte que você pratica, suas características e regras.',
+  F03: 'Manter seu quarto e pertences em ordem.',
   // ----- Cuidado com o Corpo -----
   F13: 'Participar de atividades voltadas à prevenção das doenças mais comuns na infância (viroses, febre, gripe, dengue, catapora, caxumba, sarampo etc.), identificando seus sintomas e aprendendo formas de prevenção.',
   F18: 'Realizar atividades físicas desafiadoras como passar por uma falsa baiana, subir em uma árvore, dar cambalhota ou fazer estrela.',
+  I03: 'Durante o Jogo do Kim, acertar a maioria dos objetos usando visão, audição, tato, olfato ou paladar.',
+  F14: 'Proteger-se do calor e do frio nas atividades da alcateia, utilizando boné, protetor solar, blusas para o frio, beber água e respeitar os limites do seu corpo.',
+  F22: 'Fazer um checklist de segurança para a próxima atividade ao ar livre (hidratação, protetor, boné, calçado).',
+  // ----- Saúde Mental -----
+  F15: 'Praticar uma atividade que te faça sentir feliz e relaxado, encaixando na sua rotina e vendo quanto tempo gasta em suas atividades diárias.',
   // ----- Aprendizagem Contínua e Desenvolvimento Vocacional -----
   I02: 'Escolher um novo idioma e aprender cinco frases úteis.',
   I05: 'Contar para a alcateia a história de um livro que tenha lido.',
+  I19: 'Com a ajuda dos responsáveis, escrever uma carta para um Velho Lobo e enviá-la pelo correio ou por e-mail.',
   I22: 'Ouvir a história "O aguilhão do rei" e contar suas conclusões.',
   I29: 'Apresentar à alcateia uma profissão de seu interesse, explicando os requisitos necessários para exercê-la.',
+  I20: 'Demonstrar para a alcateia um conhecimento ou habilidade que possui.',
+  I25: 'Conhecer uma biblioteca e pedir a recomendação de um livro ao bibliotecário, sobre temas de seu interesse.',
   // ----- Autonomia e Liderança -----
   I15: 'Fazer uma compra e prestar contas do pagamento.',
+  S27: 'Conhecer os meios de transporte, farmácias, correios, hospitais, supermercados, pontos de ônibus/estações de trem/metrô, igrejas e parques próximos à sua casa.',
   // ----- Criatividade e Inovação -----
   I10: 'Criar e apresentar com sua matilha uma esquete em uma Flor Vermelha.',
   I11: 'Apresentar um trabalho artístico para sua alcateia, como: pintura, modelagem, colagem etc.',
