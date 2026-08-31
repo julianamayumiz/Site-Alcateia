@@ -147,7 +147,8 @@ const state = {
   todos_chefia: [],
   progressao: {},
   passagem: {},
-  lobinhos: null
+  lobinhos: null,
+  usuarios: {}
 };
 
 // Exporta o estado para uso global

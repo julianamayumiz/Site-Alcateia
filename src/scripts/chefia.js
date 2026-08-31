@@ -25,6 +25,8 @@ function render(page) {
     window.renderPassagem();
   } else if (page === 'controle' && typeof window.renderControle === 'function') {
     window.renderControle();
+  } else if (page === 'usuarios' && typeof window.renderUsuarios === 'function') {
+    window.renderUsuarios();
   }
 }
 

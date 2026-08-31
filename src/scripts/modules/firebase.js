@@ -57,6 +57,7 @@ function listenAll() {
       if(d.progressao) state.progressao = d.progressao;
       if(d.passagem)   state.passagem   = d.passagem;
       if(d.lobinhos && Array.isArray(d.lobinhos)) state.lobinhos = d.lobinhos;
+      if(d.usuarios) state.usuarios = d.usuarios;
     }
     showSyncStatus('ok');
     // Re-render active page with fresh data
@@ -84,6 +85,7 @@ function listenAll() {
     if(d.progressao && JSON.stringify(d.progressao) !== JSON.stringify(state.progressao)) { state.progressao = d.progressao; changed=true; }
     if(d.passagem   && JSON.stringify(d.passagem)   !== JSON.stringify(state.passagem))   { state.passagem   = d.passagem;   changed=true; }
     if(d.lobinhos   && JSON.stringify(d.lobinhos)   !== JSON.stringify(state.lobinhos))   { state.lobinhos   = d.lobinhos;   changed=true; }
+    if(d.usuarios   && JSON.stringify(d.usuarios)   !== JSON.stringify(state.usuarios))   { state.usuarios   = d.usuarios;   changed=true; }
     if(changed) scheduleActiveRender();
   });
 }

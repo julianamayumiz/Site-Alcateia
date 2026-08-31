@@ -11,10 +11,11 @@ const pageNames = {
   caixa: 'Fluxo de Caixa',
   progressao: 'Progressão',
   passagem: 'Controle de Passagem',
-  controle: 'Controle de Lobinhos'
+  controle: 'Controle de Lobinhos',
+  usuarios: 'Usuários'
 };
 
-const pageList = ['dashboard','calendario','presenca','especialidades','matilhas','comunicados','caixa','progressao','passagem','controle'];
+const pageList = ['dashboard','calendario','presenca','especialidades','matilhas','comunicados','caixa','progressao','passagem','controle','usuarios'];
 
 // ===================== SIDEBAR MOBILE =====================
 function toggleSidebar() {
@@ -61,7 +62,7 @@ async function goTo(page) {
   
   // Show/hide add button based on page
   const addBtn = document.getElementById('btn-add');
-  addBtn.style.display = (page === 'presenca' || page === 'dashboard') ? 'none' : 'inline-flex';
+  addBtn.style.display = (page === 'presenca' || page === 'dashboard' || page === 'usuarios') ? 'none' : 'inline-flex';
 
   // Importar/Exportar: visíveis apenas nas páginas com dados estruturados
   const pagesComDados = ['calendario','presenca','especialidades','matilhas','caixa'];

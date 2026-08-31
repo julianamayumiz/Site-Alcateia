@@ -1,0 +1,71 @@
+<style>
+  .usuarios-input {
+    width: 100%;
+    padding: 9px 11px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    background: var(--surface, var(--card));
+    color: var(--text1, var(--text));
+  }
+  .usuarios-input:focus { outline: 2px solid var(--accent); border-color: var(--accent); }
+  .usuarios-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 10px;
+  }
+  .usuarios-row + .usuarios-row { margin-top: 8px; }
+  .usuarios-acoes { display: flex; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
+  .usuarios-acoes .btn { font-size: 12px; padding: 4px 10px; }
+  .tag {
+    font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px;
+    background: var(--surface2, rgba(127,127,127,0.15)); color: var(--text2, var(--text3));
+  }
+  .tag.admin { background: rgba(84,114,228,0.18); color: var(--accent); }
+  .tag.inativo { background: rgba(192,57,43,0.15); color: var(--red, #c0392b); }
+</style>
+
+<div class="page-header">
+  <div class="page-header-left">
+    <h1>Usuários</h1>
+    <p>Contas de acesso ao Portal da Chefia</p>
+  </div>
+</div>
+
+<div id="usuarios-guard" style="display:none;color:var(--text3);font-size:14px;padding:24px 0">
+  Apenas administradores podem gerenciar usuários.
+</div>
+
+<div id="usuarios-conteudo">
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:20px">
+    <p class="section-label" style="margin-top:0">Adicionar chefe</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end">
+      <div style="flex:1;min-width:150px">
+        <label for="novo-nome" style="display:block;font-size:12px;color:var(--text3);margin-bottom:4px">Nome</label>
+        <input id="novo-nome" class="usuarios-input" type="text" placeholder="Nome do chefe">
+      </div>
+      <div style="flex:1;min-width:200px">
+        <label for="novo-email" style="display:block;font-size:12px;color:var(--text3);margin-bottom:4px">E-mail</label>
+        <input id="novo-email" class="usuarios-input" type="email" placeholder="pessoa@escoteiros.org.br">
+      </div>
+      <div style="min-width:110px">
+        <label for="novo-papel" style="display:block;font-size:12px;color:var(--text3);margin-bottom:4px">Papel</label>
+        <select id="novo-papel" class="usuarios-input">
+          <option value="chefe">Chefe</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" id="btn-novo-usuario" onclick="criarUsuarioUI()" style="gap:6px">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Adicionar
+      </button>
+    </div>
+    <p style="font-size:12px;color:var(--text3);margin:10px 0 0">
+      A pessoa entra com a senha temporária padrão e define a senha própria no primeiro acesso.
+    </p>
+  </div>
+
+  <p class="section-label" id="usuarios-label">Contas</p>
+  <div id="usuarios-lista"></div>
+</div>
