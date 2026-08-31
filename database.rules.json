@@ -2,11 +2,14 @@
   "rules": {
     "alcateia": {
       ".read": true,
-      ".write": "auth != null && auth.token.email.matches(/.*@escoteiros[.]org[.]br$/)",
+
+      "usuarios": {
+        ".write": "auth != null && root.child('alcateia/usuarios').child(auth.uid).child('papel').val() === 'admin'"
+      },
 
       "confirmacoes": {
         "$id": {
-          ".write": "(!data.exists() && newData.hasChildren(['nome','data','presenca'])) || (auth != null && auth.token.email.matches(/.*@escoteiros[.]org[.]br$/))",
+          ".write": "(!data.exists() && newData.hasChildren(['nome','data','presenca'])) || (auth != null && (auth.token.email.matches(/.*@escoteiros[.]org[.]br$/) || root.child('alcateia/usuarios').child(auth.uid).child('ativo').val() === true))",
           ".validate": "newData.hasChild('nome') && newData.hasChild('data') && newData.hasChild('presenca') && newData.child('nome').isString() && newData.child('nome').val().length < 120 && newData.child('data').isString() && newData.child('data').val().length < 40"
         }
       },
@@ -14,9 +17,13 @@
       "_config": {
         "paisPasswordHash": {
           ".read": true,
-          ".write": "auth != null && auth.token.email.matches(/.*@escoteiros[.]org[.]br$/)",
+          ".write": "auth != null && (auth.token.email.matches(/.*@escoteiros[.]org[.]br$/) || root.child('alcateia/usuarios').child(auth.uid).child('ativo').val() === true)",
           ".validate": "newData.isString() && newData.val().length == 64"
         }
+      },
+
+      "$secao": {
+        ".write": "$secao != 'usuarios' && $secao != '_config' && auth != null && (auth.token.email.matches(/.*@escoteiros[.]org[.]br$/) || root.child('alcateia/usuarios').child(auth.uid).child('ativo').val() === true)"
       }
     }
   }

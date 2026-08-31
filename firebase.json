@@ -13,11 +13,6 @@
       ".firebaserc"
     ],
     "cleanUrls": true,
-    "rewrites": [
-      { "source": "/chefia", "destination": "/src/pages/chefia.html" },
-      { "source": "/chefia-login", "destination": "/src/pages/chefia-login.html" },
-      { "source": "/pais", "destination": "/src/pages/pais.html" }
-    ],
     "headers": [
       {
         "source": "**/*.@(html|js|css|json)",
