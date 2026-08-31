@@ -1,8 +1,8 @@
 // ===================== USUÁRIOS MODULE =====================
 // Área administrativa: gerencia as contas de acesso ao Portal da Chefia.
 // Todas as operações passam por Cloud Functions (região southamerica-east1),
-// que validam se quem chamou é admin. O nó alcateia/usuarios é sincronizado
-// pelo firebase.js e fica em state.usuarios.
+// que validam se quem chamou é admin. O nó /usuarios (raiz do RTDB) é sincronizado
+// por firebase.js -> subscribeUsuarios() (só admin lê a coleção) e fica em state.usuarios.
 
 let _usuariosBusy = false;
 

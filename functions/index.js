@@ -4,9 +4,9 @@
 // Todas as funções são "callable" (chamadas pelo cliente via firebase.functions()).
 // Só o admin pode usar as funções de gestão. O admin é identificado por:
 //   1) UID na lista ADMIN_BOOTSTRAP_UIDS (para o primeiro acesso, antes do nó existir), ou
-//   2) alcateia/usuarios/{uid}/papel === 'admin' no Realtime Database.
+//   2) usuarios/{uid}/papel === 'admin' no Realtime Database.
 //
-// Modelo de dados: alcateia/usuarios/{uid} = {
+// Modelo de dados: usuarios/{uid} = {
 //   nome, email, papel: 'admin'|'chefe', ativo: bool, senhaProvisoria: bool,
 //   criadoEm, atualizadoEm
 // }
@@ -21,7 +21,7 @@ setGlobalOptions({ region: "southamerica-east1", maxInstances: 5 });
 
 // -------------------- Configuração --------------------
 
-// UID(s) que sempre podem administrar, mesmo sem nó em alcateia/usuarios.
+// UID(s) que sempre podem administrar, mesmo sem nó em usuarios.
 // Necessário para o "bootstrap" (rodar migrarTudo pela primeira vez).
 const ADMIN_BOOTSTRAP_UIDS = ["f0zaMk3VgAMwvJOhPj615biG6kj2"]; // juliana.mayumi@escoteiros.org.br
 
@@ -59,7 +59,7 @@ function assertPapelValido(papel) {
 }
 
 async function papelDoUid(uid) {
-  const snap = await rtdb().ref(`alcateia/usuarios/${uid}/papel`).get();
+  const snap = await rtdb().ref(`usuarios/${uid}/papel`).get();
   return snap.val();
 }
 
@@ -74,9 +74,9 @@ async function exigirAdmin(request) {
   throw new HttpsError("permission-denied", "Apenas administradores podem executar esta ação.");
 }
 
-// Cria/atualiza o nó alcateia/usuarios/{uid} preservando o que já existe.
+// Cria/atualiza o nó usuarios/{uid} preservando o que já existe.
 async function gravarNoUsuario(uid, patch) {
-  const ref = rtdb().ref(`alcateia/usuarios/${uid}`);
+  const ref = rtdb().ref(`usuarios/${uid}`);
   const atual = (await ref.get()).val() || {};
   const dados = {
     nome:            patch.nome            ?? atual.nome            ?? "",
@@ -138,6 +138,27 @@ async function provisionarConta({ email, nome, papel }) {
 }
 
 // ==================== FUNÇÕES CALLABLE ====================
+
+// --- moverUsuariosParaRaiz: uso único (Etapa 6). Copia alcateia/usuarios -> usuarios
+//     na raiz do RTDB. Não apaga o original (fica como backup até a verificação). ---
+exports.moverUsuariosParaRaiz = onCall(async (request) => {
+  await exigirAdmin(request);
+  const antigo = (await rtdb().ref("alcateia/usuarios").get()).val() || {};
+  const novoRef = rtdb().ref("usuarios");
+  const jaExiste = (await novoRef.get()).val();
+  if (jaExiste && Object.keys(jaExiste).length) {
+    return { ok: true, jaMigrado: true, total: Object.keys(jaExiste).length };
+  }
+  await novoRef.set(antigo);
+  return { ok: true, jaMigrado: false, total: Object.keys(antigo).length, copiados: Object.keys(antigo) };
+});
+
+// --- limparUsuariosAntigos: uso único, DEPOIS de verificar. Remove alcateia/usuarios. ---
+exports.limparUsuariosAntigos = onCall(async (request) => {
+  await exigirAdmin(request);
+  await rtdb().ref("alcateia/usuarios").remove();
+  return { ok: true };
+});
 
 // --- migrarTudo: uso único (bootstrap). Provisiona todo o ELENCO. ---
 exports.migrarTudo = onCall(async (request) => {
@@ -232,14 +253,14 @@ exports.removerUsuario = onCall(async (request) => {
   await auth().deleteUser(uid).catch((e) => {
     if (!e || e.code !== "auth/user-not-found") throw e;
   });
-  await rtdb().ref(`alcateia/usuarios/${uid}`).remove();
+  await rtdb().ref(`usuarios/${uid}`).remove();
   return { ok: true };
 });
 
 // --- listarUsuarios: retorna o nó completo (conveniência para a área admin). ---
 exports.listarUsuarios = onCall(async (request) => {
   await exigirAdmin(request);
-  const snap = await rtdb().ref("alcateia/usuarios").get();
+  const snap = await rtdb().ref("usuarios").get();
   return { usuarios: snap.val() || {} };
 });
 
@@ -250,7 +271,7 @@ exports.finalizarTrocaSenha = onCall(async (request) => {
   if (!caller || !caller.uid) {
     throw new HttpsError("unauthenticated", "É necessário estar autenticado.");
   }
-  await rtdb().ref(`alcateia/usuarios/${caller.uid}/senhaProvisoria`).set(false);
-  await rtdb().ref(`alcateia/usuarios/${caller.uid}/atualizadoEm`).set(TS());
+  await rtdb().ref(`usuarios/${caller.uid}/senhaProvisoria`).set(false);
+  await rtdb().ref(`usuarios/${caller.uid}/atualizadoEm`).set(TS());
   return { ok: true };
 });

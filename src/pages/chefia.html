@@ -370,7 +370,7 @@ document.addEventListener('DOMContentLoaded', function(){
   if (!firebase.apps.length) firebase.initializeApp(window.firebaseConfig);
   firebase.auth().onAuthStateChanged(function(user){
     if (!user) { window.location.href = 'chefia-login.html'; return; }
-    firebase.database().ref('alcateia/usuarios/' + user.uid).once('value').then(function(snap){
+    firebase.database().ref('usuarios/' + user.uid).once('value').then(function(snap){
       var u = snap.val();
       if (!u || u.ativo !== true) {
         firebase.auth().signOut().then(function(){ window.location.href = 'chefia-login.html'; });
@@ -389,6 +389,7 @@ document.addEventListener('DOMContentLoaded', function(){
       if (u.papel === 'admin') {
         var navU = document.getElementById('nav-usuarios');
         if (navU) navU.style.display = '';
+        if (typeof window.subscribeUsuarios === 'function') window.subscribeUsuarios();
       }
     }).catch(function(e){
       console.warn('Falha ao verificar usuário:', e);

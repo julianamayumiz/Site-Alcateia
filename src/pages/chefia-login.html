@@ -329,7 +329,7 @@
 
     // Verifica o cadastro do usuário no Realtime Database e decide o próximo passo.
     function verificarUsuario(user) {
-      return db.ref('alcateia/usuarios/' + user.uid).once('value').then(function(snap) {
+      return db.ref('usuarios/' + user.uid).once('value').then(function(snap) {
         var u = snap.val();
         if (!u || u.ativo !== true) {
           return auth.signOut().then(function() {

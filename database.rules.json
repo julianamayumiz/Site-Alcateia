@@ -1,17 +1,14 @@
 {
   "rules": {
     "alcateia": {
-      ".read": "auth != null && root.child('alcateia/usuarios').child(auth.uid).child('ativo').val() === true",
-
-      "usuarios": {
-        "$uid": {
-          ".read": "auth != null && auth.uid === $uid",
-          ".write": "auth != null && root.child('alcateia/usuarios').child(auth.uid).child('papel').val() === 'admin'"
-        }
-      },
-
-      "$secao": {
-        ".write": "$secao != 'usuarios' && auth != null && root.child('alcateia/usuarios').child(auth.uid).child('ativo').val() === true"
+      ".read": "auth != null && root.child('usuarios').child(auth.uid).child('ativo').val() === true",
+      ".write": "auth != null && root.child('usuarios').child(auth.uid).child('ativo').val() === true"
+    },
+    "usuarios": {
+      ".read": "auth != null && root.child('usuarios').child(auth.uid).child('papel').val() === 'admin'",
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && root.child('usuarios').child(auth.uid).child('papel').val() === 'admin'"
       }
     }
   }
