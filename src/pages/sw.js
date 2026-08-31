@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'alcateia-chefia-v5';
+const CACHE_VERSION = 'alcateia-chefia-v6';
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 

@@ -19,6 +19,8 @@
 
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js" integrity="sha384-ajMUFBUFMCyjh8uxJg6bkGcKe9RTolyjwbxB3yES0QQMenP3Oztj/W9vA2SJPcIh" crossorigin="anonymous"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js" integrity="sha384-xD1t9dGSVKobUztxDkv6xUI0H4AnFz0NxwlgDJJ7FDlblG9xxr1Z9iauCZuJYj6p" crossorigin="anonymous"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js" integrity="sha384-f6/UpzjTjIXASlp20cArQsaRh1EvHVJd5kegy/gYR9W2D0a32TnEqUEiW4Zm/5O0" crossorigin="anonymous"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-functions-compat.js"></script>
   <script src="../scripts/firebase-config.js"></script>
 
   <script>
@@ -40,6 +42,8 @@
       --accent-hover: #1f2b6b;
       --red: #c0392b;
       --red-light: #fce8e6;
+      --green: #1e7e34;
+      --green-light: #e6f4ea;
       --surface2: #edf0f8;
       --text3: #677090;
       --radius-sm: 6px;
@@ -56,6 +60,8 @@
       --text3: #7282ab;
       --accent: #5472e4;
       --accent-hover: #4060d4;
+      --red-light: #3a2222;
+      --green-light: #1f3326;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -83,50 +89,103 @@
 
     .logo { margin-bottom: 16px; }
     h1 { font-size: 24px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
-    .subtitle { font-size: 14px; color: var(--text2); margin-bottom: 32px; }
+    .subtitle { font-size: 14px; color: var(--text2); margin-bottom: 28px; }
 
-    .btn-google {
+    form { text-align: left; }
+    .field { margin-bottom: 14px; }
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text2);
+      margin-bottom: 6px;
+    }
+    .field input {
       width: 100%;
-      padding: 12px 16px;
+      padding: 11px 13px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
       background: var(--surface);
       color: var(--text);
-      border: 1px solid var(--border);
+    }
+    .field input:focus { outline: 2px solid var(--accent); outline-offset: 0; border-color: var(--accent); }
+
+    .pw-wrap { position: relative; }
+    .pw-wrap input { padding-right: 44px; }
+    .pw-toggle {
+      position: absolute;
+      top: 0; right: 0;
+      height: 100%;
+      width: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text3);
+      padding: 0;
+    }
+    .pw-toggle:hover { color: var(--accent); }
+    .pw-toggle .eye-off { display: none; }
+    .pw-toggle.on .eye-on { display: none; }
+    .pw-toggle.on .eye-off { display: block; }
+
+    .btn-primary {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
       border-radius: 8px;
       font-family: 'DM Sans', sans-serif;
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
+      transition: background 0.2s;
+      margin-top: 4px;
     }
-    .btn-google:hover { border-color: var(--accent); box-shadow: 0 4px 12px rgba(43,58,140,0.1); }
-    .btn-google:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
 
-    .error-message {
-      background: var(--red-light);
-      color: var(--red);
-      padding: 12px 16px;
+    .link-btn {
+      display: inline-block;
+      margin-top: 14px;
+      background: none;
+      border: none;
+      color: var(--accent);
+      font-family: inherit;
+      font-size: 13px;
+      cursor: pointer;
+      padding: 0;
+    }
+    .link-btn:hover { text-decoration: underline; }
+
+    .msg {
+      padding: 12px 14px;
       border-radius: 8px;
       font-size: 13px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       display: none;
       text-align: left;
     }
-    .error-message.show { display: block; }
+    .msg.show { display: block; }
+    .msg.error { background: var(--red-light); color: var(--red); }
+    .msg.ok { background: var(--green-light); color: var(--green); }
 
-    .info-text {
+    .hint {
       font-size: 12px;
       color: var(--text2);
       margin-top: 20px;
       padding: 12px;
       background: var(--surface2);
       border-radius: var(--radius-sm);
+      text-align: left;
     }
 
-    .back-link { margin-top: 24px; font-size: 13px; }
+    .back-link { margin-top: 22px; font-size: 13px; }
     .back-link a { color: var(--accent); text-decoration: none; font-weight: 500; }
     .back-link a:hover { text-decoration: underline; }
   </style>
@@ -140,23 +199,60 @@
         <polygon points="26,16 28.4,22.8 35.5,22.9 29.8,27.2 31.9,34.1 26,30 20.1,34.1 22.2,27.2 16.5,22.9 23.6,22.8" fill="white"/>
       </svg>
     </div>
-    <h1>Portal da Chefia</h1>
-    <div class="subtitle">Acesso restrito &middot; conta @escoteiros.org.br</div>
+    <h1 id="tituloPainel">Portal da Chefia</h1>
+    <div class="subtitle" id="subtitloPainel">Acesso restrito &middot; use seu e-mail e senha</div>
 
-    <div class="error-message" id="errorMessage"></div>
+    <div class="msg" id="msg"></div>
 
-    <button type="button" class="btn-google" id="btnGoogle">
-      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
-        <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.17-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.91c1.7-1.57 2.69-3.88 2.69-6.62z"/>
-        <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.91-2.26c-.81.54-1.84.86-3.05.86-2.34 0-4.33-1.58-5.04-3.71H.96v2.33A9 9 0 0 0 9 18z"/>
-        <path fill="#FBBC05" d="M3.96 10.71A5.41 5.41 0 0 1 3.68 9c0-.59.1-1.17.28-1.71V4.96H.96A9 9 0 0 0 0 9c0 1.45.35 2.82.96 4.04l3-2.33z"/>
-        <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.96l3 2.33C4.67 5.16 6.66 3.58 9 3.58z"/>
-      </svg>
-      <span id="btnText">Entrar com Google</span>
-    </button>
+    <!-- PAINEL: LOGIN -->
+    <form id="formLogin">
+      <div class="field">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" autocomplete="username" placeholder="voce@escoteiros.org.br" required>
+      </div>
+      <div class="field">
+        <label for="senha">Senha</label>
+        <div class="pw-wrap">
+          <input type="password" id="senha" autocomplete="current-password" placeholder="Sua senha" required>
+          <button type="button" class="pw-toggle" data-target="senha" aria-label="Mostrar senha">
+            <svg class="eye-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg class="eye-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="btn-primary" id="btnEntrar">Entrar</button>
+      <div style="text-align:center">
+        <button type="button" class="link-btn" id="btnEsqueci">Esqueci minha senha</button>
+      </div>
+    </form>
 
-    <div class="info-text">
-      Apenas contas <strong>@escoteiros.org.br</strong> tem acesso ao portal.
+    <!-- PAINEL: TROCA DE SENHA OBRIGATÓRIA -->
+    <form id="formSenha" style="display:none">
+      <div class="field">
+        <label for="novaSenha">Nova senha (mínimo 8 caracteres)</label>
+        <div class="pw-wrap">
+          <input type="password" id="novaSenha" autocomplete="new-password" placeholder="Escolha uma senha" required>
+          <button type="button" class="pw-toggle" data-target="novaSenha" aria-label="Mostrar senha">
+            <svg class="eye-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg class="eye-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="confirmaSenha">Confirme a nova senha</label>
+        <div class="pw-wrap">
+          <input type="password" id="confirmaSenha" autocomplete="new-password" placeholder="Repita a senha" required>
+          <button type="button" class="pw-toggle" data-target="confirmaSenha" aria-label="Mostrar senha">
+            <svg class="eye-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg class="eye-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="btn-primary" id="btnTrocar">Salvar e entrar</button>
+    </form>
+
+    <div class="hint" id="hintLogin">
+      Primeiro acesso? Use a senha temporária que a chefia te passou &mdash; o sistema vai pedir para você criar uma senha própria.
     </div>
 
     <div class="back-link">
@@ -168,58 +264,158 @@
     (function() {
       var saved = localStorage.getItem('alcateiaTheme');
       var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (saved === 'dark' || (!saved && prefersDark)) {
-        document.body.classList.add('dark');
-      }
+      if (saved === 'dark' || (!saved && prefersDark)) document.body.classList.add('dark');
       document.documentElement.classList.remove('dark-init');
     })();
 
     if (!firebase.apps.length) firebase.initializeApp(window.firebaseConfig);
-    var DOM = window.ALCATEIA_EMAIL_DOMAIN || 'escoteiros.org.br';
     var auth = firebase.auth();
-    var btn = document.getElementById('btnGoogle');
-    var btnText = document.getElementById('btnText');
-    var errEl = document.getElementById('errorMessage');
+    var db = firebase.database();
 
-    function showError(msg) {
-      errEl.textContent = msg;
-      errEl.classList.add('show');
+    var msg = document.getElementById('msg');
+    var formLogin = document.getElementById('formLogin');
+    var formSenha = document.getElementById('formSenha');
+    var hintLogin = document.getElementById('hintLogin');
+    var titulo = document.getElementById('tituloPainel');
+    var subt = document.getElementById('subtitloPainel');
+    var btnEntrar = document.getElementById('btnEntrar');
+    var btnTrocar = document.getElementById('btnTrocar');
+
+    function showMsg(txt, tipo) {
+      msg.textContent = txt;
+      msg.className = 'msg show ' + (tipo || 'error');
     }
-    function clearError() { errEl.classList.remove('show'); }
+    function clearMsg() { msg.className = 'msg'; }
 
-    // Se ja esta logado com dominio correto, redireciona
-    auth.onAuthStateChanged(function(user){
-      if (user && (user.email || '').toLowerCase().endsWith('@' + DOM)) {
-        window.location.href = 'chefia.html';
+    // Botões "mostrar senha"
+    Array.prototype.forEach.call(document.querySelectorAll('.pw-toggle'), function(btn) {
+      btn.addEventListener('click', function() {
+        var input = document.getElementById(btn.getAttribute('data-target'));
+        if (!input) return;
+        var mostrar = input.type === 'password';
+        input.type = mostrar ? 'text' : 'password';
+        btn.classList.toggle('on', mostrar);
+        btn.setAttribute('aria-label', mostrar ? 'Ocultar senha' : 'Mostrar senha');
+        input.focus();
+      });
+    });
+
+    var ERROS = {
+      'auth/invalid-email': 'E-mail inválido.',
+      'auth/user-disabled': 'Esta conta está desativada. Fale com a administração.',
+      'auth/user-not-found': 'E-mail ou senha incorretos.',
+      'auth/wrong-password': 'E-mail ou senha incorretos.',
+      'auth/invalid-credential': 'E-mail ou senha incorretos.',
+      'auth/too-many-requests': 'Muitas tentativas. Aguarde alguns minutos e tente de novo.',
+      'auth/network-request-failed': 'Sem conexão. Verifique sua internet.',
+      'auth/weak-password': 'Senha muito fraca. Use pelo menos 8 caracteres.',
+      'auth/requires-recent-login': 'Sessão expirada. Entre novamente para trocar a senha.'
+    };
+    function msgErro(e) {
+      return (e && ERROS[e.code]) || ('Não foi possível continuar: ' + (e && e.message || 'erro desconhecido'));
+    }
+
+    function irParaPortal() { window.location.href = 'chefia.html'; }
+
+    function mostrarTrocaSenha() {
+      clearMsg();
+      formLogin.style.display = 'none';
+      hintLogin.style.display = 'none';
+      formSenha.style.display = 'block';
+      titulo.textContent = 'Crie sua senha';
+      subt.textContent = 'Primeiro acesso — defina uma senha só sua';
+      setTimeout(function(){ document.getElementById('novaSenha').focus(); }, 50);
+    }
+
+    // Verifica o cadastro do usuário no Realtime Database e decide o próximo passo.
+    function verificarUsuario(user) {
+      return db.ref('alcateia/usuarios/' + user.uid).once('value').then(function(snap) {
+        var u = snap.val();
+        if (!u || u.ativo !== true) {
+          return auth.signOut().then(function() {
+            showMsg('Sua conta não está autorizada ou foi desativada. Fale com a administração.', 'error');
+            resetBotoes();
+          });
+        }
+        if (u.senhaProvisoria === true) {
+          mostrarTrocaSenha();
+          return;
+        }
+        irParaPortal();
+      });
+    }
+
+    function resetBotoes() {
+      btnEntrar.disabled = false;
+      btnEntrar.textContent = 'Entrar';
+      btnTrocar.disabled = false;
+      btnTrocar.textContent = 'Salvar e entrar';
+    }
+
+    // Se já há sessão ativa ao abrir a página, valida direto.
+    auth.onAuthStateChanged(function(user) {
+      if (user && formSenha.style.display === 'none' && formLogin.style.display !== 'none') {
+        verificarUsuario(user).catch(function(e) { console.warn(e); });
       }
     });
 
-    btn.addEventListener('click', function() {
-      clearError();
-      btn.disabled = true;
-      btnText.textContent = 'Entrando...';
-      var provider = new firebase.auth.GoogleAuthProvider();
-      provider.setCustomParameters({ hd: DOM });
-      auth.signInWithPopup(provider).then(function(result) {
-        var email = (result.user && result.user.email || '').toLowerCase();
-        if (!email.endsWith('@' + DOM)) {
-          return auth.signOut().then(function(){
-            showError('Acesso permitido apenas para contas @' + DOM + '.');
-            btn.disabled = false;
-            btnText.textContent = 'Entrar com Google';
-          });
-        }
-        window.location.href = 'chefia.html';
+    // ---- Login ----
+    formLogin.addEventListener('submit', function(e) {
+      e.preventDefault();
+      clearMsg();
+      btnEntrar.disabled = true;
+      btnEntrar.textContent = 'Entrando...';
+      var email = document.getElementById('email').value.trim().toLowerCase();
+      var senha = document.getElementById('senha').value;
+      auth.signInWithEmailAndPassword(email, senha)
+        .then(function(cred) { return verificarUsuario(cred.user); })
+        .catch(function(err) {
+          console.warn(err);
+          showMsg(msgErro(err), 'error');
+          resetBotoes();
+        });
+    });
+
+    // ---- Esqueci minha senha ----
+    document.getElementById('btnEsqueci').addEventListener('click', function() {
+      clearMsg();
+      var email = document.getElementById('email').value.trim().toLowerCase();
+      if (!email) {
+        showMsg('Digite seu e-mail no campo acima e clique de novo em "Esqueci minha senha".', 'error');
+        return;
+      }
+      auth.sendPasswordResetEmail(email).then(function() {
+        showMsg('Se este e-mail estiver cadastrado, um link de redefinição foi enviado. Verifique sua caixa de entrada (e o spam).', 'ok');
       }).catch(function(err) {
         console.warn(err);
-        if (err && err.code === 'auth/popup-closed-by-user') {
-          clearError();
-        } else {
-          showError('Nao foi possivel entrar: ' + (err && err.message || 'erro desconhecido'));
-        }
-        btn.disabled = false;
-        btnText.textContent = 'Entrar com Google';
+        showMsg(msgErro(err), 'error');
       });
+    });
+
+    // ---- Troca de senha obrigatória ----
+    formSenha.addEventListener('submit', function(e) {
+      e.preventDefault();
+      clearMsg();
+      var nova = document.getElementById('novaSenha').value;
+      var conf = document.getElementById('confirmaSenha').value;
+      if (nova.length < 8) { showMsg('A senha precisa ter pelo menos 8 caracteres.', 'error'); return; }
+      if (nova !== conf) { showMsg('As senhas não conferem.', 'error'); return; }
+
+      var user = auth.currentUser;
+      if (!user) { showMsg('Sessão expirada. Entre novamente.', 'error'); return; }
+
+      btnTrocar.disabled = true;
+      btnTrocar.textContent = 'Salvando...';
+      user.updatePassword(nova)
+        .then(function() {
+          return firebase.app().functions('southamerica-east1').httpsCallable('finalizarTrocaSenha')({});
+        })
+        .then(function() { irParaPortal(); })
+        .catch(function(err) {
+          console.warn(err);
+          showMsg(msgErro(err), 'error');
+          resetBotoes();
+        });
     });
   </script>
 

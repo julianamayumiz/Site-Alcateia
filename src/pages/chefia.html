@@ -98,6 +98,7 @@
       </button>
     </nav>
     <div class="sidebar-footer">
+      <div id="user-badge" style="font-size:11px;font-weight:500;margin-bottom:4px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
       <div id="sync-status" style="font-size:11px;font-family:'DM Mono',monospace;margin-bottom:6px;color:var(--text3)">Conectando...</div>
       <div class="version">alcateiakotick · 2026</div>
     </div>
@@ -370,17 +371,28 @@
 // garantir que os scripts deferidos (firebase-*) já estejam disponíveis.
 document.addEventListener('DOMContentLoaded', function(){
   if (!firebase.apps.length) firebase.initializeApp(window.firebaseConfig);
-  var DOM = window.ALCATEIA_EMAIL_DOMAIN || 'escoteiros.org.br';
   firebase.auth().onAuthStateChanged(function(user){
     if (!user) { window.location.href = 'chefia-login.html'; return; }
-    var email = (user.email || '').toLowerCase();
-    if (!email.endsWith('@' + DOM)) {
-      alert('Acesso restrito a contas @' + DOM);
+    firebase.database().ref('alcateia/usuarios/' + user.uid).once('value').then(function(snap){
+      var u = snap.val();
+      if (!u || u.ativo !== true) {
+        firebase.auth().signOut().then(function(){ window.location.href = 'chefia-login.html'; });
+        return;
+      }
+      if (u.senhaProvisoria === true) {
+        // Primeiro acesso ainda não concluído: volta ao login para criar a senha.
+        window.location.href = 'chefia-login.html';
+        return;
+      }
+      window.ALCATEIA_USER = { uid: user.uid, email: user.email, nome: u.nome || '', papel: u.papel || 'chefe' };
+      document.body.dataset.authReady = '1';
+      document.body.dataset.papel = u.papel || 'chefe';
+      var badge = document.getElementById('user-badge');
+      if (badge) badge.textContent = (u.nome || user.email) + (u.papel === 'admin' ? ' · admin' : '');
+    }).catch(function(e){
+      console.warn('Falha ao verificar usuário:', e);
       firebase.auth().signOut().then(function(){ window.location.href = 'chefia-login.html'; });
-      return;
-    }
-    window.ALCATEIA_USER = user;
-    document.body.dataset.authReady = '1';
+    });
   });
 });
 
